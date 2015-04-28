@@ -1,0 +1,8 @@
+﻿<Window x:Class="WindowsFirewallDashboard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="510.973" Width="731.5">
+	<Grid>
+
+	</Grid>
+</Window>
