@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFirewallDashboard", "WindowsFirewallDashboard\WindowsFirewallDashboard.csproj", "{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFirewallHelper", "WindowsFirewallHelper\WindowsFirewallHelper.csproj", "{97F5DEEC-DA4B-40D4-A799-EC0D63100CDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFirewallEventListener", "WindowsFirewallEventListener\WindowsFirewallEventListener.csproj", "{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFirewallLibrary", "WindowsFirewallLibrary\WindowsFirewallLibrary.csproj", "{329D8EC7-9D9D-46CF-B93C-849A912D7C66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,14 @@ Global
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97F5DEEC-DA4B-40D4-A799-EC0D63100CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97F5DEEC-DA4B-40D4-A799-EC0D63100CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97F5DEEC-DA4B-40D4-A799-EC0D63100CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97F5DEEC-DA4B-40D4-A799-EC0D63100CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

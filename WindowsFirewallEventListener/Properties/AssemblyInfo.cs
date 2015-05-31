@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden 
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
-[assembly: AssemblyTitle("WindowsFirewallHelper")]
+[assembly: AssemblyTitle("WindowsFirewallEventListener")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WindowsFirewallHelper")]
+[assembly: AssemblyProduct("WindowsFirewallEventListener")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
-[assembly: Guid("f8d8a4de-df93-49ce-b564-dccd291b3187")]
+[assembly: Guid("aac8c256-6a01-40e4-be81-d96ad82f39ac")]
 
 // Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 //

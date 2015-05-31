@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NetFwTypeLib;
 
-namespace WindowsFirewallHelper
+namespace WindowsFirewallLibrary.FirewallController
 {
 	public enum FirewallStatus
 	{
@@ -55,11 +55,11 @@ namespace WindowsFirewallHelper
 
 			return Activator.CreateInstance(type);
 		}
-		
+
 		public abstract FirewallStatus GetFirewallStatus();
 
-		public abstract Boolean EnableFirewall();
+		public abstract bool EnableFirewall();
 
-		public abstract Boolean DisableFirewall();
+		public abstract bool DisableFirewall();
 	}
 }

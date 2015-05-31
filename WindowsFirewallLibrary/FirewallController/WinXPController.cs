@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NetFwTypeLib;
 
-namespace WindowsFirewallHelper
+namespace WindowsFirewallLibrary.FirewallController
 {
 	public class WinXPController : AController
 	{
@@ -37,7 +37,7 @@ namespace WindowsFirewallHelper
 			return firewallEnabled ? FirewallStatus.Enabled : FirewallStatus.Disabled;
 		}
 
-		public override Boolean EnableFirewall()
+		public override bool EnableFirewall()
 		{
 			try
 			{
@@ -51,7 +51,7 @@ namespace WindowsFirewallHelper
 			return true;
 		}
 
-		public override Boolean DisableFirewall()
+		public override bool DisableFirewall()
 		{
 			try
 			{
@@ -136,6 +136,6 @@ namespace WindowsFirewallHelper
 
 			/*now add this application to AuthorizedApplications collection */
 			applications.Add(application);
-		} 
+		}
 	}
 }
