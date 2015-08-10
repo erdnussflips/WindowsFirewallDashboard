@@ -140,8 +140,8 @@ namespace WindowsFirewallLibrary.FirewallController
 			return DisableFirewallOnPrivateNetworks() & DisableFirewallOnDomainNetworks() & DisableFirewallOnPublicNetworks();
 		}
 
-		/* Returns unprotected network interfaces
-		 *
+		/*
+		 * Returns unprotected network interfaces
 		 */
 		public void GetVulnerableInterfaces()
 		{
