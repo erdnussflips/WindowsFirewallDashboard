@@ -10,5 +10,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 	{
 		public static StateParameter On = new StateParameter { Value = "on" };
 		public static StateParameter Off = new StateParameter { Value = "off" };
+
+		public static StateParameter Default = On;
+		public static StateParameter DefaultForServer2008 = On;
 	}
 }

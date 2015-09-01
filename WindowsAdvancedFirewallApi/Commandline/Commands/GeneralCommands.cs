@@ -5,101 +5,104 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsAdvancedFirewallApi.Commandline.Enum.Firewall;
+using WindowsAdvancedFirewallApi.Commandline.Parameter;
+using WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallPolicy;
+using WindowsAdvancedFirewallApi.Commandline.Parameter.Logging;
+using WindowsAdvancedFirewallApi.Commandline.Parameter.Settings;
 
 namespace WindowsAdvancedFirewallApi.Commandline.Commands
 {
 	public class GeneralCommands : NetshCommands
 	{
-		public static NetshResult Export(Uri path) => RunCommand("export", path.AbsolutePath);
-		public static NetshResult Import(Uri path) => RunCommand("import", path.AbsolutePath);
-		public static NetshResult Reset(Uri path = null)
+		public static NetshResult Export(PathParameter parameter) => RunCommand("export", parameter.Value);
+		public static NetshResult Import(PathParameter parameter) => RunCommand("import", parameter.Value);
+		public static NetshResult Reset(PathParameter parameter = null)
 		{
-			if(path != null)
+			if(parameter != null)
 			{
-				return RunCommand("reset", path.AbsolutePath);
+				return RunCommand("reset", parameter.Value);
 			}
 
 			return RunCommand("reset");
 		}
 
-		protected static NetshResult SetFirewallProperty(FirewallProfile profile, string property, string parameter)
+		private static NetshResult SetFirewallProperty(ProfileParameter profile, string property, string parameter)
 		{
-			return RunCommand("set " + profile.value + " " + property, parameter);
+			return RunCommand("set " + profile.Value + " " + property, parameter);
 		}
 
-		public static NetshResult SetFirewallState(FirewallProfile profile, FirewallState state)
+		public static NetshResult SetFirewallState(ProfileParameter profile, StateParameter parameter)
 		{
-			return SetFirewallProperty(profile, "state", state.value);
+			return SetFirewallProperty(profile, "state", parameter.Value);
 		}
 
-		public static NetshResult SetFirewallPolicy(FirewallProfile profile, FirewallPolicyInbound inbound, FirewallPolicyOutbound outbound)
+		public static NetshResult SetFirewallPolicy(ProfileParameter profile, InboundPolicyParameter parameterInbound, OutboundPolicyParameter parameterOutbound)
 		{
-			return SetFirewallProperty(profile, "firewallpolicy", inbound.value + "," + outbound.value);
+			return SetFirewallProperty(profile, "firewallpolicy", parameterInbound.Value + "," + parameterOutbound.Value);
 		}
 
-		protected static NetshResult SetFirewallSetting(FirewallProfile profile, string setting, string parameter)
+		private static NetshResult SetFirewallSetting(ProfileParameter profile, string setting, string parameter)
 		{
 			return SetFirewallProperty(profile, "settings", setting + " " + parameter);
 		}
 
-		public static NetshResult SetFirewallSettingLocalRules(FirewallProfile profile, FirewallSettingLocalRules setting)
+		public static NetshResult SetFirewallSettingLocalRules(ProfileParameter profile, LocalFirewallRulesParameter parameter)
 		{
-			return SetFirewallSetting(profile, FirewallSettingLocalRules.Name, setting.value);
+			return SetFirewallSetting(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		public static NetshResult SetFirewallSettingLocalConsecRules(FirewallProfile profile, FirewallSettingLocalRulesConsec setting)
+		public static NetshResult SetFirewallSettingLocalConsecRules(ProfileParameter profile, LocalConsecRulesParameter parameter)
 		{
-			return SetFirewallSetting(profile, FirewallSettingLocalRulesConsec.Name, setting.value);
+			return SetFirewallSetting(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		public static NetshResult SetFirewallSettingInboundNotification(FirewallProfile profile, FirewallSettingInboundNotification setting)
+		public static NetshResult SetFirewallSettingInboundNotification(ProfileParameter profile, InboundUserNotificationParameter parameter)
 		{
-			return SetFirewallSetting(profile, FirewallSettingInboundNotification.Name, setting.value);
+			return SetFirewallSetting(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		public static NetshResult SetFirewallSettingRemoteManagement(FirewallProfile profile, FirewallSettingRemoteManagement setting)
+		public static NetshResult SetFirewallSettingRemoteManagement(ProfileParameter profile, RemoteManagementParameter parameter)
 		{
-			return SetFirewallSetting(profile, FirewallSettingRemoteManagement.Name, setting.value);
+			return SetFirewallSetting(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		public static NetshResult SetFirewallSettingUnicastResponseToMulticast(FirewallProfile profile, FirewallSettingUnicastResponseToMulticast setting)
+		public static NetshResult SetFirewallSettingUnicastResponseToMulticast(ProfileParameter profile, UnicastResponseToMulticastParameter parameter)
 		{
-			return SetFirewallSetting(profile, FirewallSettingUnicastResponseToMulticast.Name, setting.value);
+			return SetFirewallSetting(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		protected static NetshResult SetFirewallLogging(FirewallProfile profile, string setting, string parameter)
+		protected static NetshResult SetFirewallLogging(ProfileParameter profile, string parametername, string parametervalue)
 		{
-			return SetFirewallProperty(profile, "logging", setting + " " + parameter);
+			return SetFirewallProperty(profile, "logging", parametername + " " + parametervalue);
 		}
 
-		public static NetshResult SetFirewallLoggingAllowedConnections(FirewallProfile profile, FirewallLoggingAllowedConnections setting)
+		public static NetshResult SetFirewallLoggingAllowedConnections(ProfileParameter profile, AllowedConnectionsParameter parameter)
 		{
-			return SetFirewallLogging(profile, FirewallLoggingAllowedConnections.Name, setting.value);
+			return SetFirewallLogging(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		public static NetshResult SetFirewallLoggingDroppedConnections(FirewallProfile profile, FirewallLoggingDroppedConnections setting)
+		public static NetshResult SetFirewallLoggingDroppedConnections(ProfileParameter profile, DroppedConnectionsParameter parameter)
 		{
-			return SetFirewallLogging(profile, FirewallLoggingDroppedConnections.Name, setting.value);
+			return SetFirewallLogging(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		public static NetshResult SetFirewallLoggingFilename(FirewallProfile profile, FirewallLoggingFilename setting)
+		public static NetshResult SetFirewallLoggingFilename(ProfileParameter profile, FilenameParameter parameter)
 		{
-			if(setting.FolderNeedsPermission())
+			if (parameter.ParameterValue.FilefolderNeedsPermission())
 			{
-				var directory = new DirectoryInfo(Path.GetDirectoryName(setting.value));
+				var directory = new DirectoryInfo(Path.GetDirectoryName(parameter.ParameterValue.Value));
 				var acl = directory.GetAccessControl();
 
 				acl.AddAccessRule(new FileSystemAccessRule(@"NT SERVICE\mpssvc", FileSystemRights.Write, AccessControlType.Allow));
 				directory.SetAccessControl(acl);
 			}
 
-			return SetFirewallLogging(profile, FirewallLoggingFilename.Name, setting.value);
+			return SetFirewallLogging(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 
-		public static NetshResult SetFirewallLoggingMaxFilesize(FirewallProfile profile, FirewallLoggingMaxFilesize setting)
+		public static NetshResult SetFirewallLoggingMaxFilesize(ProfileParameter profile, MaxFilesizeParameter parameter)
 		{
-			return SetFirewallLogging(profile, FirewallLoggingMaxFilesize.Name, setting.value);
+			return SetFirewallLogging(profile, parameter.Name, parameter.ParameterValue.Value);
 		}
 	}
 }

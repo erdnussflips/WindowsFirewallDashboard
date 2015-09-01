@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IPAddressRange, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -53,31 +55,31 @@
     <Compile Include="Commandline\Commands\MainModeCommands.cs" />
     <Compile Include="Commandline\Commands\MonitorCommands.cs" />
     <Compile Include="Commandline\Commands\NetshCommands.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallLoggingDroppedConnections.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallLoggingAllowedConnections.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallLoggingFilename.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallLoggingMaxFilesize.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallPolicyInbound.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallPolicyOutbound.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallProfile.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallSettingInboundNotification.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallSettingLocalRulesConsec.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallSettingLocalRules.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallSettingRemoteManagement.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallSettingUnicastResponseToMulticast.cs" />
-    <Compile Include="Commandline\Enum\Firewall\FirewallState.cs" />
-    <Compile Include="Commandline\Enum\NetshConfigurable.cs" />
-    <Compile Include="Commandline\Enum\NetshControllable.cs" />
-    <Compile Include="Commandline\Enum\NetshParameter.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RuleAddress.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RuleLocalAddress.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RuleLocalPort.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RulePort.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RuleRemoteAddress.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RuleRemotePort.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RuleService.cs" />
-    <Compile Include="Commandline\FirewallRule.cs" />
-    <Compile Include="Commandline\Enum\RuleParameter\RuleAttributes.cs" />
+    <Compile Include="Commandline\NetshConstants.cs" />
+    <Compile Include="Commandline\Parameter\FirewallPolicy\InboundPolicyParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallPolicy\OutboundPolicyParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallPolicy\PolicyParameter.cs" />
+    <Compile Include="Commandline\Parameter\Logging\AllowedConnectionsParameter.cs" />
+    <Compile Include="Commandline\Parameter\Logging\DroppedConnectionsParameter.cs" />
+    <Compile Include="Commandline\Parameter\Logging\FilenameParameter.cs" />
+    <Compile Include="Commandline\Parameter\Logging\LoggingParameter.cs" />
+    <Compile Include="Commandline\Parameter\Logging\MaxFilesizeParameter.cs" />
+    <Compile Include="Commandline\Parameter\NetshConfigurableParameter.cs" />
+    <Compile Include="Commandline\Parameter\NetshExtendedParameter.cs" />
+    <Compile Include="Commandline\Parameter\NetshParameter.cs" />
+    <Compile Include="Commandline\Parameter\NetshSimpleParameter.cs" />
+    <Compile Include="Commandline\Parameter\PathParameter.cs" />
+    <Compile Include="Commandline\Parameter\ProfileParameter.cs" />
+    <Compile Include="Commandline\Parameter\Settings\InboundUserNotificationParameter.cs" />
+    <Compile Include="Commandline\Parameter\Settings\LocalFirewallRulesParameter.cs" />
+    <Compile Include="Commandline\Parameter\Settings\UnicastResponseToMulticastParameter.cs" />
+    <Compile Include="Commandline\Parameter\Settings\LocalConsecRulesParameter.cs" />
+    <Compile Include="Commandline\Parameter\Settings\RemoteManagementParameter.cs" />
+    <Compile Include="Commandline\Parameter\Settings\SettingsParameter.cs" />
+    <Compile Include="Commandline\Parameter\StateParameter.cs" />
+    <Compile Include="Commandline\Parameter\Value\NetshConfigurableValue.cs" />
+    <Compile Include="Commandline\Parameter\Value\NetshControllableValue.cs" />
+    <Compile Include="Commandline\Parameter\Value\NetshExtendedParameterValue.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

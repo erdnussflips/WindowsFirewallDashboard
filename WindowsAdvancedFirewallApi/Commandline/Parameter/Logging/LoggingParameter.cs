@@ -11,6 +11,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 		where ParameterType : LoggingParameter<ParameterType, ParameterValueType>, new()
 		where ParameterValueType : NetshExtendedParameterValue<ParameterValueType>, new()
 	{
+		internal LoggingParameter(string name, ParameterValueType value) : base(name, value) { }
 
 	}
 }

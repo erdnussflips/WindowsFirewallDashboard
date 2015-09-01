@@ -8,5 +8,9 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 {
 	public abstract class NetshParameter
 	{
+		internal NetshParameter()
+		{
+
+		}
 	}
 }

@@ -9,7 +9,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Value
 	public class NetshControllableValue<ParameterValueType> : NetshConfigurableValue<ParameterValueType>
 		where ParameterValueType : NetshControllableValue<ParameterValueType>, new()
 	{
-		public static ParameterValueType Enable = new ParameterValueType { NetshValue = "enable" };
-		public static ParameterValueType Disable = new ParameterValueType { NetshValue = "disable" };
+		public static ParameterValueType Enable = new ParameterValueType { Value = "enable" };
+		public static ParameterValueType Disable = new ParameterValueType { Value = "disable" };
 	}
 }

@@ -6,7 +6,8 @@ using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Commandline.Commands;
-using WindowsAdvancedFirewallApi.Commandline.Enum.Firewall;
+using WindowsAdvancedFirewallApi.Commandline.Parameter;
+using WindowsAdvancedFirewallApi.Commandline.Parameter.Logging;
 using Debugger = System.Diagnostics.Debugger;
 
 namespace WindowsAdvancedFirewallApi
@@ -20,10 +21,15 @@ namespace WindowsAdvancedFirewallApi
 
 		public static void netshTest()
 		{
+			var result = GeneralCommands.SetFirewallState(ProfileParameter.All, StateParameter.Off);
+			result = GeneralCommands.SetFirewallState(ProfileParameter.All, StateParameter.Default);
+			result = GeneralCommands.SetFirewallLoggingAllowedConnections(ProfileParameter.All, new AllowedConnectionsParameter { ParameterValue = AllowedConnectionsParameter.Value.Default });
+
+
 			//var result = GeneralCommands.Export(new Uri(@"D:\firewallSettings.wfw"));
 
-			var result2 = GeneralCommands.SetFirewallPolicy(FirewallProfile.Public, FirewallPolicyInbound.BlockInboundAlways, FirewallPolicyOutbound.BlockOutbound);
-			result2 = GeneralCommands.SetFirewallPolicy(FirewallProfile.Public, FirewallPolicyInbound.Default, FirewallPolicyOutbound.Default);
+			//var result2 = GeneralCommands.SetFirewallPolicy(FirewallProfile.Public, FirewallPolicyInbound.BlockInboundAlways, FirewallPolicyOutbound.BlockOutbound);
+			//result2 = GeneralCommands.SetFirewallPolicy(FirewallProfile.Public, FirewallPolicyInbound.Default, FirewallPolicyOutbound.Default);
 		}
 		public static void test()
 		{
@@ -49,7 +55,7 @@ namespace WindowsAdvancedFirewallApi
 
 				//ps.AddScript("Get-Command -Noun '*firewall*'");
 				ps.AddScript(@"Set-ExecutionPolicy Unrestricted -Scope Process; Get-ExecutionPolicy -List; Get-Module -ListAvailable | Import-Module; Get-Module -List; Get-NetFirewallProfile;");
-                var result = ps.Invoke();
+				var result = ps.Invoke();
 
 				var informationrecords = new List<InformationalRecord>();
 				informationrecords.AddRange(ps.Streams.Debug);

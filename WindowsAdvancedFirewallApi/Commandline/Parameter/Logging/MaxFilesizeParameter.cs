@@ -21,10 +21,15 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 					throw new ArgumentOutOfRangeException(nameof(maxfilesize), "The parameter value must between 1 to 32767.");
 				}
 
-				return new Value { NetshValue = maxfilesize.ToString(), Size = maxfilesize };
+				return new Value { Value = maxfilesize.ToString(), Size = maxfilesize };
 			}
 
 			private short Size;
+		}
+
+		public MaxFilesizeParameter() : base("maxfilesize")
+		{
+
 		}
 	}
 }

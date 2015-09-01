@@ -8,6 +8,6 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 {
 	public class NetshSimpleParameter : NetshParameter
 	{
-		internal string Value;
+		protected internal string Value { get; protected set; }
 	}
 }

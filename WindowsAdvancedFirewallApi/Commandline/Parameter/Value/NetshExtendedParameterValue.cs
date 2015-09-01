@@ -9,7 +9,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Value
 	public class NetshExtendedParameterValue<ParameterValueType>
 		where ParameterValueType : NetshExtendedParameterValue<ParameterValueType>, new()
 	{
-		public string NetshValue { get; protected set; }
+		public string Value { get; protected set; }
 
 		protected NetshExtendedParameterValue() { }
 	}

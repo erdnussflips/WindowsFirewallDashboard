@@ -11,20 +11,23 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 	{
 		public class Value : NetshConfigurableValue<Value>
 		{
-			public static Value Default = new Value { NetshValue = new Uri(@"%windir%\system32\logfiles\firewall\pfirewall.log", UriKind.RelativeOrAbsolute).AbsolutePath };
+			public static Value Default = new Value { Value = new Uri(@"%windir%\system32\logfiles\firewall\pfirewall.log", UriKind.RelativeOrAbsolute).AbsolutePath };
 			public static Value DefaultForGPO = NotConfigured;
 
 			public static Value Custom(Uri filepath)
 			{
-				return new Value { NetshValue = filepath.AbsolutePath, userdefined = true };
+				return new Value { Value = filepath.AbsolutePath, userdefined = true };
 			}
 
-			private bool userdefined = false;
+			private bool userdefined;
 
 			internal bool FilefolderNeedsPermission()
 			{
 				return userdefined;
 			}
 		}
+
+		public FilenameParameter(Value value) : base("filename", value) { }
+		public FilenameParameter() : this(null) { }
 	}
 }
