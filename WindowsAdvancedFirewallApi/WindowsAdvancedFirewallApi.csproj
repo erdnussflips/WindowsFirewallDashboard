@@ -59,6 +59,7 @@
     <Compile Include="Commandline\Parameter\FirewallPolicy\InboundPolicyParameter.cs" />
     <Compile Include="Commandline\Parameter\FirewallPolicy\OutboundPolicyParameter.cs" />
     <Compile Include="Commandline\Parameter\FirewallPolicy\PolicyParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\RuleParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\AllowedConnectionsParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\DroppedConnectionsParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\FilenameParameter.cs" />

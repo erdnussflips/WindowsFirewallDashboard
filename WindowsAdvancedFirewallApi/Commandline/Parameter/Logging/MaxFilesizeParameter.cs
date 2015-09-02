@@ -27,9 +27,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 			private short Size;
 		}
 
-		public MaxFilesizeParameter() : base("maxfilesize")
-		{
+		public MaxFilesizeParameter(Value value) : base("maxfilesize", value) { }
 
-		}
+		public MaxFilesizeParameter() : base(null) { }
 	}
 }
