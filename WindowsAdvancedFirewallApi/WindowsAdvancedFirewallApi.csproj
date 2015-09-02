@@ -59,6 +59,15 @@
     <Compile Include="Commandline\Parameter\FirewallPolicy\InboundPolicyParameter.cs" />
     <Compile Include="Commandline\Parameter\FirewallPolicy\OutboundPolicyParameter.cs" />
     <Compile Include="Commandline\Parameter\FirewallPolicy\PolicyParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\ActionParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\EnableParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\DirectionParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\DescriptionParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\RuleMultipleValueParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\ServiceParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\LocalIpAddressParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\ProgramParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\NameParameter.cs" />
     <Compile Include="Commandline\Parameter\Firewall\RuleParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\AllowedConnectionsParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\DroppedConnectionsParameter.cs" />
@@ -78,9 +87,12 @@
     <Compile Include="Commandline\Parameter\Settings\RemoteManagementParameter.cs" />
     <Compile Include="Commandline\Parameter\Settings\SettingsParameter.cs" />
     <Compile Include="Commandline\Parameter\StateParameter.cs" />
+    <Compile Include="Commandline\Parameter\Value\NetshAnyValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshConfigurableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshControllableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshExtendedParameterValue.cs" />
+    <Compile Include="Commandline\Parameter\Value\NetshMultipleValue.cs" />
+    <Compile Include="Commandline\Parameter\Value\NetshSingleValue.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
