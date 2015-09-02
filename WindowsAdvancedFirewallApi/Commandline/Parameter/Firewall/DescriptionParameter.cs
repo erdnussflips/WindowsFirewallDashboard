@@ -7,7 +7,7 @@ using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
 namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
 {
-	public class DescriptionParameter : RuleParameter<DescriptionParameter, DescriptionParameter.Value>
+	public class DescriptionParameter : RuleSingleParameter<DescriptionParameter, DescriptionParameter.Value>
 	{
 		public class Value : NetshExtendedParameterValue<Value>
 		{

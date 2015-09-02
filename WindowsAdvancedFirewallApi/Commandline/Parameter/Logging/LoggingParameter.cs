@@ -7,7 +7,7 @@ using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
 namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 {
-	public abstract class LoggingParameter<ParameterType, ParameterValueType> : NetshExtendedParameter<ParameterType, ParameterValueType>
+	public abstract class LoggingParameter<ParameterType, ParameterValueType> : NetshExtendedSingleValueParameter<ParameterType, ParameterValueType>
 		where ParameterType : LoggingParameter<ParameterType, ParameterValueType>, new()
 		where ParameterValueType : NetshExtendedParameterValue<ParameterValueType>, new()
 	{

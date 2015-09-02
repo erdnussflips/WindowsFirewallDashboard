@@ -7,24 +7,14 @@ using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
 namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 {
-	public abstract class NetshExtendedParameter<ParameterType, ParameterValueType> : NetshParameter
-		where ParameterType : NetshExtendedParameter<ParameterType, ParameterValueType>, new()
-		where ParameterValueType : NetshExtendedParameterValue<ParameterValueType>, new ()
+	public abstract class NetshExtendedParameter<ParameterType> : NetshParameter
+		where ParameterType : NetshExtendedParameter<ParameterType>, new()
 	{
 		protected internal string Name { get; }
-		public ParameterValueType ParameterValue;
 
 		internal NetshExtendedParameter(string name)
 		{
 			Name = name;
-		}
-
-		internal NetshExtendedParameter(string name, ParameterValueType value) : this(name)
-		{
-			if(value != null)
-			{
-				ParameterValue = value;
-			}
 		}
 	}
 }

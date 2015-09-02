@@ -7,7 +7,7 @@ using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
 namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 {
-	public class MaxFilesizeParameter : NetshExtendedParameter<MaxFilesizeParameter, MaxFilesizeParameter.Value>
+	public class MaxFilesizeParameter : NetshExtendedSingleValueParameter<MaxFilesizeParameter, MaxFilesizeParameter.Value>
 	{
 		public class Value : NetshConfigurableValue<Value>
 		{

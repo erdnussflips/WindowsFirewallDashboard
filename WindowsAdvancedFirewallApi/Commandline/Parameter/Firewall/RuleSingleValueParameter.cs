@@ -7,10 +7,10 @@ using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
 namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
 {
-	public abstract class RuleParameter<ParameterType, ParameterValueType> : NetshExtendedParameter<ParameterType, ParameterValueType>
-		where ParameterType : RuleParameter<ParameterType, ParameterValueType>, new()
+	public abstract class RuleSingleParameter<ParameterType, ParameterValueType> : NetshExtendedSingleValueParameter<ParameterType, ParameterValueType>
+		where ParameterType : RuleSingleParameter<ParameterType, ParameterValueType>, new()
 		where ParameterValueType : NetshExtendedParameterValue<ParameterValueType>, new()
 	{
-		internal RuleParameter(string name, ParameterValueType value) : base(name, value) { }
+		internal RuleSingleParameter(string name, ParameterValueType value) : base(name, value) { }
 	}
 }

@@ -7,7 +7,7 @@ using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
 namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
 {
-	public class LocalIpAddressParameter : RuleParameter<LocalIpAddressParameter, LocalIpAddressParameter.Value>
+	public class LocalIpAddressParameter : RuleMultipleValueParameter<LocalIpAddressParameter, LocalIpAddressParameter.Value>
 	{
 		public class Value : NetshAnyValue<Value>
 		{
@@ -19,8 +19,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
 			}
 		}
 
-		//public LocalIpAddressParameter(List<Value> value) : base("localip", value) { }
-		public LocalIpAddressParameter(Value value) : base("localip", value) { }
+		public LocalIpAddressParameter(List<Value> values) : base("localip", values) { }
 		public LocalIpAddressParameter() : this(null) { }
 	}
 }
