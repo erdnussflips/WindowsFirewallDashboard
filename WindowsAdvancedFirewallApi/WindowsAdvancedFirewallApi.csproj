@@ -68,14 +68,16 @@
     <Compile Include="Commandline\Parameter\Firewall\LocalIpAddressParameter.cs" />
     <Compile Include="Commandline\Parameter\Firewall\ProgramParameter.cs" />
     <Compile Include="Commandline\Parameter\Firewall\NameParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\RuleParameter.cs" />
+    <Compile Include="Commandline\Parameter\Firewall\RuleSingleValueParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\AllowedConnectionsParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\DroppedConnectionsParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\FilenameParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\LoggingParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\MaxFilesizeParameter.cs" />
     <Compile Include="Commandline\Parameter\NetshConfigurableParameter.cs" />
+    <Compile Include="Commandline\Parameter\NetshExtendedMultipleValueParameter.cs" />
     <Compile Include="Commandline\Parameter\NetshExtendedParameter.cs" />
+    <Compile Include="Commandline\Parameter\NetshExtendedSingleValueParameter.cs" />
     <Compile Include="Commandline\Parameter\NetshParameter.cs" />
     <Compile Include="Commandline\Parameter\NetshSimpleParameter.cs" />
     <Compile Include="Commandline\Parameter\PathParameter.cs" />
@@ -91,8 +93,6 @@
     <Compile Include="Commandline\Parameter\Value\NetshConfigurableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshControllableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshExtendedParameterValue.cs" />
-    <Compile Include="Commandline\Parameter\Value\NetshMultipleValue.cs" />
-    <Compile Include="Commandline\Parameter\Value\NetshSingleValue.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
