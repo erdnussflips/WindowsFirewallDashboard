@@ -15,6 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAdvancedFirewallApi"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug as different User|Any CPU = Debug as different User|Any CPU
+		Debug as different User|x64 = Debug as different User|x64
+		Debug as different User|x86 = Debug as different User|x86
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -23,6 +26,12 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug as different User|Any CPU.ActiveCfg = Debug as different User|Any CPU
+		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug as different User|Any CPU.Build.0 = Debug as different User|Any CPU
+		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug as different User|x64.ActiveCfg = Debug as different User|x64
+		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug as different User|x64.Build.0 = Debug as different User|x64
+		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug as different User|x86.ActiveCfg = Debug as different User|x86
+		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug as different User|x86.Build.0 = Debug as different User|x86
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Debug|x64.ActiveCfg = Debug|x64
@@ -35,6 +44,12 @@ Global
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Release|x64.Build.0 = Release|x64
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Release|x86.ActiveCfg = Release|x86
 		{9F7454DF-4E63-46EE-9B4C-39D0AF7C866E}.Release|x86.Build.0 = Release|x86
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug as different User|Any CPU.ActiveCfg = Debug as different User|Any CPU
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug as different User|Any CPU.Build.0 = Debug as different User|Any CPU
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug as different User|x64.ActiveCfg = Debug as different User|x64
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug as different User|x64.Build.0 = Debug as different User|x64
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug as different User|x86.ActiveCfg = Debug as different User|x86
+		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug as different User|x86.Build.0 = Debug as different User|x86
 		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Debug|x64.ActiveCfg = Debug|x64
@@ -47,6 +62,12 @@ Global
 		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Release|x64.Build.0 = Release|x64
 		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Release|x86.ActiveCfg = Release|x86
 		{AAC8C256-6A01-40E4-BE81-D96AD82F39AC}.Release|x86.Build.0 = Release|x86
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug as different User|Any CPU.ActiveCfg = Debug as different User|Any CPU
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug as different User|Any CPU.Build.0 = Debug as different User|Any CPU
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug as different User|x64.ActiveCfg = Debug as different User|x64
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug as different User|x64.Build.0 = Debug as different User|x64
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug as different User|x86.ActiveCfg = Debug as different User|x86
+		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug as different User|x86.Build.0 = Debug as different User|x86
 		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Debug|x64.ActiveCfg = Debug|x64
@@ -59,6 +80,12 @@ Global
 		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Release|x64.Build.0 = Release|x64
 		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Release|x86.ActiveCfg = Release|x86
 		{329D8EC7-9D9D-46CF-B93C-849A912D7C66}.Release|x86.Build.0 = Release|x86
+		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug as different User|Any CPU.ActiveCfg = Debug as different User|Any CPU
+		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug as different User|Any CPU.Build.0 = Debug as different User|Any CPU
+		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug as different User|x64.ActiveCfg = Debug as different User|x64
+		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug as different User|x64.Build.0 = Debug as different User|x64
+		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug as different User|x86.ActiveCfg = Debug as different User|x86
+		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug as different User|x86.Build.0 = Debug as different User|x86
 		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Debug|x64.ActiveCfg = Debug|x64
@@ -71,6 +98,12 @@ Global
 		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Release|x64.Build.0 = Release|x64
 		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Release|x86.ActiveCfg = Release|x86
 		{26724F6A-EF9E-4C92-8E1F-4CBBC3458EC6}.Release|x86.Build.0 = Release|x86
+		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug as different User|Any CPU.ActiveCfg = Debug as different User|Any CPU
+		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug as different User|Any CPU.Build.0 = Debug as different User|Any CPU
+		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug as different User|x64.ActiveCfg = Debug as different User|x64
+		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug as different User|x64.Build.0 = Debug as different User|x64
+		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug as different User|x86.ActiveCfg = Debug as different User|x86
+		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug as different User|x86.Build.0 = Debug as different User|x86
 		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A600B42F-23A8-4FBF-A4D1-4FD264C9ED43}.Debug|x64.ActiveCfg = Debug|x64

@@ -1,0 +1,179 @@
+# Notes:
+#   - Minimal appveyor.yml file is an empty file. All sections are optional.
+#   - Indent each level of configuration with 2 spaces. Do not use tabs!
+#   - All section names are case-sensitive.
+#   - Section names should be unique on each level.
+
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+# version format
+version: 0.0.{build}
+
+# environment variables
+environment:
+  version_branch: $(version)-{branch}
+  project_name: WindowsFirewallDashboard
+  artifact_project_name: $(project_name)
+  artifact_name: $(project_name)-$(configuration)
+  github_token:
+    secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
+
+# branches to build
+branches:
+  # whitelist
+  #only:
+  #  - master
+  #  - production
+
+  # blacklist
+  except:
+    - gh-pages
+
+# Do not build on tags (GitHub only)
+skip_tags: true
+
+# Skipping commits with particular message or from user
+#skip_commits:
+#  message: /Created.*\.(png|jpg|jpeg|bmp|gif)/       # Regex for matching commit message
+#  author: John        # Commit author's username, name, email or regexp maching one of these.
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# Operating system (build VM template)
+#os: Windows Server 2012
+os: Visual Studio 2015
+
+# scripts that are called at very beginning, before repo cloning
+#init:
+#  - git config --global core.autocrlf input
+
+# clone directory
+#clone_folder: c:\projects\myproject
+
+# this is how to allow failing jobs in the matrix
+# matrix:
+#   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
+#   allow_failures:
+#     - platform: x86
+#       configuration: Debug
+#     - platform: x64
+#       configuration: Release
+
+# build cache to preserve files/folders between builds
+cache:
+  - packages -> **\packages.config  # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
+
+# scripts that run after cloning repository
+install:
+  # to run script as a PowerShell command prepend it with ps:
+  # - ps: Write-Host 'This is PowerShell'
+  - cmd: nuget restore
+
+# enable patching of AssemblyInfo.* files
+assembly_info:
+  patch: false
+  file: AssemblyInfo.*
+  assembly_version: "{version}.0"
+  assembly_file_version: "{version}.0"
+  assembly_informational_version: "{version}.0"
+
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform:
+  - Any CPU
+# to add several platforms to build matrix:
+#  - x86
+
+# build Configuration, i.e. Debug, Release, etc.
+# to add several configurations to build matrix:
+configuration:
+  - Release
+
+build:
+  parallel: true                  # enable MSBuild parallel builds
+  project: "{project_name}.sln"   # path to Visual Studio solution or project
+  #publish_wap: true               # package Web Application Projects (WAP) for Web Deploy
+  #publish_wap_xcopy: true         # package Web Application Projects (WAP) for XCopy deployment
+  #publish_azure: true             # package Azure Cloud Service projects and push to artifacts
+  #publish_nuget: true             # package projects with .nuspec files and push to artifacts
+  #publish_nuget_symbols: true     # generate and publish NuGet symbol packages
+  #include_nuget_references: true  # add -IncludeReferencedProjects option while packaging NuGet artifacts
+
+  # MSBuild verbosity level
+  #verbosity: quiet|minimal|normal|detailed
+  verbosity: normal
+
+# scripts to run before build
+before_build:
+
+# scripts to run after build
+after_build:
+
+# to run your custom scripts instead of automatic MSBuild
+#build_script:
+
+# to disable automatic builds
+#build: off
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  # pushing a single file
+  - path: $(artifact_project_name)\bin\$(configuration)
+    name: $(artifact_name)
+    type: zip
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+# providers: Local, FTP, WebDeploy, AzureCS, AzureBlob, S3, NuGet, Environment
+# provider names are case-sensitive!
+deploy:
+    # Deploy to GitHub Releases
+  - provider: GitHub
+    auth_token:
+      secure: $(github_token)
+    artifact: $(artifact_name)
+    draft: false
+    prerelease: true
+    on:
+      branch: dev                # release from master branch only
+      appveyor_repo_tag: true       # deploy on tag push only
+
+# scripts to run before deployment
+before_deploy:
+
+# scripts to run after deployment
+after_deploy:
+
+# to run your custom scripts instead of provider deployments
+deploy_script:
+
+# to disable deployment
+#deploy: off
+
+#---------------------------------#
+#        global handlers          #
+#---------------------------------#
+
+# on successful build
+# on_success:
+#   - do something
+
+# on build failure
+# on_failure:
+#   - do something
+
+# after build failure or success
+# on_finish:
+#   - do something

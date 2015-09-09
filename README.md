@@ -1,4 +1,6 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/o6ii86n4mn153vom?svg=true)](https://ci.appveyor.com/project/ErdnussFlipS/windowsfirewalldashboard)
+Master branch | Development branch
+------------- | -------------
+[![Build status](https://ci.appveyor.com/api/projects/status/o6ii86n4mn153vom?branch=master&svg=true)](https://ci.appveyor.com/project/ErdnussFlipS/windowsfirewalldashboard) | [![Build status](https://ci.appveyor.com/api/projects/status/o6ii86n4mn153vom?branch=dev&svg=true)](https://ci.appveyor.com/project/ErdnussFlipS/windowsfirewalldashboard)
 
 # WindowsFirewallDashboard
 The WindowsFirewallDashboard is an alternative admanistration panel for the Windows Firewall with Notifications for both directions.
