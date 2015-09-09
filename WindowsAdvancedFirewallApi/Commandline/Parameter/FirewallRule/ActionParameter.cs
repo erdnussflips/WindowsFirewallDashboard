@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
-namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
+namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 {
 	public class ActionParameter : RuleSingleParameter<ActionParameter, ActionParameter.Value>
 	{

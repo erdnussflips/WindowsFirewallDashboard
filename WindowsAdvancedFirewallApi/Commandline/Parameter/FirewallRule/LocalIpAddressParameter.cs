@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
-namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
+namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 {
 	public class LocalIpAddressParameter : RuleMultipleValueParameter<LocalIpAddressParameter, LocalIpAddressParameter.Value>
 	{
@@ -13,13 +13,13 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
 		{
 			public static Value Default = Any;
 
-			public static Value Custom(string serviceShortName)
+			public static Value Custom(string address)
 			{
-				return new Value { Value = serviceShortName };
+				return new Value { Value = address };
 			}
 		}
 
-		public LocalIpAddressParameter(List<Value> values) : base("localip", values) { }
+		public LocalIpAddressParameter(params Value[] values) : base("localip", values) { }
 		public LocalIpAddressParameter() : this(null) { }
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,14 +34,31 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 			}
 		}
 
-		internal NetshExtendedMultipleValueParameter(string name) : base(name) { }
-
-		internal NetshExtendedMultipleValueParameter(string name, List<ParameterValueType> values) : this(name)
+		internal NetshExtendedMultipleValueParameter(string name, params ParameterValueType[] values) : base(name)
 		{
-			if (values != null)
+			if(values != null)
 			{
-				ParameterValues = values;
+				ParameterValues.AddRange(values);
 			}
+		}
+
+		public override string ToString()
+		{
+			var strBuilder = new StringBuilder();
+			strBuilder.Append(Name + "=");
+			var iterator = ParameterValues.GetEnumerator();
+
+			if(ParameterValues.Count > 1)
+			{
+				do
+				{
+					strBuilder.Append(iterator.Current + ",");
+				} while (iterator.MoveNext());
+			}
+
+			strBuilder.Append(iterator.Current);
+
+			return strBuilder.ToString();
 		}
 
 		public void AddValue(ParameterValueType value)

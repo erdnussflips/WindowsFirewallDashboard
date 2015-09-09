@@ -10,9 +10,6 @@ namespace WindowsAdvancedFirewallApi.Commandline.Commands
 {
 	public abstract class NetshCommands
 	{
-		[DllImport("shell32.dll", EntryPoint = "IsUserAnAdmin")]
-		private static extern bool HasAdministratorPrivileges();
-
 		public enum InternalCode { OK, AdminRightsNeeded, UnsupportedParameter }
 
 		public struct NetshResult {
@@ -42,7 +39,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Commands
 				StandardOutput = process.StandardOutput.ReadToEnd(),
 				StandardError = process.StandardError.ReadToEnd(),
 				ExitCode = process.ExitCode,
-                Code = InternalCode.OK
+				Code = InternalCode.OK
 			};
 
 			process.Close();
@@ -52,7 +49,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Commands
 
 		protected static NetshResult RunCommand(string command, string parameter = null, string context = null)
 		{
-			if(!HasAdministratorPrivileges())
+			if(!ApiHelper.HasAdministratorPrivileges())
 			{
 				return new NetshResult { Code = InternalCode.AdminRightsNeeded };
 			}

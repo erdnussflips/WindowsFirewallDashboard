@@ -19,5 +19,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 
 		protected internal bool UsableInRule = true;
 		protected internal string ValueInRule { get; protected set; }
+
+		protected internal readonly string NameInRule = "profile";
 	}
 }

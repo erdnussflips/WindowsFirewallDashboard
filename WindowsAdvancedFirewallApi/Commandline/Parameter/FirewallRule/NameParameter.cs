@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Commandline.Parameter.Value;
 
-namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
+namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 {
 	public class NameParameter : RuleSingleParameter<NameParameter, NameParameter.Value>
 	{
@@ -13,6 +13,11 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Firewall
 		{
 			public static Value Custom(string ruleName)
 			{
+				if(string.Compare(ruleName, "all", true) != 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(ruleName), "The value 'all' is permitted.");
+				}
+
 				return new Value { Value = ruleName };
 			}
 		}

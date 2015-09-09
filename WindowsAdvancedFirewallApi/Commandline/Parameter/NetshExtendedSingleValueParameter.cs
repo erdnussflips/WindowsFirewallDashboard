@@ -22,5 +22,10 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 				ParameterValue = value;
 			}
 		}
+
+		public override string ToString()
+		{
+			return Name + "=" + ParameterValue.Value;
+		}
 	}
 }

@@ -32,6 +32,42 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="IPAddressRange, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IPAddressRange.1.4.0.0\lib\net40\IPAddressRange.dll</HintPath>
@@ -56,19 +92,30 @@
     <Compile Include="Commandline\Commands\MonitorCommands.cs" />
     <Compile Include="Commandline\Commands\NetshCommands.cs" />
     <Compile Include="Commandline\NetshConstants.cs" />
+    <Compile Include="Commandline\Objects\FirewallRule.cs" />
     <Compile Include="Commandline\Parameter\FirewallPolicy\InboundPolicyParameter.cs" />
     <Compile Include="Commandline\Parameter\FirewallPolicy\OutboundPolicyParameter.cs" />
     <Compile Include="Commandline\Parameter\FirewallPolicy\PolicyParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\ActionParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\EnableParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\DirectionParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\DescriptionParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\RuleMultipleValueParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\ServiceParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\LocalIpAddressParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\ProgramParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\NameParameter.cs" />
-    <Compile Include="Commandline\Parameter\Firewall\RuleSingleValueParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\ActionParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\SecurityParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\EnableParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\DirectionParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\DescriptionParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\EdgeParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\RemoteUserGroupParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\RemoteComputerGroupParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\InterfaceTypeParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\ProtocolParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\RemotePortParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\LocalPortParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\RemoteIpAddressParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\RuleMultipleValueParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\ServiceParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\LocalIpAddressParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\ProgramParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\NameParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\RuleSingleValueParameter.cs" />
+    <Compile Include="Commandline\Parameter\FirewallRule\Value\PortValue.cs" />
     <Compile Include="Commandline\Parameter\Logging\AllowedConnectionsParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\DroppedConnectionsParameter.cs" />
     <Compile Include="Commandline\Parameter\Logging\FilenameParameter.cs" />
@@ -93,17 +140,29 @@
     <Compile Include="Commandline\Parameter\Value\NetshConfigurableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshControllableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshExtendedParameterValue.cs" />
+    <Compile Include="ApiHelper.cs" />
+    <Compile Include="COM\Types\COMWrapperType.cs" />
+    <Compile Include="COM\Types\FirewallPolicy.cs" />
+    <Compile Include="COM\Types\FirewallProfile.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Powershell\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="NetFwTypeLib">
+      <Guid>{58FBCF7C-E7A9-467C-80B3-FC65E8FCCA08}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

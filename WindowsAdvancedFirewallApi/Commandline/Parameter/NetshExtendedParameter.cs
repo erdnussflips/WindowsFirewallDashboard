@@ -16,5 +16,15 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 		{
 			Name = name;
 		}
+
+		public string ToStringAppendEmptyChar(bool prepend = false, bool forceAppend = false)
+		{
+			var ret = ToString();
+
+			if (prepend) ret = " " + ret;
+			if (!prepend || forceAppend) ret = ret + " ";
+
+			return ret;
+		}
 	}
 }

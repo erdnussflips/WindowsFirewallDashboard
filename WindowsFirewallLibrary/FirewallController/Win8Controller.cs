@@ -16,24 +16,24 @@ using WindowsFirewallLibrary.FirewallEvent;
 
 namespace WindowsFirewallLibrary.FirewallController
 {
-    public class Win8Controller : AController
-    {
-	    private INetFwPolicy2 firewallPolicy;
-	    public INetFwPolicy2 FirewallPolicy
-	    {
-		    get
-		    {
-			    if (firewallPolicy != null) return firewallPolicy;
+	public class Win8Controller : AController
+	{
+		private INetFwPolicy2 firewallPolicy;
+		public INetFwPolicy2 FirewallPolicy
+		{
+			get
+			{
+				if (firewallPolicy != null) return firewallPolicy;
 
-			    firewallPolicy = (INetFwPolicy2) Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FwPolicy2"));
-			    return firewallPolicy;
-		    }
-	    }
+				firewallPolicy = (INetFwPolicy2) Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FwPolicy2"));
+				return firewallPolicy;
+			}
+		}
 
 		protected NET_FW_PROFILE_TYPE2_ GetGlobaleProfileType()
-        {
-            return NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_ALL;
-        }
+		{
+			return NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_ALL;
+		}
 		protected NET_FW_PROFILE_TYPE2_ GetCurrentProfile()
 		{
 			return (NET_FW_PROFILE_TYPE2_) FirewallPolicy.CurrentProfileTypes;
@@ -44,7 +44,7 @@ namespace WindowsFirewallLibrary.FirewallController
 			return FirewallPolicy.FirewallEnabled[type] ? FirewallStatus.Enabled : FirewallStatus.Disabled;
 		}
 		private bool SetFirewallStatusByType(NET_FW_PROFILE_TYPE2_ type, bool status)
-        {
+		{
 			try
 			{
 				FirewallPolicy.FirewallEnabled[type] = status;
@@ -55,11 +55,11 @@ namespace WindowsFirewallLibrary.FirewallController
 			}
 
 			return true;
-        }
+		}
 		private bool EnableFirewallByType(NET_FW_PROFILE_TYPE2_ type)
-        {
-            return SetFirewallStatusByType(type, true);
-        }
+		{
+			return SetFirewallStatusByType(type, true);
+		}
 		private bool DisableFirewallByType(NET_FW_PROFILE_TYPE2_ type)
 		{
 			return SetFirewallStatusByType(type, false);
@@ -131,9 +131,9 @@ namespace WindowsFirewallLibrary.FirewallController
 		}
 
 		public override bool EnableFirewall()
-	    {
+		{
 			return EnableFirewallOnPrivateNetworks() & EnableFirewallOnDomainNetworks() & EnableFirewallOnPublicNetworks();
-	    }
+		}
 
 		public override bool DisableFirewall()
 		{
@@ -151,8 +151,8 @@ namespace WindowsFirewallLibrary.FirewallController
 		}
 
 		private const string netshFirewallCommand = "advfirewall set allprofiles logging ";
-	    private const string netshFirewallCommandArgsDroppedConnections = "droppedconnections ";
-	    private const string netshFirewallCommandArgsAllowedConnections = "allowedconnections ";
+		private const string netshFirewallCommandArgsDroppedConnections = "droppedconnections ";
+		private const string netshFirewallCommandArgsAllowedConnections = "allowedconnections ";
 
 		private string RemoveEmptyLines(string lines)
 		{
@@ -160,14 +160,14 @@ namespace WindowsFirewallLibrary.FirewallController
 		}
 
 		private int RunProcess(string application, string args)
-        {
+		{
 			var procStartInfo = new ProcessStartInfo(application, args)
 			{
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
-	            UseShellExecute = false,
-	            CreateNoWindow = true
-            };
+				UseShellExecute = false,
+				CreateNoWindow = true
+			};
 
 			Console.WriteLine("RunProcess command: " + application + " " + args);
 
@@ -184,7 +184,7 @@ namespace WindowsFirewallLibrary.FirewallController
 			process.Close();
 
 			return exitCode;
-        }
+		}
 		public bool EnableFirewallEventLogging()
 		{
 			var args_filename = "filename %systemroot%\\system32\\LogFiles\\Firewall\\pfirewall.log";
@@ -203,10 +203,10 @@ namespace WindowsFirewallLibrary.FirewallController
 			AddFirewallEventTask();
 
 			return exitCodeFilename == 0 && exitCodeFilesize == 0 && exitCodeDoppedConnections == 0 && exitCodeAllowedConections == 0;
-        }
+		}
 
 		public bool DisableFirewallEventLogging()
-        {
+		{
 			// disable event logging for dropped connections (default configuration)
 			var exitCodeDoppedConnections = RunProcess("netsh", netshFirewallCommand + netshFirewallCommandArgsDroppedConnections + "disable");
 			// disable event logging for allowed connections (default configuration)
@@ -215,7 +215,7 @@ namespace WindowsFirewallLibrary.FirewallController
 			RemoveAllFirewallEventTasks();
 
 			return exitCodeDoppedConnections == 0 && exitCodeAllowedConnections == 0;
-        }
+		}
 
 		public void GenerateValueQueries<T>(EventTrigger eventTrigger)
 		{
@@ -320,5 +320,5 @@ namespace WindowsFirewallLibrary.FirewallController
 				}
 			}
 		}
-    }
+	}
 }

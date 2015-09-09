@@ -12,5 +12,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 		{
 
 		}
+
+		public abstract override string ToString();
 	}
 }
