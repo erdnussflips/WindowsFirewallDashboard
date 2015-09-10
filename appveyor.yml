@@ -16,8 +16,9 @@ environment:
   project_name: WindowsFirewallDashboard
   artifact_project_name: $(project_name)
   artifact_name: $(project_name)-$(configuration)
-  github_token:
-    secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
+  github_token_encrypted: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
+  github_token_decrypted:
+    secure: $(github_token_encrypted)
 
 # branches to build
 branches:
@@ -142,7 +143,7 @@ deploy:
     # Deploy to GitHub Releases
   - provider: GitHub
     auth_token:
-      secure: $(github_token)
+      secure: $(github_token_encrypted)
     artifact: $(artifact_name)
     draft: false
     prerelease: true
