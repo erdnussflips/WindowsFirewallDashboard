@@ -17,8 +17,6 @@ environment:
   artifact_project_name: $(project_name)
   artifact_name: $(project_name)-$(configuration)
   github_token_encrypted: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
-  github_token_decrypted:
-    secure: $(github_token_encrypted)
 
 # branches to build
 branches:
@@ -69,9 +67,17 @@ cache:
 
 # scripts that run after cloning repository
 install:
+  - cmd: cmake --version
+  - cmd: msbuild /version
   # to run script as a PowerShell command prepend it with ps:
   # - ps: Write-Host 'This is PowerShell'
   - cmd: nuget restore
+  - ps: Get-ChildItem Env:*
+  - cmd: echo $(version_branch)
+  - cmd: echo $(project_name)
+  - cmd: echo $(artifact_project_name)
+  - cmd: echo $(artifact_name)
+  - cmd: echo $(github_token_encrypted)
 
 # enable patching of AssemblyInfo.* files
 assembly_info:
@@ -143,8 +149,8 @@ deploy:
     # Deploy to GitHub Releases
   - provider: GitHub
     auth_token:
-      secure: $(github_token_encrypted)
-    artifact: $(artifact_name)
+      secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
+    artifact: "{artifact_name}"
     draft: false
     prerelease: true
     on:
