@@ -26,7 +26,7 @@ environment:
   version_branch: $(APPVEYOR_BUILD_VERSION)-$(branch)
   project_name: WindowsFirewallDashboard
   artifact_project_name: "{project_name}"
-  artifact_name: "{project_name}"-$(configuration)
+  artifact_name: "{project_name}-$(configuration)"
   github_token_encrypted: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
 
 # Do not build on tags (GitHub only)
