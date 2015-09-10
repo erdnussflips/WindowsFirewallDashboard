@@ -23,10 +23,10 @@ branches:
 
 # environment variables
 environment:
-  version_branch: $(APPVEYOR_BUILD_VERSION)-$(branch)
+  version_branch: $(APPVEYOR_BUILD_VERSION)-$(APPVEYOR_REPO_BRANCH)
   project_name: WindowsFirewallDashboard
-  artifact_project_name: "{project_name}"
-  artifact_name: "{project_name}-$(configuration)"
+  artifact_project_name: WindowsFirewallDashboard
+  artifact_name: WindowsFirewallDashboard-$(configuration)
   github_token_encrypted: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
 
 # Do not build on tags (GitHub only)
@@ -73,11 +73,6 @@ install:
   # - ps: Write-Host 'This is PowerShell'
   - cmd: nuget restore
   - ps: Get-ChildItem Env:*
-  - cmd: echo $(version_branch)
-  - cmd: echo $(project_name)
-  - cmd: echo $(artifact_project_name)
-  - cmd: echo $(artifact_name)
-  - cmd: echo $(github_token_encrypted)
 
 # enable patching of AssemblyInfo.* files
 assembly_info:
@@ -135,9 +130,9 @@ after_build:
 
 artifacts:
   # pushing a single file
-  - path: $(artifact_project_name)\bin\$(configuration)
+  - path: $(project_name)\bin\$(configuration)
     name: $(artifact_name)
-    type: zip
+#    type: zip
 
 #---------------------------------#
 #     deployment configuration    #
@@ -150,7 +145,7 @@ deploy:
   - provider: GitHub
     auth_token:
       secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
-    artifact: "{artifact_name}"
+    artifact: $(artifact_name)
     draft: false
     prerelease: true
     on:
@@ -159,9 +154,11 @@ deploy:
 
 # scripts to run before deployment
 before_deploy:
+  - ps: ls "$(project_name)\bin\$(configuration)"
 
 # scripts to run after deployment
 after_deploy:
+  - ps: ls "$(project_name)\bin\$(configuration)"
 
 # to run your custom scripts instead of provider deployments
 deploy_script:
