@@ -10,14 +10,6 @@
 # version format
 version: 0.0.{build}
 
-# environment variables
-environment:
-  version_branch: $(version)-{branch}
-  project_name: WindowsFirewallDashboard
-  artifact_project_name: $(project_name)
-  artifact_name: $(project_name)-$(configuration)
-  github_token_encrypted: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
-
 # branches to build
 branches:
   # whitelist
@@ -28,6 +20,14 @@ branches:
   # blacklist
   except:
     - gh-pages
+
+# environment variables
+environment:
+  version_branch: $(APPVEYOR_BUILD_VERSION)-$(branch)
+  project_name: WindowsFirewallDashboard
+  artifact_project_name: "{project_name}"
+  artifact_name: "{project_name}"-$(configuration)
+  github_token_encrypted: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
 
 # Do not build on tags (GitHub only)
 skip_tags: true
