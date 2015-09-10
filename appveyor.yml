@@ -154,11 +154,13 @@ deploy:
 
 # scripts to run before deployment
 before_deploy:
-  - ps: ls "$(project_name)\bin\$(configuration)"
+  - ps: ls "${Env:project_name}\bin"
+  - ps: ls "${Env:project_name}\bin\${Env:configuration}"
 
 # scripts to run after deployment
 after_deploy:
-  - ps: ls "$(project_name)\bin\$(configuration)"
+  - ps: ls "${Env:project_name}\bin"
+  - ps: ls "${Env:project_name}\bin\${Env:configuration}"
 
 # to run your custom scripts instead of provider deployments
 deploy_script:
