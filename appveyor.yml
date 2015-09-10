@@ -132,7 +132,7 @@ artifacts:
   # pushing a single file
   - path: $(project_name)\bin\$(configuration)
     name: $(artifact_name)
-#    type: zip
+    type: zip
 
 #---------------------------------#
 #     deployment configuration    #
