@@ -10,15 +10,6 @@
 # version format
 version: 0.0.{build}
 
-# environment variables
-environment:
-  version_branch: $(version)-{branch}
-  project_name: WindowsFirewallDashboard
-  artifact_project_name: $(project_name)
-  artifact_name: $(project_name)-$(configuration)
-  github_token:
-    secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
-
 # branches to build
 branches:
   # whitelist
@@ -29,6 +20,14 @@ branches:
   # blacklist
   except:
     - gh-pages
+
+# environment variables
+environment:
+  VERSION_BRANCH: $(APPVEYOR_BUILD_VERSION)-$(APPVEYOR_REPO_BRANCH)
+  PROJECT_NAME: WindowsFirewallDashboard
+  ARTIFACT_PROJECT_NAME: WindowsFirewallDashboard
+  ARTIFACT_NAME: WindowsFirewallDashboard
+  GITHUB_TOKEN_ENCRYPTED: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
 
 # Do not build on tags (GitHub only)
 skip_tags: true
@@ -43,11 +42,12 @@ skip_tags: true
 #---------------------------------#
 
 # Operating system (build VM template)
-#os: Windows Server 2012
-os: Visual Studio 2015
+os:
+  - Visual Studio 2015
+#  - Windows Server 2012
 
 # scripts that are called at very beginning, before repo cloning
-#init:
+init:
 #  - git config --global core.autocrlf input
 
 # clone directory
@@ -67,13 +67,15 @@ cache:
   - packages -> **\packages.config  # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
 
 # scripts that run after cloning repository
+# use - ps for powershell, - cmd for commandline
 install:
-  # to run script as a PowerShell command prepend it with ps:
-  # - ps: Write-Host 'This is PowerShell'
+  - cmd: cmake --version
+#  - cmd: msbuild /version
   - cmd: nuget restore
 
 # enable patching of AssemblyInfo.* files
 assembly_info:
+  # todo: enable after testing
   patch: false
   file: AssemblyInfo.*
   assembly_version: "{version}.0"
@@ -92,13 +94,12 @@ platform:
 #  - x86
 
 # build Configuration, i.e. Debug, Release, etc.
-# to add several configurations to build matrix:
 configuration:
   - Release
 
 build:
   parallel: true                  # enable MSBuild parallel builds
-  project: "{project_name}.sln"   # path to Visual Studio solution or project
+  project: $(PROJECT_NAME).sln   # path to Visual Studio solution or project
   #publish_wap: true               # package Web Application Projects (WAP) for Web Deploy
   #publish_wap_xcopy: true         # package Web Application Projects (WAP) for XCopy deployment
   #publish_azure: true             # package Azure Cloud Service projects and push to artifacts
@@ -108,7 +109,7 @@ build:
 
   # MSBuild verbosity level
   #verbosity: quiet|minimal|normal|detailed
-  verbosity: normal
+  verbosity: minimal
 
 # scripts to run before build
 before_build:
@@ -127,10 +128,8 @@ after_build:
 #---------------------------------#
 
 artifacts:
-  # pushing a single file
-  - path: $(artifact_project_name)\bin\$(configuration)
-    name: $(artifact_name)
-    type: zip
+  - path: $(PROJECT_NAME)\bin\$(CONFIGURATION)\
+    name: $(ARTIFACT_NAME)
 
 #---------------------------------#
 #     deployment configuration    #
@@ -138,29 +137,37 @@ artifacts:
 
 # providers: Local, FTP, WebDeploy, AzureCS, AzureBlob, S3, NuGet, Environment
 # provider names are case-sensitive!
-deploy:
-    # Deploy to GitHub Releases
-  - provider: GitHub
-    auth_token:
-      secure: $(github_token)
-    artifact: $(artifact_name)
-    draft: false
-    prerelease: true
-    on:
-      branch: dev                # release from master branch only
-      appveyor_repo_tag: true       # deploy on tag push only
+# deploy:
+#     # Deploy to GitHub Releases
+#   - provider: GitHub
+#     auth_token:
+#       secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
+#     tag: $(APPVEYOR_BUILD_VERSION)
+#     release: $(APPVEYOR_PROJECT_NAME) v$(APPVEYOR_BUILD_VERSION)
+#     # description needs to be declared, but can be empty, so that github not reject the deploy
+#     description: ""
+#     artifact: $(ARTIFACT_NAME)
+#     draft: false
+#     prerelease: true
+#     on:
+# #      branch: dev                # release from dev branch only
+#       appveyor_repo_tag: false       # deploy on tag push only; default: true
+
+
+# to disable deployment
+deploy: off
 
 # scripts to run before deployment
 before_deploy:
+#  - ps: Get-ChildItem Env:*
+#  - ps: ls "${Env:PROJECT_NAME}\bin"
+#  - ps: ls "${Env:PROJECT_NAME}\bin\${Env:configuration}"
 
 # scripts to run after deployment
 after_deploy:
 
 # to run your custom scripts instead of provider deployments
 deploy_script:
-
-# to disable deployment
-#deploy: off
 
 #---------------------------------#
 #        global handlers          #
