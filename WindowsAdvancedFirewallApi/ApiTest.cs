@@ -5,6 +5,8 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.COM;
+using WindowsAdvancedFirewallApi.COM.Types;
 using WindowsAdvancedFirewallApi.Commandline.Commands;
 using WindowsAdvancedFirewallApi.Commandline.Parameter;
 using WindowsAdvancedFirewallApi.Commandline.Parameter.Logging;
@@ -16,7 +18,13 @@ namespace WindowsAdvancedFirewallApi
 	{
 		public static void run()
 		{
-			netshTest();
+			comTest();
+		}
+
+		public static void comTest()
+		{
+			Firewall.Disable(FirewallProfile.Private);
+			Firewall.Enable(FirewallProfile.Private);
 		}
 
 		public static void netshTest()

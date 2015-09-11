@@ -168,6 +168,9 @@
     <Compile Include="Commandline\Parameter\Value\NetshControllableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshExtendedParameterValue.cs" />
     <Compile Include="ApiHelper.cs" />
+    <Compile Include="COM\COMTypes.cs" />
+    <Compile Include="COM\Firewall.cs" />
+    <Compile Include="COM\FirewallStatus.cs" />
     <Compile Include="COM\Types\COMWrapperType.cs" />
     <Compile Include="COM\Types\FirewallPolicy.cs" />
     <Compile Include="COM\Types\FirewallProfile.cs" />
@@ -189,6 +192,7 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>False</Private>
     </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
