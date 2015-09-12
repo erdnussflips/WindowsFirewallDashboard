@@ -1,11 +1,11 @@
 # Windows Firewall Dashboard
 
-Project status: [![Build status](https://ci.appveyor.com/api/projects/status/o6ii86n4mn153vom?svg=true)](https://ci.appveyor.com/project/ErdnussFlipS/windowsfirewalldashboard)
+[![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard) [![Release](https://img.shields.io/github/release/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](https://github.com/ErdnussFlipS/WindowsFirewallDashboard/releases/latest) [![Issues](https://img.shields.io/github/issues/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](https://github.com/ErdnussFlipS/WindowsFirewallDashboard/issues)
 
 Branch	| Status
 --------|--------
-master 	| [![Build status](https://ci.appveyor.com/api/projects/status/o6ii86n4mn153vom/branch/master?svg=true)](https://ci.appveyor.com/project/ErdnussFlipS/windowsfirewalldashboard)
-dev		| [![Build status](https://ci.appveyor.com/api/projects/status/o6ii86n4mn153vom/branch/dev?svg=true)](https://ci.appveyor.com/project/ErdnussFlipS/windowsfirewalldashboard)
+master 	| [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard/master.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard)
+dev		| [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard/dev.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard)
 
 ## Description
 The Windows Firewall Dashboard is an alternative admanistration panel for the Windows Firewall with Notifications for both directions.
