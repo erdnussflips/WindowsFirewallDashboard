@@ -17,9 +17,15 @@ This Application is separated into GUI-Client "Windows Firewall Dashboard" and .
 
 The .NET-API can be found at [ErdnussFlipS/WindowsAdvancedFirewallApi](https://github.com/ErdnussFlipS/WindowsAdvancedFirewallApi).
 
+## Useful links
+- [Understanding MVC, MVP and MVVM Design Patterns](http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html)
+- [Modern User Interfaces with WPF MVVM, XAML Templates and Entity Framework 6](http://www.codeproject.com/Articles/897441/Modern-User-Interfaces-with-WPF-MVVM-XAML-Template)
+- [MVVM Tutorial](http://www.cocktailsandcode.de/?s=mvvm)
+- [Wiring up View and Viewmodel in MVVM and Silverlight 4 – Blendability included](http://blog.roboblob.com/2010/01/17/wiring-up-view-and-viewmodel-in-mvvm-and-silverlight-4-blendability-included/)
+
 ## Stuff
 - Ereignisanzeige -> Anwendungs- und Dienstprotokolle -> Microsoft -> Windows -> Windows Firewall with Advanced Security -> Firewall
 - Ereignisse:
--- Ereignis-ID: 2004 - Eine Regel wurde der Ausnahmeliste der Windows-Firewall hinzugefügt.
--- Ereignis-ID: 2005 - Eine Regel in der Ausnahmeliste der Windows-Firewall wurde geändert.
--- Ereignis-ID: 2006 - Eine Regel in der Ausnahmeliste der Windows-Firewall wurde gelöscht.
+  - Ereignis-ID: 2004 - Eine Regel wurde der Ausnahmeliste der Windows-Firewall hinzugefügt.
+  - Ereignis-ID: 2005 - Eine Regel in der Ausnahmeliste der Windows-Firewall wurde geändert.
+  - Ereignis-ID: 2006 - Eine Regel in der Ausnahmeliste der Windows-Firewall wurde gelöscht.
