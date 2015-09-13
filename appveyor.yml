@@ -8,14 +8,14 @@
 #      general configuration      #
 #---------------------------------#
 # version format
-version: 0.0.{build}
+version: 0.0.0.{build}
 
 # branches to build
 branches:
   # whitelist
   #only:
   #  - master
-  #  - production
+  #  - dev
 
   # blacklist
   except:
@@ -27,6 +27,8 @@ environment:
   PROJECT_NAME: WindowsFirewallDashboard
   ARTIFACT_PROJECT_NAME: WindowsFirewallDashboard
   ARTIFACT_NAME: WindowsFirewallDashboard
+  GITHUB_TAG_NAME_BRANCH_DEV: v$(APPVEYOR_BUILD_VERSION)-dev
+  GITHUB_TAG_NAME_BRANCH_MASTER: v$(APPVEYOR_BUILD_VERSION)
   GITHUB_TOKEN_ENCRYPTED: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
 
 # Do not build on tags (GitHub only)
@@ -34,8 +36,6 @@ skip_tags: true
 
 # Skipping commits with particular message or from user
 #skip_commits:
-#  message: /Created.*\.(png|jpg|jpeg|bmp|gif)/       # Regex for matching commit message
-#  author: John        # Commit author's username, name, email or regexp maching one of these.
 
 #---------------------------------#
 #    environment configuration    #
@@ -48,19 +48,9 @@ os:
 
 # scripts that are called at very beginning, before repo cloning
 init:
-#  - git config --global core.autocrlf input
 
 # clone directory
 #clone_folder: c:\projects\myproject
-
-# this is how to allow failing jobs in the matrix
-# matrix:
-#   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
-#   allow_failures:
-#     - platform: x86
-#       configuration: Debug
-#     - platform: x64
-#       configuration: Release
 
 # build cache to preserve files/folders between builds
 cache:
@@ -69,18 +59,17 @@ cache:
 # scripts that run after cloning repository
 # use - ps for powershell, - cmd for commandline
 install:
-  - cmd: cmake --version
-#  - cmd: msbuild /version
   - cmd: nuget restore
+#  - cmd: cmake --version
+#  - cmd: msbuild /version
 
 # enable patching of AssemblyInfo.* files
 assembly_info:
-  # todo: enable after testing
-  patch: false
+  patch: true
   file: AssemblyInfo.*
-  assembly_version: "{version}.0"
-  assembly_file_version: "{version}.0"
-  assembly_informational_version: "{version}.0"
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
 
 
 #---------------------------------#
@@ -90,26 +79,17 @@ assembly_info:
 # build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform:
   - Any CPU
-# to add several platforms to build matrix:
-#  - x86
 
 # build Configuration, i.e. Debug, Release, etc.
 configuration:
   - Release
 
 build:
-  parallel: true                  # enable MSBuild parallel builds
-  project: $(PROJECT_NAME).sln   # path to Visual Studio solution or project
-  #publish_wap: true               # package Web Application Projects (WAP) for Web Deploy
-  #publish_wap_xcopy: true         # package Web Application Projects (WAP) for XCopy deployment
-  #publish_azure: true             # package Azure Cloud Service projects and push to artifacts
-  #publish_nuget: true             # package projects with .nuspec files and push to artifacts
-  #publish_nuget_symbols: true     # generate and publish NuGet symbol packages
-  #include_nuget_references: true  # add -IncludeReferencedProjects option while packaging NuGet artifacts
+  parallel: true                   # enable MSBuild parallel builds
+  project: $(PROJECT_NAME).sln     # path to Visual Studio solution or project
 
   # MSBuild verbosity level
-  #verbosity: quiet|minimal|normal|detailed
-  verbosity: minimal
+  verbosity: normal                # quiet|minimal|normal|detailed
 
 # scripts to run before build
 before_build:
@@ -135,27 +115,42 @@ artifacts:
 #     deployment configuration    #
 #---------------------------------#
 
-# providers: Local, FTP, WebDeploy, AzureCS, AzureBlob, S3, NuGet, Environment
+# providers: Local, FTP, GitHub, WebDeploy, AzureCS, AzureBlob, S3, NuGet, Environment
 # provider names are case-sensitive!
-# deploy:
-#     # Deploy to GitHub Releases
-#   - provider: GitHub
-#     auth_token:
-#       secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
-#     tag: $(APPVEYOR_BUILD_VERSION)
-#     release: $(APPVEYOR_PROJECT_NAME) v$(APPVEYOR_BUILD_VERSION)
-#     # description needs to be declared, but can be empty, so that github not reject the deploy
-#     description: ""
-#     artifact: $(ARTIFACT_NAME)
-#     draft: false
-#     prerelease: true
-#     on:
-# #      branch: dev                # release from dev branch only
-#       appveyor_repo_tag: false       # deploy on tag push only; default: true
+deploy:
+  # Development branch, deploy to github
+  - provider: GitHub
+    auth_token:
+      secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
+    tag: $(GITHUB_TAG_NAME_BRANCH_DEV)
+    release: $(GITHUB_TAG_NAME_BRANCH_DEV)
+    # description needs to be declared, but can be empty, so that github not reject the deploy
+    description: "This is a development release. It should not be used in production environments."
+    artifact: $(ARTIFACT_NAME)
+    draft: false
+    prerelease: true
+    on:
+#      branch: dev                    # release from dev branch only
+      branch: appveyor_test
+      appveyor_repo_tag: false       # deploy on tag push only; default: true
+  # Master branch, deploy to github
+  - provider: GitHub
+    auth_token:
+      secure: nRaKUqfN0jThBJ38Qrhex0gGoicQZpBuMfmDZ03A4NEQN5AGoqObtBZu6iKq3D5I
+    tag: $(GITHUB_TAG_NAME_BRANCH_MASTER)
+    release: $(GITHUB_TAG_NAME_BRANCH_MASTER)
+    # description needs to be declared, but can be empty, so that github not reject the deploy
+    description: ""
+    artifact: $(ARTIFACT_NAME)
+    draft: false
+    prerelease: false
+    on:
+      branch: master                 # release from dev branch only
+      appveyor_repo_tag: false       # deploy on tag push only; default: true
 
 
 # to disable deployment
-deploy: off
+#deploy: off
 
 # scripts to run before deployment
 before_deploy:
