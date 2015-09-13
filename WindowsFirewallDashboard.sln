@@ -15,6 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAdvancedFirewallApi"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{517CEC21-A90A-4AAE-A485-4A5F9A0A36B2}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.reference.yml = appveyor.reference.yml
 		appveyor.yml = appveyor.yml
 		README.md = README.md
 	EndProjectSection

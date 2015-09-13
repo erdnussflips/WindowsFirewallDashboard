@@ -6,10 +6,10 @@
 [![Release](https://img.shields.io/github/release/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](https://github.com/ErdnussFlipS/WindowsFirewallDashboard/releases/latest)
 ![License](https://img.shields.io/github/license/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)
 
-Branch	| Status
+Branch  | Status
 --------|--------
-master 	| [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard/master.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard) [![Coverage](https://img.shields.io/codecov/c/github/ErdnussFlipS/WindowsFirewallDashboard/master.svg?style=flat-square)](http://codecov.io/github/ErdnussFlipS/WindowsFirewallDashboard?branch=master)
-dev		| [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard/dev.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard) [![Coverage](https://img.shields.io/codecov/c/github/ErdnussFlipS/WindowsFirewallDashboard/dev.svg?style=flat-square)](http://codecov.io/github/ErdnussFlipS/WindowsFirewallDashboard?branch=dev)
+master  | [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard/master.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard) [![Coverage](https://img.shields.io/codecov/c/github/ErdnussFlipS/WindowsFirewallDashboard/master.svg?style=flat-square)](http://codecov.io/github/ErdnussFlipS/WindowsFirewallDashboard?branch=master)
+dev     | [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard/dev.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard) [![Coverage](https://img.shields.io/codecov/c/github/ErdnussFlipS/WindowsFirewallDashboard/dev.svg?style=flat-square)](http://codecov.io/github/ErdnussFlipS/WindowsFirewallDashboard?branch=dev)
 
 ## Description
 The Windows Firewall Dashboard is an alternative admanistration panel for the Windows Firewall with Notifications for both directions.
