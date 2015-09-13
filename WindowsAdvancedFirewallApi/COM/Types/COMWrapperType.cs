@@ -8,13 +8,18 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 {
 	public class COMWrapperType<COMType>
 	{
-		protected COMType COMObject;
+		protected internal COMType COMObject { get; protected set; }
 
 		public COMWrapperType()
 		{
 		}
 
-		public COMWrapperType(string progID)
+		protected COMWrapperType(Type type)
+		{
+			COMObject = (COMType)Activator.CreateInstance(type);
+		}
+
+		protected COMWrapperType(string progID)
 		{
 			COMObject = (COMType)Activator.CreateInstance(Type.GetTypeFromProgID(progID));
 		}

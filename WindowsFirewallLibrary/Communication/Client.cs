@@ -53,7 +53,7 @@ namespace WindowsFirewallLibrary.Communication
 
 		public void Start()
 		{
-            pipeClient.Start();
+			pipeClient.Start();
 			pipeClient.WaitForConnection(100);
 		}
 
