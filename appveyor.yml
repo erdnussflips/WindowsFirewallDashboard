@@ -130,8 +130,8 @@ deploy:
     draft: false
     prerelease: true
     on:
-#      branch: dev                    # release from dev branch only
-      branch: appveyor_test          # todo: delete
+      branch: dev                    # release from dev branch only
+#      branch: appveyor_test          # todo: delete
       appveyor_repo_tag: false       # deploy on tag push only; default: true
   # Master branch, deploy to github
   - provider: GitHub

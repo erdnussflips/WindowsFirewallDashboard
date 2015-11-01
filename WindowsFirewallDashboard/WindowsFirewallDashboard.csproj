@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WindowsFirewallDashboard</RootNamespace>
     <AssemblyName>WindowsFirewallDashboard</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -28,12 +28,13 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -128,6 +129,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WindowsFirewallDashboard.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
@@ -228,9 +232,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="System\" />
+    <Folder Include="ApplicationSystem\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WindowsAdvancedFirewallApi\WindowsAdvancedFirewallApi.csproj">
+      <Project>{a600b42f-23a8-4fbf-a4d1-4fd264c9ed43}</Project>
+      <Name>WindowsAdvancedFirewallApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsFirewallEventListener\WindowsFirewallEventListener.csproj">
       <Project>{aac8c256-6a01-40e4-be81-d96ad82f39ac}</Project>
       <Name>WindowsFirewallEventListener</Name>
@@ -244,7 +252,9 @@
     <Resource Include="Windows Firewall Event.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ressources\Images\shield.svg" />
+    <Content Include="Ressources\Images\shield.svg">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

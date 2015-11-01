@@ -12,7 +12,7 @@ master  | [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/Windo
 dev     | [![Build status](https://img.shields.io/appveyor/ci/ErdnussFlipS/WindowsFirewallDashboard/dev.svg?style=flat-square)](https://ci.appveyor.com/project/ErdnussFlipS/WindowsFirewallDashboard) [![Coverage](https://img.shields.io/codecov/c/github/ErdnussFlipS/WindowsFirewallDashboard/dev.svg?style=flat-square)](http://codecov.io/github/ErdnussFlipS/WindowsFirewallDashboard?branch=dev)
 
 ## Description
-The Windows Firewall Dashboard is an alternative admanistration panel for the Windows Firewall with Notifications for both directions.
+The Windows Firewall Dashboard is an alternative administration panel for the Windows Firewall with Notifications for both directions.
 
 It should be easier to configure the Windows Firewall for normal users.
 
@@ -30,6 +30,11 @@ The .NET-API can be found at [ErdnussFlipS/WindowsAdvancedFirewallApi](https://g
 ## Stuff
 - Ereignisanzeige -> Anwendungs- und Dienstprotokolle -> Microsoft -> Windows -> Windows Firewall with Advanced Security -> Firewall
 - Ereignisse:
+  - Ereignis Übersicht: https://technet.microsoft.com/en-us/library/dd364427(v=ws.10).aspx
+  - Ereignis-ID: 2002 - Eine Windows Firewall Einstellung wurde geändert. (Allgemeine Änderung)
+  - Ereignis-ID: 2003 - Eine Windows Firewall Einstellung im Profil %s wurde geändert. (Profiländerung)
   - Ereignis-ID: 2004 - Eine Regel wurde der Ausnahmeliste der Windows-Firewall hinzugefügt.
   - Ereignis-ID: 2005 - Eine Regel in der Ausnahmeliste der Windows-Firewall wurde geändert.
   - Ereignis-ID: 2006 - Eine Regel in der Ausnahmeliste der Windows-Firewall wurde gelöscht.
+  - ...
+  - Ereignis-ID: 2033 - Eine Regel in der Windows Firewall Konfiguration auf diesem Computer wurde gelöscht.

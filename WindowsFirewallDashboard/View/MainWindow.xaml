@@ -95,8 +95,12 @@
 					<TextBlock Margin="0,0,2,0" Grid.Row="1" TextWrapping="Wrap" Text="Übersicht" VerticalAlignment="Top" Style="{DynamicResource ApplicationSubheading}"/>
 				</Grid>
 				<Grid x:Name="Rules" Visibility="Collapsed"/>
-				<Grid x:Name="Settings" Visibility="Collapsed"/>
-			</Grid>
+				<Grid x:Name="Settings">
+                    <Button x:Name="button" Content="Install" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="button1" Content="Deinstall" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="button2" Content="Listen" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
+            </Grid>
 		</Grid>
 	</Grid>
 </Controls:MetroWindow>

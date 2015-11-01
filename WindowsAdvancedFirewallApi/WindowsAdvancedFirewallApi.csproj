@@ -111,6 +111,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiConstants.cs" />
     <Compile Include="ApiTest.cs" />
     <Compile Include="Commandline\Commands\ConsecCommands.cs" />
     <Compile Include="Commandline\Commands\FirewallCommands.cs" />
@@ -174,10 +175,14 @@
     <Compile Include="COM\Types\COMWrapperType.cs" />
     <Compile Include="COM\Types\FirewallPolicy.cs" />
     <Compile Include="COM\Types\FirewallProfile.cs" />
+    <Compile Include="Events\Arguments\FirewallEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallSettingsEventArgs.cs" />
+    <Compile Include="Events\FirewallEventManager.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Events\Handler\" />
     <Folder Include="Powershell\" />
   </ItemGroup>
   <ItemGroup>

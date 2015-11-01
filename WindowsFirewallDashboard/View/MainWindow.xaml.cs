@@ -16,6 +16,8 @@ using WindowsFirewallLibrary.FirewallController;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using WindowsFirewallLibrary.Communication;
+using WindowsAdvancedFirewallApi;
+using WindowsAdvancedFirewallApi.Events;
 
 namespace WindowsFirewallDashboard
 {
@@ -31,6 +33,25 @@ namespace WindowsFirewallDashboard
 			InitializeEvents();
 
 			communicationServer = new Server();
+
+			button.Click += Button_Click;
+			button1.Click += Button1_Click;
+			button2.Click += Button2_Click;
+		}
+
+		private void Button2_Click(object sender, RoutedEventArgs e)
+		{
+			FirewallEventManager.Instance.StartListingFirewall();
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			FirewallEventManager.Instance.Install();
+		}
+
+		private void Button1_Click(object sender, RoutedEventArgs e)
+		{
+			FirewallEventManager.Instance.Deinstall();
 		}
 
 		public void InitializeEvents()
