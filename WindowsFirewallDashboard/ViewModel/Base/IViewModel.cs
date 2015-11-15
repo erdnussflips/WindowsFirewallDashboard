@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFirewallDashboard.ViewModel
+namespace WindowsFirewallDashboard.ViewModel.Base
 {
 	public interface IViewModel : INotifyPropertyChanged { }
 	public interface IViewModel<TModel> : IViewModel

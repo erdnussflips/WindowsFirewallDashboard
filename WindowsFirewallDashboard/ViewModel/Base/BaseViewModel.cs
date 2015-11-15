@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFirewallDashboard.ViewModel
+namespace WindowsFirewallDashboard.ViewModel.Base
 {
 	[Serializable]
 	public abstract class BaseViewModel : IViewModel

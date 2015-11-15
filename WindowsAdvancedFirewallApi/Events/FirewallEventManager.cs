@@ -55,7 +55,6 @@ namespace WindowsAdvancedFirewallApi.Events
 
 		private FirewallEventManager()
 		{
-			
 		}
 
 

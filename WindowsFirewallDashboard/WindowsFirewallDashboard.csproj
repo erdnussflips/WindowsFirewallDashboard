@@ -164,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\FirewallEventNotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -172,12 +176,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ApplicationSystem\ApplicationManager.cs" />
+    <Compile Include="ApplicationSystem\FirewallManager.cs" />
+    <Compile Include="ApplicationSystem\NotificationManager.cs" />
+    <Compile Include="ApplicationSystem\ApplicationResource.cs" />
+    <Compile Include="ApplicationSystem\TrayManager.cs" />
     <Compile Include="Locator\ViewModelLocator.cs" />
-    <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\BaseViewModelGeneric.cs" />
+    <Compile Include="ViewModel\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModel\Base\BaseViewModelGeneric.cs" />
     <Compile Include="ViewModel\ControlViewModel.cs" />
-    <Compile Include="ViewModel\IViewModel.cs" />
-    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\Base\IViewModel.cs" />
+    <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="View\FirewallEventNotificationWindow.xaml.cs">
+      <DependentUpon>FirewallEventNotificationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -204,14 +216,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="firewall_event.bat" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <Resource Include="Ressources\Fonts\icomoon.ttf" />
+    <Resource Include="Resources\Fonts\icomoon.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -233,17 +244,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApplicationSystem\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\WindowsAdvancedFirewallApi\WindowsAdvancedFirewallApi.csproj">
       <Project>{a600b42f-23a8-4fbf-a4d1-4fd264c9ed43}</Project>
       <Name>WindowsAdvancedFirewallApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WindowsFirewallEventListener\WindowsFirewallEventListener.csproj">
-      <Project>{aac8c256-6a01-40e4-be81-d96ad82f39ac}</Project>
-      <Name>WindowsFirewallEventListener</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsFirewallLibrary\WindowsFirewallLibrary.csproj">
       <Project>{329d8ec7-9d9d-46cf-b93c-849a912d7c66}</Project>
@@ -254,10 +259,10 @@
     <Resource Include="Windows Firewall Event.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Ressources\Images\NotifyIcon.ico">
+    <Resource Include="Resources\Images\NotifyIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Ressources\Images\shield.svg">
+    <Content Include="Resources\Images\shield.svg">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>

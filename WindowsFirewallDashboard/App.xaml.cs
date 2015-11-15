@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using WindowsFirewallDashboard.ApplicationSystem;
 
 namespace WindowsFirewallDashboard
 {
@@ -21,6 +22,8 @@ namespace WindowsFirewallDashboard
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
+			base.OnStartup(e);
+			ApplicationManager.Instance.Start();
 			//var systemAccentColors = new ResourceDictionary();
 			//systemAccentColors.Add("HighlightColor", SystemColors.HighlightColor);
 			//systemAccentColors.Add("AccentColor", SystemColors.HighlightColor);
@@ -31,7 +34,7 @@ namespace WindowsFirewallDashboard
 
 			////var systemAccentBrushes = new ResourceDictionary();
 			////var assembly = typeof(App).Assembly.GetName().Name;
-			////LoadComponent(systemAccentBrushes, new Uri("/" + assembly + ";component/Ressources/Accents/SystemAccentColor.xaml", UriKind.Relative));
+			////LoadComponent(systemAccentBrushes, new Uri("/" + assembly + ";component/Resources/Accents/SystemAccentColor.xaml", UriKind.Relative));
 
 			////var systemAccent = new ResourceDictionary();
 			////systemAccent.MergedDictionaries.Add(systemAccentColors);
@@ -43,15 +46,31 @@ namespace WindowsFirewallDashboard
 
 
 			//// add custom accent and theme resource dictionaries
-			////ThemeManager.AddAccent("SystemAccent", new Uri("pack://application:,,,/Ressources/Accents/SystemAccentColor.xaml"));
+			////ThemeManager.AddAccent("SystemAccent", new Uri("pack://application:,,,/Resources/Accents/SystemAccentColor.xaml"));
 
 			////// get the theme from the current application
 			//var theme = ThemeManager.DetectAppStyle(Current);
 
 			////// now use the custom accent
 			//ThemeManager.ChangeAppStyle(Current, accent, theme.Item1);
+		}
 
-			base.OnStartup(e);
+		protected override void OnActivated(EventArgs e)
+		{
+			base.OnActivated(e);
+			ApplicationManager.Instance.Activate();
+		}
+
+		protected override void OnDeactivated(EventArgs e)
+		{
+			base.OnDeactivated(e);
+			ApplicationManager.Instance.Deactivate();
+		}
+
+		protected override void OnExit(ExitEventArgs e)
+		{
+			base.OnExit(e);
+			ApplicationManager.Instance.Exit();
 		}
 	}
 }

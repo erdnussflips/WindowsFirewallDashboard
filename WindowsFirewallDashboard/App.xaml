@@ -29,6 +29,7 @@
 					</Style>
 				</ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
+
 			<Style x:Key="ApplicationSubheading" TargetType="{x:Type TextBlock}">
 				<Setter Property="TextWrapping" Value="NoWrap"/>
 				<Setter Property="TextTrimming" Value="None"/>
@@ -36,6 +37,8 @@
 				<Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"/>
 				<Setter Property="TextAlignment" Value="Left"/>
 			</Style>
+
+			<FontFamily x:Key="WindowsFirewallDashboardFont">/WindowsFirewallDashboard;component/Resources/Fonts/#icomoon</FontFamily>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

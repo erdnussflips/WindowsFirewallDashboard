@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WindowsFirewallDashboard.ViewModel
+namespace WindowsFirewallDashboard.ViewModel.Base
 {
 	[Serializable]
 	public class RelayCommand : ICommand
