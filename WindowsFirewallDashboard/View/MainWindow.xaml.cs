@@ -26,22 +26,30 @@ namespace WindowsFirewallDashboard
 	/// </summary>
 	public partial class MainWindow : MetroWindow
 	{
-		private Server communicationServer;
+		private System.Windows.Forms.NotifyIcon notifyIcon;
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			InitializeCustomComponents();
 			InitializeEvents();
 
-			communicationServer = new Server();
-
+			StartListening();
 			button.Click += Button_Click;
 			button1.Click += Button1_Click;
 			button2.Click += Button2_Click;
+
+			FirewallEventManager.Instance.SettingsChanged += Instance_SettingsChanged;
+		}
+
+		private void Instance_SettingsChanged(object sender, WindowsAdvancedFirewallApi.Events.Arguments.FirewallSettingEventArgs e)
+		{
+			System.Windows.MessageBox.Show("Firewall settings changed");
 		}
 
 		private void Button2_Click(object sender, RoutedEventArgs e)
 		{
-			FirewallEventManager.Instance.StartListingFirewall();
+			StartListening();
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -54,26 +62,55 @@ namespace WindowsFirewallDashboard
 			FirewallEventManager.Instance.Deinstall();
 		}
 
-		public void InitializeEvents()
+		private void InitializeCustomComponents()
+		{
+			Uri TweetyUri = new Uri(@"/Ressources/Images/NotifyIcon.ico", UriKind.Relative);
+			System.IO.Stream IconStream = Application.GetResourceStream(TweetyUri).Stream;
+
+			notifyIcon = new System.Windows.Forms.NotifyIcon();
+			notifyIcon.Icon = new System.Drawing.Icon(IconStream);
+			notifyIcon.MouseDoubleClick += NotifyIcon_MouseDoubleClick;
+			StateChanged += Window_StateChanged;
+		}
+
+		private void NotifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			WindowState = WindowState.Normal;
+		}
+
+		private void Window_StateChanged(object sender, EventArgs e)
+		{
+			if (this.WindowState == WindowState.Minimized)
+			{
+				this.ShowInTaskbar = false;
+				notifyIcon.Text = "Windows Firewall Dashboard";
+				notifyIcon.Visible = true;
+			}
+			else if (this.WindowState == WindowState.Normal)
+			{
+				notifyIcon.Visible = false;
+				this.ShowInTaskbar = true;
+			}
+		}
+
+		private void InitializeEvents()
 		{
 			BtnDashboard.Click += (object sender, RoutedEventArgs e) =>
 			{
 				//viewModel.ShowDashboardCommand.Execute(null);
 			};
-			btnStartListening.Click += BtnStartListening_Click;
-			btnStopListening.Click += BtnStopListening_Click;
 		}
 
-		private void BtnStopListening_Click(object sender, RoutedEventArgs e)
+		private void StartListening()
 		{
-			communicationServer.Stop();
-			MessageBox.Show("Listening disabled");
+			if(FirewallEventManager.Instance.StartListingFirewall())
+				this.TbNofitications.Text = "Benachrichtigungen aktiv.";
 		}
 
-		private void BtnStartListening_Click(object sender, RoutedEventArgs e)
+		private void StopListening()
 		{
-			communicationServer.Start();
-			MessageBox.Show("Listening enabled");
+			if(FirewallEventManager.Instance.StopListingFirewall())
+				this.TbNofitications.Text = "Benachrichtigungen inaktiv.";
 		}
 	}
 }

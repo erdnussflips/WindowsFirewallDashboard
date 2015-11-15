@@ -144,7 +144,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -252,6 +254,9 @@
     <Resource Include="Windows Firewall Event.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Ressources\Images\NotifyIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Ressources\Images\shield.svg">
       <SubType>Designer</SubType>
     </Content>

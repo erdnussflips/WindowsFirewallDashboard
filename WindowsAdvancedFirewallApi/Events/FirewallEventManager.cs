@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,11 +8,14 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Events.Arguments;
+using WindowsAdvancedFirewallApi.Events.Objects;
 
 namespace WindowsAdvancedFirewallApi.Events
 {
 	public class FirewallEventManager
 	{
+		private static Logger LOG = LogManager.GetCurrentClassLogger();
+
 		public enum InstallationStatus
 		{
 			Installed, NotInstalled, Unknown
@@ -42,14 +46,16 @@ namespace WindowsAdvancedFirewallApi.Events
 
 		private EventLog _eventLog { get; set; }
 
-		public event EventHandler<FirewallEventArgs> RuleAdded;
-		public event EventHandler<FirewallEventArgs> RuleChanged;
-		public event EventHandler<FirewallEventArgs> RuleDeleted;
-		public event EventHandler<FirewallEventArgs> StatusChanged;
+		public event EventHandler<FirewallSettingEventArgs> SettingsChanged;
+
+		public event EventHandler<FirewallRuleEventArgs> RulesChanged;
+		public event EventHandler<FirewallRuleEventArgs> RuleAdded;
+		public event EventHandler<FirewallRuleEventArgs> RuleModified;
+		public event EventHandler<FirewallRuleEventArgs> RuleDeleted;
 
 		private FirewallEventManager()
 		{
-
+			
 		}
 
 
@@ -117,27 +123,62 @@ namespace WindowsAdvancedFirewallApi.Events
 			//}
 		}
 
-		public void StartListingFirewall()
+		public bool CanListenFirewall()
 		{
-			_eventLog = new EventLog(FIREWALL_EVENT_LOGNAME)
+			try
 			{
-				EnableRaisingEvents = true
-			};
-			_eventLog.EntryWritten += EventLog_EntryWritten;
+				var temp = new EventLog(FIREWALL_EVENT_LOGNAME)
+				{
+					EnableRaisingEvents = true
+				};
+				temp.Close();
+				temp.Dispose();
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 
-		public void StopListingFirewall()
+		public bool StartListingFirewall()
+		{
+			if(CanListenFirewall())
+			{
+				if (_eventLog == null)
+				{
+					_eventLog = new EventLog(FIREWALL_EVENT_LOGNAME)
+					{
+						EnableRaisingEvents = true,
+					};
+					_eventLog.EntryWritten += EventLog_EntryWritten;
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool StopListingFirewall()
 		{
 			if(_eventLog != null)
 			{
 				_eventLog.Close();
 				_eventLog.Dispose();
+
+				return true;
 			}
+
+			return false;
 		}
 
 		private void EventLog_EntryWritten(object sender, EntryWrittenEventArgs e)
 		{
-			switch (e?.Entry?.InstanceId)
+			var eventId = e?.Entry?.InstanceId;
+
+			switch ((ApiConstants.EventID)eventId)
 			{
 				case ApiConstants.EventID.FIREWALL_SETTING_GENERAL:
 				case ApiConstants.EventID.FIREWALL_SETTING_PROFILE:
@@ -149,24 +190,21 @@ namespace WindowsAdvancedFirewallApi.Events
 					RaiseFirewallRuleEvent(e);
 					break;
 				default:
-					// TODO: Log this case
+					LOG.Info(string.Format("The event id '{0}' is not handled by this API", eventId));
 					break;
 			}
 		}
 
 		private void RaiseFirewallSettingEvent(EntryWrittenEventArgs e)
 		{
-
+			var @event = new FirewallSettingEventArgs(e);
+			SettingsChanged?.Invoke(this, @event);
 		}
 
 		private void RaiseFirewallRuleEvent(EntryWrittenEventArgs e)
 		{
-
-		}
-
-		private void RaiseEvent(EventHandler handler, FirewallEventArgs e)
-		{
-			handler?.Invoke(this, e);
+			var @event = new FirewallRuleEventArgs(e);
+			RulesChanged?.Invoke(this, @event);
 		}
 
 		~FirewallEventManager()

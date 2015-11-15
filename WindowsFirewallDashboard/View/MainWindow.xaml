@@ -16,31 +16,31 @@
 		ResizeMode="CanResizeWithGrip"
 		WindowTransitionsEnabled="true"
 		DataContext="{Binding Path=ControlVM, Source={StaticResource Locator}}">
-	<Controls:MetroWindow.Resources>
-		<Style x:Key="StatusIcon" TargetType="{x:Type TextBlock}">
-			<Style.Resources>
-				<Storyboard x:Key="Enabled">
-					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
-						<EasingColorKeyFrame KeyTime="0" Value="Lime"/>
-					</ColorAnimationUsingKeyFrames>
-				</Storyboard>
-				<Storyboard x:Key="Disabled">
-					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
-						<EasingColorKeyFrame KeyTime="0" Value="Red"/>
-					</ColorAnimationUsingKeyFrames>
-				</Storyboard>
-				<Storyboard x:Key="PartialEnabled">
-					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
-						<EasingColorKeyFrame KeyTime="0" Value="Orange"/>
-					</ColorAnimationUsingKeyFrames>
-				</Storyboard>
-			</Style.Resources>
-		</Style>
-	</Controls:MetroWindow.Resources>
-	<Controls:MetroWindow.RightWindowCommands>
-		<Controls:WindowCommands>
-			<Button Content="Einstellungen" />
-			<!--<Button>
+    <Controls:MetroWindow.Resources>
+        <Style x:Key="StatusIcon" TargetType="{x:Type TextBlock}">
+            <Style.Resources>
+                <Storyboard x:Key="Enabled">
+                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
+                        <EasingColorKeyFrame KeyTime="0" Value="Lime"/>
+                    </ColorAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="Disabled">
+                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
+                        <EasingColorKeyFrame KeyTime="0" Value="Red"/>
+                    </ColorAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="PartialEnabled">
+                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
+                        <EasingColorKeyFrame KeyTime="0" Value="Orange"/>
+                    </ColorAnimationUsingKeyFrames>
+                </Storyboard>
+            </Style.Resources>
+        </Style>
+    </Controls:MetroWindow.Resources>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Einstellungen" />
+            <!--<Button>
 				<StackPanel Orientation="Horizontal">
 					<Rectangle Width="20" Height="20"
 				   Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
@@ -54,53 +54,56 @@
 				   Text="deploy cupcakes" />
 				</StackPanel>
 			</Button>-->
-		</Controls:WindowCommands>
-	</Controls:MetroWindow.RightWindowCommands>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
-	<Grid>
-		<Grid Visibility="Collapsed">
-			<Button x:Name="btnEnablePublic" Content="Enable Firewall on &#xA;Public Networks" HorizontalAlignment="Left" Margin="90,90,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnEnablePrivate" Content="Enable Firewall on &#xA;Private Networks" HorizontalAlignment="Left" Margin="326,90,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnEnableDomain" Content="Enable Firewall on &#xA;Domain Networks" HorizontalAlignment="Left" Margin="577,90,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnDisablePublic" Content="Disable Firewall on &#xA;Public Networks" HorizontalAlignment="Left" Margin="90,205,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnDisablePrivate" Content="Disable Firewall on &#xA;Private Networks" HorizontalAlignment="Left" Margin="325.8,205.4,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnDisableDomain" Content="Disable Firewall on &#xA;Domain Networks" HorizontalAlignment="Left" Margin="577,205,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnEnable" Content="Enable Firewall" HorizontalAlignment="Left" Margin="90,319,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnDisable" Content="Disable Firewall" HorizontalAlignment="Left" Margin="326,319,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnEnableNotifications" Content="Enable Event Logging" HorizontalAlignment="Left" Margin="90,446,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnDisableNofifications" Content="Disable Event Logging" HorizontalAlignment="Left" Margin="577,446,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnRestoreDefaults" Content="RESTORE FIREWALL &#xA;DEFAULTS" HorizontalAlignment="Left" Margin="577,319,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
-			<Button x:Name="btnStartListening" Content="Start listening" HorizontalAlignment="Left" Margin="326,441,0,0" VerticalAlignment="Top" Width="130" Height="16"/>
-			<Button x:Name="btnStopListening" Content="Stop listening" HorizontalAlignment="Left" Margin="326,479,0,0" VerticalAlignment="Top" Width="130" Height="16"/>
-		</Grid>
-		<Grid Margin="5">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-			<Grid x:Name="InformationGrid">
-				<StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
-					<TextBlock x:Name="Logo" TextWrapping="Wrap" FontFamily="/WindowsFirewallDashboard;component/Ressources/Fonts/#icomoon" FontSize="200" Text="&#xE600;" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Style="{DynamicResource StatusIcon}" Margin="0,0,0,10"/>
-					<Button x:Name="BtnDashboard" Content="Übersicht" VerticalAlignment="Top" Margin="0" Command="{Binding ShowInformationGridCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Dashboard, Mode=OneWay}"/>
-					<Button x:Name="BtnRules" Content="Regeln" VerticalAlignment="Top" Command="{Binding ShowInformationGridCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Rules, Mode=OneWay}"/>
-					<Button x:Name="BtnSettings" Content="Einstellungen" VerticalAlignment="Top" Command="{Binding ShowInformationGridCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Settings, Mode=OneWay}"/>
-				</StackPanel>
-			</Grid>
-			<Grid x:Name="DetailsGrid" Grid.Column="1">
-				<Grid x:Name="Dashboard" Visibility="Collapsed">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition/>
-					</Grid.RowDefinitions>
-					<TextBlock Margin="0,0,2,0" Grid.Row="1" TextWrapping="Wrap" Text="Übersicht" VerticalAlignment="Top" Style="{DynamicResource ApplicationSubheading}"/>
-				</Grid>
-				<Grid x:Name="Rules" Visibility="Collapsed"/>
-				<Grid x:Name="Settings">
+    <Grid>
+        <Grid Visibility="Collapsed">
+            <Button x:Name="btnEnablePublic" Content="Enable Firewall on &#xA;Public Networks" HorizontalAlignment="Left" Margin="90,90,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnEnablePrivate" Content="Enable Firewall on &#xA;Private Networks" HorizontalAlignment="Left" Margin="326,90,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnEnableDomain" Content="Enable Firewall on &#xA;Domain Networks" HorizontalAlignment="Left" Margin="577,90,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnDisablePublic" Content="Disable Firewall on &#xA;Public Networks" HorizontalAlignment="Left" Margin="90,205,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnDisablePrivate" Content="Disable Firewall on &#xA;Private Networks" HorizontalAlignment="Left" Margin="325.8,205.4,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnDisableDomain" Content="Disable Firewall on &#xA;Domain Networks" HorizontalAlignment="Left" Margin="577,205,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnEnable" Content="Enable Firewall" HorizontalAlignment="Left" Margin="90,319,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnDisable" Content="Disable Firewall" HorizontalAlignment="Left" Margin="326,319,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnEnableNotifications" Content="Enable Event Logging" HorizontalAlignment="Left" Margin="90,446,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnDisableNofifications" Content="Disable Event Logging" HorizontalAlignment="Left" Margin="577,446,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnRestoreDefaults" Content="RESTORE FIREWALL &#xA;DEFAULTS" HorizontalAlignment="Left" Margin="577,319,0,0" VerticalAlignment="Top" Width="130" Height="50"/>
+            <Button x:Name="btnStartListening" Content="Start listening" HorizontalAlignment="Left" Margin="326,441,0,0" VerticalAlignment="Top" Width="130" Height="16"/>
+            <Button x:Name="btnStopListening" Content="Stop listening" HorizontalAlignment="Left" Margin="326,479,0,0" VerticalAlignment="Top" Width="130" Height="16"/>
+        </Grid>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel x:Name="InformationGrid">
+                <StackPanel x:Name="Status" Orientation="Vertical" Margin="0,0,0,25">
+                    <TextBlock x:Name="Logo" TextWrapping="Wrap" FontFamily="/WindowsFirewallDashboard;component/Ressources/Fonts/#icomoon" FontSize="200" Text="&#xE600;" TextAlignment="Center" VerticalAlignment="Center" Foreground="Black" Style="{DynamicResource StatusIcon}" Margin="0,0,0,10"/>
+                    <TextBlock x:Name="TbNofitications" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel x:Name="Navigation" VerticalAlignment="Top" d:LayoutOverrides="TopPosition, BottomPosition">
+                    <Button x:Name="BtnDashboard" Content="Übersicht" VerticalAlignment="Top" Margin="0" Command="{Binding ShowInformationGridCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Dashboard, Mode=OneWay}"/>
+                    <Button x:Name="BtnRules" Content="Regeln" VerticalAlignment="Top" Command="{Binding ShowInformationGridCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Rules, Mode=OneWay}"/>
+                    <Button x:Name="BtnSettings" Content="Einstellungen" VerticalAlignment="Top" Command="{Binding ShowInformationGridCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=Settings, Mode=OneWay}"/>
+                </StackPanel>
+            </StackPanel>
+            <Grid x:Name="DetailsGrid" Grid.Column="1">
+                <Grid x:Name="Dashboard" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="0,0,2,0" Grid.Row="1" TextWrapping="Wrap" Text="Übersicht" VerticalAlignment="Top" Style="{DynamicResource ApplicationSubheading}"/>
+                </Grid>
+                <Grid x:Name="Rules" Visibility="Collapsed"/>
+                <Grid x:Name="Settings">
                     <Button x:Name="button" Content="Install" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="button1" Content="Deinstall" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="button2" Content="Listen" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75"/>
                 </Grid>
             </Grid>
-		</Grid>
-	</Grid>
+        </Grid>
+    </Grid>
 </Controls:MetroWindow>

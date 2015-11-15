@@ -16,9 +16,9 @@ namespace WindowsAdvancedFirewallApi
 		{
 			if(!HasAdministratorPrivileges())
 			{
-				string messageNormal = "You need administrator rights for this action.";
-				string messageAppend = "You need administrator rights ";
-				string message = String.Empty;
+				var messageNormal = "You need administrator rights for this action.";
+				var messageAppend = "You need administrator rights ";
+				var message = String.Empty;
 
 				if(customMessage != null)
 				{

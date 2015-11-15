@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Events;
 
 namespace WindowsAdvancedFirewallApi
 {
@@ -15,13 +16,13 @@ namespace WindowsAdvancedFirewallApi
 		public const string REGISTRY_KEY_EVENTLOG = @"SYSTEM\CurrentControlSet\Services\EventLog\";
 		public const string REGISTRY_KEY_FIREWALL_LOG = REGISTRY_KEY_EVENTLOG + FIREWALL_EVENT_PROTOCOL;
 
-		internal class EventID
+		internal enum EventID
 		{
-			public const int FIREWALL_SETTING_GENERAL = 2002;
-			public const int FIREWALL_SETTING_PROFILE = 2003;
-			public const int FIREWALL_RULE_ADDED = 2004;
-			public const int FIREWALL_RULE_MODIFIED = 2005;
-			public const int FIREWALL_RULE_DELETED = 2006;
+			FIREWALL_SETTING_GENERAL = WFEvents.WFGlobalConfigurationChangedEvent,
+			FIREWALL_SETTING_PROFILE = WFEvents.WFProfileConfigurationChangedEvent,
+			FIREWALL_RULE_ADDED = WFEvents.WFRuleAddEvent,
+			FIREWALL_RULE_MODIFIED = WFEvents.WFRuleChangeEvent,
+			FIREWALL_RULE_DELETED = WFEvents.WFRuleDeleteEvent
 		}
 	}
 }

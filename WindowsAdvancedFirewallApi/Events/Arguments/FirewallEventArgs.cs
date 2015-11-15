@@ -1,79 +1,58 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Events.Objects;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public abstract class FirewallEventArgs : EventArgs
+	public abstract class FirewallEventArgs<T> : EventArgs
+		where T : FirewallObject, new()
 	{
-		private EntryWrittenEventArgs _parentEventArgs;
+		private static Logger LOG = LogManager.GetCurrentClassLogger();
 
-		protected EntryWrittenEventArgs ParentEventArgs
-		{
-			get { return _parentEventArgs; }
-			set { _parentEventArgs = value; }
-		}
+		protected EntryWrittenEventArgs FirewallLogEventArgs { get; set; }
 
-		private int _profiles;
+		public long EventId { get; protected set; }
 
-		public int Profiles
-		{
-			get { return _profiles; }
-			set { _profiles = value; }
-		}
+		public int Origin { get; protected set; }
+		public string ModifyingUser { get; protected set; }
+		public string ModifyingApplication { get; protected set; }
 
-		private int _origin;
-
-		public int Origin
-		{
-			get { return _origin; }
-			set { _origin = value; }
-		}
-
-		private string _modifyingUser;
-
-		public string ModifyingUser
-		{
-			get { return _modifyingUser; }
-			set { _modifyingUser = value; }
-		}
-
-		private string _modifyingApplication;
-
-		public string ModifyingApplication
-		{
-			get { return _modifyingApplication; }
-			set { _modifyingApplication = value; }
-		}
+		protected T Data { get; set; }
 
 		internal FirewallEventArgs(EntryWrittenEventArgs eventArgs)
 		{
-			if(eventArgs == null)
+			if (eventArgs == null)
 			{
-				throw new ArgumentOutOfRangeException("The given parameter " + nameof(eventArgs) + " is null.");
+				var exception = new ArgumentOutOfRangeException("The given parameter " + nameof(eventArgs) + " is null.");
+				LOG.Error(exception, "Wrong parameter");
+				throw exception;
 			}
 
-			ParentEventArgs = eventArgs;
-			initialize();
-		}
+			FirewallLogEventArgs = eventArgs;
+			EventId = FirewallLogEventArgs.Entry.InstanceId;
 
-		protected abstract void initialize();
+			Data = new T();
+		}
 
 		protected void SetAttributes(int iProfiles, int iOrigin, int iModifiyingUser, int iModifyingApplication)
 		{
 			try
 			{
-				Profiles = int.Parse(ParentEventArgs.Entry.ReplacementStrings[iProfiles]);
-				Origin = int.Parse(ParentEventArgs.Entry.ReplacementStrings[iOrigin]);
-				ModifyingUser = ParentEventArgs.Entry.ReplacementStrings[iModifiyingUser];
-				ModifyingApplication = ParentEventArgs.Entry.ReplacementStrings[iModifyingApplication];
+				Data.Profiles = (FirewallObject.Profile)int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[iProfiles]);
+
+				Origin = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[iOrigin]);
+				ModifyingUser = FirewallLogEventArgs.Entry.ReplacementStrings[iModifiyingUser];
+				ModifyingApplication = FirewallLogEventArgs.Entry.ReplacementStrings[iModifyingApplication];
 			}
-			catch (Exception ex)
+			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
 			{
-				// TODO: log entry
+				LOG.Info(string.Format("Primitive parse error: {0}", string.Join(",", FirewallLogEventArgs.Entry.ReplacementStrings)));
+				LOG.Debug(ex);
 			}
 		}
 	}
