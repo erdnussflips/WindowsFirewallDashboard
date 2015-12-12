@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WindowsFirewallDashboard.View;
 
 namespace WindowsFirewallDashboard.ApplicationSystem
@@ -10,10 +11,29 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 	public class NotificationManager
 	{
 		[STAThread]
-		public void ShowWindow()
+		private void ShowWindow(Type t)
 		{
-			var window = new MainWindow();
-			window.Show();
+			
+		}
+
+		[STAThread]
+		public void ShowNewMainWindow()
+		{
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				var window = new MainWindow();
+				window.Show();
+			});
+		}
+
+		[STAThread]
+		public void ShowEventNotification()
+		{
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				var window = new FirewallEventNotificationWindow();
+				window.Show();
+			});
 		}
 	}
 }

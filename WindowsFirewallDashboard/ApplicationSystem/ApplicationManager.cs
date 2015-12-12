@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Events;
+using WindowsAdvancedFirewallApi.Events.Arguments;
 
 namespace WindowsFirewallDashboard.ApplicationSystem
 {
@@ -29,20 +30,14 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 
 		private ApplicationManager()
 		{
-			Firewall = new FirewallManager();
 			Notifications = new NotificationManager();
 			Tray = new TrayManager();
+			Firewall = new FirewallManager(Notifications);
 		}
 
 		public void Start()
 		{
-			Firewall.EventManager.SettingsChanged += EventManager_SettingsChanged;
-			Firewall.EventManager.StartListingFirewall();
-		}
-
-		private void EventManager_SettingsChanged(object sender, WindowsAdvancedFirewallApi.Events.Arguments.FirewallSettingEventArgs e)
-		{
-			Notifications.ShowWindow();
+			Firewall.StartEventListening();
 		}
 
 		public void Activate()
@@ -57,7 +52,7 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 
 		public void Exit()
 		{
-			Firewall.EventManager.StopListingFirewall();
+			Firewall.StopEventListening();
 		}
 
 		public void StartInBackground()

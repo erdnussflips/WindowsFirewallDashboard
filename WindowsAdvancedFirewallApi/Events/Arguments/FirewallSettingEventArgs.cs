@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Events.Objects;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
@@ -28,18 +29,17 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 		{
 			SetAttributes(0, 5, 6, 7);
 
-			try
-			{
-				Setting.Type = (FirewallSetting.SettingType)int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[1]);
-				Setting.ValueSize = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[2]);
-				Setting.Value = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[3]);
-				Setting.ValueString = FirewallLogEventArgs.Entry.ReplacementStrings[4];
-			}
-			catch(Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
-			{
-				LOG.Info(string.Format("Primitive parse error: {0}", string.Join(",",FirewallLogEventArgs.Entry.ReplacementStrings)));
-				LOG.Debug(ex);
-			}
+			LOG.Debug("ReplacementStrings: {0}", string.Join(",", FirewallLogEventArgs.Entry.ReplacementStrings));
+
+			var settingType = FirewallLogEventArgs.Entry.ReplacementStrings[1].ParseInteger(-1);
+			Setting.Type = settingType.Parse(FirewallSetting.SettingType.Unkown);
+
+			Setting.ValueSize = FirewallLogEventArgs.Entry.ReplacementStrings[2].ParseInteger(-1);
+
+			var settingValue = FirewallLogEventArgs.Entry.ReplacementStrings[3].ParseInteger(-1);
+			Setting.Value = settingValue.Parse(FirewallSetting.SettingValue.Unkown);
+
+			Setting.ValueString = FirewallLogEventArgs.Entry.ReplacementStrings[4];
 		}
 	}
 }

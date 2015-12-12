@@ -189,6 +189,8 @@
     <Compile Include="Events\WFEvents.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\EnumUtils.cs" />
+    <Compile Include="Utils\PrimitiveUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Powershell\" />
