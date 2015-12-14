@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 
@@ -33,6 +34,8 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 			Notifications = new NotificationManager();
 			Tray = new TrayManager();
 			Firewall = new FirewallManager(Notifications);
+
+			Tray.Icon = new System.Drawing.Icon(Application.GetResourceStream(ApplicationResource.NotifyIconGreen).Stream);
 		}
 
 		public void Start()

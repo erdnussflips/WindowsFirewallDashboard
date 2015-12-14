@@ -181,6 +181,7 @@
     <Compile Include="ApplicationSystem\NotificationManager.cs" />
     <Compile Include="ApplicationSystem\ApplicationResource.cs" />
     <Compile Include="ApplicationSystem\TrayManager.cs" />
+    <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Locator\ViewModelLocator.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\BaseViewModelGeneric.cs" />
@@ -259,9 +260,10 @@
     <Resource Include="Windows Firewall Event.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\NotifyIcon.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\NotifyIcon-black.ico" />
+    <Resource Include="Resources\Images\NotifyIcon-white.ico" />
+    <Resource Include="Resources\Images\NotifyIcon-green.ico" />
+    <Resource Include="Resources\Images\NotifyIcon-red.ico" />
     <Content Include="Resources\Images\shield.svg">
       <SubType>Designer</SubType>
     </Content>

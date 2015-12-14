@@ -11,7 +11,7 @@ namespace WindowsAdvancedFirewallApi.Utils
     {
         private static Logger LOG = LogManager.GetCurrentClassLogger();
 
-        public static int ParseInteger(this string value, int defaultValue)
+        public static int ParseInteger(this string value)
         {
             try
             {
@@ -21,10 +21,22 @@ namespace WindowsAdvancedFirewallApi.Utils
             {
                 LOG.Info(string.Format("Primitive parse error: {0}", value));
                 LOG.Debug(ex);
-            }
 
-            LOG.Info(string.Format("Return default value: {0}", defaultValue));
-            return defaultValue;
+                throw;
+            }
+        }
+
+        public static int ParseInteger(this string value, int defaultValue)
+        {
+            try
+            {
+                return int.Parse(value);
+            }
+            catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
+            {
+                LOG.Info(string.Format("Return default value: {0}", defaultValue));
+                return defaultValue;
+            }
         }
     }
 }

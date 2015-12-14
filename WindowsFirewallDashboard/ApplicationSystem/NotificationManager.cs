@@ -10,20 +10,10 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 {
 	public class NotificationManager
 	{
-		[STAThread]
-		private void ShowWindow(Type t)
-		{
-			
-		}
+		private FirewallEventNotificationWindow notificationWindow;
 
-		[STAThread]
-		public void ShowNewMainWindow()
+		public NotificationManager()
 		{
-			Application.Current.Dispatcher.Invoke(() =>
-			{
-				var window = new MainWindow();
-				window.Show();
-			});
 		}
 
 		[STAThread]
@@ -31,8 +21,21 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 		{
 			Application.Current.Dispatcher.Invoke(() =>
 			{
-				var window = new FirewallEventNotificationWindow();
-				window.Show();
+				if(notificationWindow == null)
+				{
+					notificationWindow = new FirewallEventNotificationWindow();
+					notificationWindow.AddEvent();
+					notificationWindow.Show();
+
+					notificationWindow.Closed += delegate (object sender, EventArgs e)
+					{
+						notificationWindow = null;
+					};
+				}
+				else
+				{
+					notificationWindow.AddEvent();
+				}
 			});
 		}
 	}

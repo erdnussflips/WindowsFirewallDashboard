@@ -23,6 +23,13 @@ namespace WindowsFirewallDashboard.View
         public FirewallEventNotificationWindow()
         {
             InitializeComponent();
+            SizeToContent = SizeToContent.WidthAndHeight;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
+
+        public void AddEvent()
+        {
+
         }
     }
 }

@@ -39,7 +39,6 @@ namespace WindowsFirewallDashboard
 		private void InitializeCustomComponents()
 		{
 			ApplicationManager.Instance.Tray.RootWindow = this;
-			ApplicationManager.Instance.Tray.Icon = new System.Drawing.Icon(Application.GetResourceStream(ApplicationResource.NotifyIcon).Stream);
 		}
 
 		private void InitializeEvents()

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using WindowsFirewallDashboard.Library.Utils;
 
 namespace WindowsFirewallDashboard.ApplicationSystem
 {
@@ -88,15 +90,52 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 		public TrayManager()
 		{
 			ManagedWindows = new List<Window>();
+
 			notifyIcon = new NotifyIcon();
+			notifyIcon.MouseClick += delegate (object sender, MouseEventArgs e)
+			{
+				if (e.Button == MouseButtons.Right)
+				{
+					notifyIcon.ShowContextMenu();
+				}
+			};
+
+			var contextMenu = new ContextMenu();
+			notifyIcon.ContextMenu = contextMenu;
+
+			var menuItemDashboard = new MenuItem("Dashboard anzeigen");
+			var menuItemExit = new MenuItem("Beenden");
+
+			contextMenu.MenuItems.Add(menuItemDashboard);
+			contextMenu.MenuItems.Add(menuItemExit);
 
 			MouseDoubleClick += delegate (object sender, MouseEventArgs e)
 			{
-				if(RootWindow != null)
+				if (e.Button == MouseButtons.Left)
 				{
-					RootWindow.WindowState = WindowState.Normal;
+					ShowWindows();
 				}
 			};
+		}
+
+		public void ShowWindows()
+		{
+			if (RootWindow != null)
+			{
+				RootWindow.WindowState = WindowState.Normal;
+			}
+
+			ShowManagedWindows();
+		}
+
+		public void HideWindows()
+		{
+			if (RootWindow != null)
+			{
+				RootWindow.WindowState = WindowState.Minimized;
+			}
+
+			ShowManagedWindows();
 		}
 
 		public void AddManagedWindows(params Window[] windows)
@@ -117,7 +156,7 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 			foreach (var item in ManagedWindows)
 			{
 				item.ShowInTaskbar = true;
-				item.Show();
+				item.WindowState = WindowState.Normal;
 			}
 		}
 		public void HideManagedWindows()
@@ -125,7 +164,7 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 			foreach (var item in ManagedWindows)
 			{
 				item.ShowInTaskbar = false;
-				item.Hide();
+				item.WindowState = WindowState.Minimized;
 			}
 		}
 

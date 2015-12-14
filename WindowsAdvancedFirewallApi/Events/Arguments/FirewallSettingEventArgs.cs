@@ -31,14 +31,9 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 
 			LOG.Debug("ReplacementStrings: {0}", string.Join(",", FirewallLogEventArgs.Entry.ReplacementStrings));
 
-			var settingType = FirewallLogEventArgs.Entry.ReplacementStrings[1].ParseInteger(-1);
-			Setting.Type = settingType.Parse(FirewallSetting.SettingType.Unkown);
-
-			Setting.ValueSize = FirewallLogEventArgs.Entry.ReplacementStrings[2].ParseInteger(-1);
-
-			var settingValue = FirewallLogEventArgs.Entry.ReplacementStrings[3].ParseInteger(-1);
-			Setting.Value = settingValue.Parse(FirewallSetting.SettingValue.Unkown);
-
+			Setting.Type = EnumUtils.ParseStringValue(FirewallLogEventArgs.Entry.ReplacementStrings[1], FirewallSetting.SettingType.Unkown);
+			Setting.ValueSize = FirewallLogEventArgs.Entry.ReplacementStrings[2].ParseInteger(0);
+			Setting.Value = EnumUtils.ParseStringValue(FirewallLogEventArgs.Entry.ReplacementStrings[3], FirewallSetting.SettingValue.Unkown);
 			Setting.ValueString = FirewallLogEventArgs.Entry.ReplacementStrings[4];
 		}
 	}

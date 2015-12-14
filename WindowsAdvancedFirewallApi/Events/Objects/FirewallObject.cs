@@ -10,6 +10,7 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 	{
 		public enum Profile
 		{
+			Unkown = int.MinValue,
 			Domain = 1,
 			Private = 2,
 			Public = 4
