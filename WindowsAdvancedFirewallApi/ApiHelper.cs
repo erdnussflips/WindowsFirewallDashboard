@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -9,6 +10,8 @@ namespace WindowsAdvancedFirewallApi
 {
 	public static class ApiHelper
 	{
+		private static Logger LOG = LogManager.GetCurrentClassLogger();
+
 		[DllImport("shell32.dll", EntryPoint = "IsUserAnAdmin")]
 		public static extern bool HasAdministratorPrivileges();
 
@@ -36,7 +39,9 @@ namespace WindowsAdvancedFirewallApi
 					message = messageNormal;
 				}
 
-				throw new UnauthorizedAccessException(message);
+				var ex = new UnauthorizedAccessException(message);
+				LOG.Debug(ex.Message);
+				throw ex;
 			}
 		}
 	}

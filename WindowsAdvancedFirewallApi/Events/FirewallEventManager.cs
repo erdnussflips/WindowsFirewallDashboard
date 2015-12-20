@@ -137,6 +137,7 @@ namespace WindowsAdvancedFirewallApi.Events
 			}
 			catch (Exception ex)
 			{
+				LOG.Debug(ex.Message);
 				return false;
 			}
 		}
@@ -175,35 +176,51 @@ namespace WindowsAdvancedFirewallApi.Events
 
 		private void EventLog_EntryWritten(object sender, EntryWrittenEventArgs e)
 		{
-			var eventId = e?.Entry?.InstanceId;
+			var @event = generateFirewallEventArgs(e.Entry);
+			RaiseFirewallEvent(@event);
+		}
+
+		private void RaiseFirewallEvent(FirewallEventArgs e)
+		{
+			if (e is FirewallSettingEventArgs)
+			{
+				SettingsChanged?.Invoke(this, (FirewallSettingEventArgs)e);
+			}
+			else if (e is FirewallRuleEventArgs)
+			{
+				RulesChanged?.Invoke(this, (FirewallRuleEventArgs)e);
+			}
+		}
+
+		public List<FirewallEventArgs> GetHistory()
+		{
+			var events = new List<FirewallEventArgs>();
+
+			foreach (EventLogEntry item in _eventLog.Entries)
+			{
+				events.Add(generateFirewallEventArgs(item));
+			}
+
+			return events;
+		}
+
+		private FirewallEventArgs generateFirewallEventArgs(EventLogEntry e)
+		{
+			var eventId = e?.InstanceId;
 
 			switch ((ApiConstants.EventID)eventId)
 			{
 				case ApiConstants.EventID.FIREWALL_SETTING_GENERAL:
 				case ApiConstants.EventID.FIREWALL_SETTING_PROFILE:
-					RaiseFirewallSettingEvent(e);
-					break;
+					return new FirewallSettingEventArgs(e);
 				case ApiConstants.EventID.FIREWALL_RULE_ADDED:
 				case ApiConstants.EventID.FIREWALL_RULE_MODIFIED:
 				case ApiConstants.EventID.FIREWALL_RULE_DELETED:
-					RaiseFirewallRuleEvent(e);
-					break;
+					return new FirewallRuleEventArgs(e);
 				default:
-					LOG.Info(string.Format("The event id '{0}' is not handled by this API", eventId));
-					break;
+					LOG.Info(string.Format("The event id '{0}' is not handled by this API.", eventId));
+					return null;
 			}
-		}
-
-		private void RaiseFirewallSettingEvent(EntryWrittenEventArgs e)
-		{
-			var @event = new FirewallSettingEventArgs(e);
-			SettingsChanged?.Invoke(this, @event);
-		}
-
-		private void RaiseFirewallRuleEvent(EntryWrittenEventArgs e)
-		{
-			var @event = new FirewallRuleEventArgs(e);
-			RulesChanged?.Invoke(this, @event);
 		}
 
 		~FirewallEventManager()

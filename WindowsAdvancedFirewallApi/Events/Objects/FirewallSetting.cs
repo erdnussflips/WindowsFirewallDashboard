@@ -12,12 +12,15 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 		{
 			Unkown = -1,
 			WindowsFirewallActivating = 1,
+			WindowsFirewallShieldMode = 3, // Blocks all incoming connections (inclusive the allowed apps)
+			DeactivateIncomingNotification = 10,
 			DeactivatedInterfaces = 15
 		}
 
 		public enum SettingValue
 		{
-			Unkown = -1,
+			Unkown = -2,
+			Empty = -1,
 			No = 00000000,
 			Yes = 01000000,
 			Private = 02000000,

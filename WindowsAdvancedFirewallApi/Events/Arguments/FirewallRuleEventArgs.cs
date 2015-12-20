@@ -9,17 +9,15 @@ using WindowsAdvancedFirewallApi.Events.Objects;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public class FirewallRuleEventArgs : FirewallEventArgs<FirewallRule>
+	public class FirewallRuleEventArgs : FirewallDataEventArgs<FirewallRule>
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
-
 		public FirewallRule Rule
 		{
 			get { return Data; }
 			protected set { Data = value; }
 		}
 
-		internal FirewallRuleEventArgs(EntryWrittenEventArgs eventArgs) : base(eventArgs)
+		internal FirewallRuleEventArgs(EventLogEntry @event) : base(@event)
 		{
 			SetAttributes();
 		}
@@ -30,32 +28,32 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 
 			try
 			{
-				Rule.Id = FirewallLogEventArgs.Entry.ReplacementStrings[0];
-				Rule.Name = FirewallLogEventArgs.Entry.ReplacementStrings[1];
-				Rule.ApplicationPath = FirewallLogEventArgs.Entry.ReplacementStrings[3];
-				Rule.ServiceName = FirewallLogEventArgs.Entry.ReplacementStrings[4];
-				Rule.Direction = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[5]);
-				Rule.Protocol = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[6]);
-				Rule.LocalPorts = FirewallLogEventArgs.Entry.ReplacementStrings[7];
-				Rule.RemotePorts = FirewallLogEventArgs.Entry.ReplacementStrings[8];
-				Rule.Action = FirewallLogEventArgs.Entry.ReplacementStrings[9];
-				Rule.LocalAddresses = FirewallLogEventArgs.Entry.ReplacementStrings[11];
-				Rule.RemoteAddresses = FirewallLogEventArgs.Entry.ReplacementStrings[12];
-				Rule.RemoteMachineAuthorizationList = FirewallLogEventArgs.Entry.ReplacementStrings[13];
-				Rule.RemoteUserAuthorizationList = FirewallLogEventArgs.Entry.ReplacementStrings[14];
-				Rule.EmbeddedContext = FirewallLogEventArgs.Entry.ReplacementStrings[15];
-				Rule.Flags = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[16]);
-				Rule.Active = Convert.ToBoolean(int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[17]));
-				Rule.EdgeTraversal = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[18]);
-				Rule.LooseSourceMapped = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[19]);
-				Rule.SecurityOptions = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[20]);
-				Rule.SchemaVersion = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[23]);
-				Rule.Status = long.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[24]);
-				Rule.LocalOnlyMapped = int.Parse(FirewallLogEventArgs.Entry.ReplacementStrings[25]);
+				Rule.Id = FirewallLogEvent.ReplacementStrings[0];
+				Rule.Name = FirewallLogEvent.ReplacementStrings[1];
+				Rule.ApplicationPath = FirewallLogEvent.ReplacementStrings[3];
+				Rule.ServiceName = FirewallLogEvent.ReplacementStrings[4];
+				Rule.Direction = int.Parse(FirewallLogEvent.ReplacementStrings[5]);
+				Rule.Protocol = int.Parse(FirewallLogEvent.ReplacementStrings[6]);
+				Rule.LocalPorts = FirewallLogEvent.ReplacementStrings[7];
+				Rule.RemotePorts = FirewallLogEvent.ReplacementStrings[8];
+				Rule.Action = FirewallLogEvent.ReplacementStrings[9];
+				Rule.LocalAddresses = FirewallLogEvent.ReplacementStrings[11];
+				Rule.RemoteAddresses = FirewallLogEvent.ReplacementStrings[12];
+				Rule.RemoteMachineAuthorizationList = FirewallLogEvent.ReplacementStrings[13];
+				Rule.RemoteUserAuthorizationList = FirewallLogEvent.ReplacementStrings[14];
+				Rule.EmbeddedContext = FirewallLogEvent.ReplacementStrings[15];
+				Rule.Flags = int.Parse(FirewallLogEvent.ReplacementStrings[16]);
+				Rule.Active = Convert.ToBoolean(int.Parse(FirewallLogEvent.ReplacementStrings[17]));
+				Rule.EdgeTraversal = int.Parse(FirewallLogEvent.ReplacementStrings[18]);
+				Rule.LooseSourceMapped = int.Parse(FirewallLogEvent.ReplacementStrings[19]);
+				Rule.SecurityOptions = int.Parse(FirewallLogEvent.ReplacementStrings[20]);
+				Rule.SchemaVersion = int.Parse(FirewallLogEvent.ReplacementStrings[23]);
+				Rule.Status = long.Parse(FirewallLogEvent.ReplacementStrings[24]);
+				Rule.LocalOnlyMapped = int.Parse(FirewallLogEvent.ReplacementStrings[25]);
 			}
 			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
 			{
-				LOG.Info(string.Format("Primitive parse error: {0}", string.Join(",", FirewallLogEventArgs.Entry.ReplacementStrings)));
+				LOG.Info(string.Format("Primitive parse error: {0}", string.Join(",", FirewallLogEvent.ReplacementStrings)));
 				LOG.Debug(ex);
 			}
 		}

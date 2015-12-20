@@ -5,17 +5,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsAdvancedFirewallApi.Events.Objects;
 using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public abstract class FirewallEventArgs<TData> : EventArgs
-		where TData : FirewallObject, new()
+	public abstract class FirewallEventArgs : EventArgs
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		protected static Logger LOG = LogManager.GetCurrentClassLogger();
 
-		protected EntryWrittenEventArgs FirewallLogEventArgs { get; set; }
+		protected EventLogEntry FirewallLogEvent { get; set; }
 
 		public long EventId { get; protected set; }
 
@@ -23,9 +21,9 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 		public string ModifyingUser { get; protected set; }
 		public string ModifyingApplication { get; protected set; }
 
-		protected TData Data { get; set; }
+		public DateTime ModifyingTime { get; protected set; }
 
-		internal FirewallEventArgs(EntryWrittenEventArgs eventArgs)
+		internal FirewallEventArgs(EventLogEntry eventArgs)
 		{
 			if (eventArgs == null)
 			{
@@ -34,20 +32,18 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 				throw exception;
 			}
 
-			FirewallLogEventArgs = eventArgs;
-			EventId = FirewallLogEventArgs.Entry.InstanceId;
-
-			Data = new TData();
+			FirewallLogEvent = eventArgs;
+			EventId = FirewallLogEvent.InstanceId;
+			ModifyingTime = FirewallLogEvent.TimeGenerated;
 		}
 
-		protected void SetAttributes(int iProfiles, int iOrigin, int iModifiyingUser, int iModifyingApplication)
+		protected void SetAttributes(int iOrigin, int iModifiyingUser, int iModifyingApplication)
 		{
-			LOG.Debug("ReplacementStrings: {0}", string.Join(",", FirewallLogEventArgs.Entry.ReplacementStrings));
+			LOG.Debug("ReplacementStrings: {0}", string.Join(",", FirewallLogEvent.ReplacementStrings));
 
-			Data.Profiles = EnumUtils.ParseStringValue(FirewallLogEventArgs.Entry.ReplacementStrings[iProfiles], FirewallObject.Profile.Unkown);
-			Origin = PrimitiveUtils.ParseInteger(FirewallLogEventArgs.Entry.ReplacementStrings[iOrigin], 0);
-			ModifyingUser = FirewallLogEventArgs.Entry.ReplacementStrings[iModifiyingUser];
-			ModifyingApplication = FirewallLogEventArgs.Entry.ReplacementStrings[iModifyingApplication];
+			Origin = PrimitiveUtils.ParseInteger(FirewallLogEvent.ReplacementStrings[iOrigin], 0);
+			ModifyingUser = FirewallLogEvent.ReplacementStrings[iModifiyingUser];
+			ModifyingApplication = FirewallLogEvent.ReplacementStrings[iModifyingApplication];
 		}
 	}
 }

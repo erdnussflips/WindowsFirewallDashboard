@@ -179,6 +179,7 @@
     <Compile Include="COM\Types\COMWrapperType.cs" />
     <Compile Include="COM\Types\FirewallPolicy.cs" />
     <Compile Include="COM\Types\FirewallProfile.cs" />
+    <Compile Include="Events\Arguments\FirewallDataEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallRuleEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallSettingEventArgs.cs" />
