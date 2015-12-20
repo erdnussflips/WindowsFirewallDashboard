@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsAdvancedFirewallApi.Events.Objects
 {
-	public class FirewallNetworkInterface : FirewallBaseObject
+	public class FirewallNetworkInterfaceProfile : FirewallBaseObject
 	{
 		public string InterfaceGUID { get; set; }
 		public string InterfaceName { get; set; }

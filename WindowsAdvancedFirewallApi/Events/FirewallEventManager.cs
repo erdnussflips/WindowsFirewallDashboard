@@ -54,6 +54,8 @@ namespace WindowsAdvancedFirewallApi.Events
 		public event EventHandler<FirewallRuleBaseEventArgs> RuleModified;
 		public event EventHandler<FirewallRuleDeletedEventArgs> RuleDeleted;
 
+		public event EventHandler<FirewallNetworkInterfaceProfileChanged> NetworkInterfaceProfileChanged;
+
 		private FirewallEventManager()
 		{
 		}
@@ -198,6 +200,8 @@ namespace WindowsAdvancedFirewallApi.Events
 			InvokeEventHandler(RuleAdded, e);
 			InvokeEventHandler(RuleModified, e);
 			InvokeEventHandler(RuleDeleted, e);
+
+			InvokeEventHandler(NetworkInterfaceProfileChanged, e);
 		}
 
 		public List<FirewallBaseEventArgs> GetEventHistory()
@@ -231,6 +235,8 @@ namespace WindowsAdvancedFirewallApi.Events
 					return new FirewallRuleAddedEventArgs(e);
 				case ApiConstants.EventID.FIREWALL_RULE_DELETED:
 					return new FirewallRuleDeletedEventArgs(e);
+				case ApiConstants.EventID.FIREWALL_NETWORKINTERFACE_CHANGED:
+					return new FirewallNetworkInterfaceProfileChanged(e);
 				default:
 					LOG.Info(string.Format("The event id '{0}' is not handled by this API.", eventId));
 					return null;

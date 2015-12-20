@@ -182,7 +182,7 @@
     <Compile Include="Events\Arguments\FirewallBaseEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallDataEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallEventArgs.cs" />
-    <Compile Include="Events\Arguments\FirewallNetworkInterfaceChanged.cs" />
+    <Compile Include="Events\Arguments\FirewallNetworkInterfaceProfileChanged.cs" />
     <Compile Include="Events\Arguments\FirewallRuleAddedEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallRuleBaseEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallRuleDeletedEventArgs.cs" />
@@ -190,7 +190,7 @@
     <Compile Include="Events\Arguments\FirewallSettingEventArgs.cs" />
     <Compile Include="Events\FirewallEventManager.cs" />
     <Compile Include="Events\Objects\FirewallBaseObject.cs" />
-    <Compile Include="Events\Objects\FirewallNetworkInterface.cs" />
+    <Compile Include="Events\Objects\FirewallNetworkInterfaceProfile.cs" />
     <Compile Include="Events\Objects\FirewallRule.cs" />
     <Compile Include="Events\Objects\FirewallSetting.cs" />
     <Compile Include="Events\WFEvents.cs" />
