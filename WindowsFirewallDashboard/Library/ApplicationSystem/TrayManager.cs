@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Forms;
 using WindowsFirewallDashboard.Library.Utils;
 
-namespace WindowsFirewallDashboard.ApplicationSystem
+namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
 	public class TrayManager
 	{
@@ -172,14 +172,27 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 		{
 			if (RootWindow.WindowState == WindowState.Minimized)
 			{
-				notifyIcon.Visible = true;
 				RootWindow.ShowInTaskbar = false;
 			}
 			else if(RootWindow.WindowState == WindowState.Normal)
 			{
-				notifyIcon.Visible = false;
 				RootWindow.ShowInTaskbar = true;
 			}
+		}
+
+		public void ShowIcon()
+		{
+			notifyIcon.Visible = true;
+		}
+
+		public void HideIcon()
+		{
+			notifyIcon.Visible = false;
+		}
+
+		public void ToggleIcon()
+		{
+			notifyIcon.Visible = !notifyIcon.Visible;
 		}
 	}
 }

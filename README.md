@@ -21,6 +21,10 @@ This Application is separated into GUI-Client "Windows Firewall Dashboard" and .
 
 The .NET-API can be found at [ErdnussFlipS/WindowsAdvancedFirewallApi](https://github.com/ErdnussFlipS/WindowsAdvancedFirewallApi).
 
+## Ideas and later features
+- Automated updates through github releases
+- Improvement of firewalls filter rules through (e.g. for games) second github repo
+
 ## Useful links
 - [Understanding MVC, MVP and MVVM Design Patterns](http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html)
 - [Modern User Interfaces with WPF MVVM, XAML Templates and Entity Framework 6](http://www.codeproject.com/Articles/897441/Modern-User-Interfaces-with-WPF-MVVM-XAML-Template)

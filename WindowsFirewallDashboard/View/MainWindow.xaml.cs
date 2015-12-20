@@ -18,7 +18,7 @@ using MahApps.Metro.Controls.Dialogs;
 using WindowsFirewallLibrary.Communication;
 using WindowsAdvancedFirewallApi;
 using WindowsAdvancedFirewallApi.Events;
-using WindowsFirewallDashboard.ApplicationSystem;
+using WindowsFirewallDashboard.Library.ApplicationSystem;
 
 namespace WindowsFirewallDashboard
 {

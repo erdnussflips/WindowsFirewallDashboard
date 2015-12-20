@@ -142,9 +142,14 @@
       <HintPath>..\packages\NamedPipeWrapper.1.4.0\lib\net40\NamedPipeWrapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Octokit, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.17.0\lib\net45\Octokit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -176,13 +181,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ApplicationSystem\ApplicationManager.cs" />
-    <Compile Include="ApplicationSystem\FirewallManager.cs" />
-    <Compile Include="ApplicationSystem\NotificationManager.cs" />
-    <Compile Include="ApplicationSystem\ApplicationResource.cs" />
-    <Compile Include="ApplicationSystem\TrayManager.cs" />
+    <Compile Include="Library\ApplicationSystem\ApplicationConstants.cs" />
+    <Compile Include="Library\ApplicationSystem\ApplicationInformation.cs" />
+    <Compile Include="Library\ApplicationSystem\ApplicationManager.cs" />
+    <Compile Include="Library\ApplicationSystem\ApplicationUpdater.cs" />
+    <Compile Include="Library\ApplicationSystem\FirewallManager.cs" />
+    <Compile Include="Library\ApplicationSystem\NotificationManager.cs" />
+    <Compile Include="Library\ApplicationSystem\ApplicationResource.cs" />
+    <Compile Include="Library\ApplicationSystem\TrayManager.cs" />
     <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Locator\ViewModelLocator.cs" />
+    <Compile Include="Model\ApplicationUpdates\BetaApplicationUpdate.cs" />
+    <Compile Include="Model\ApplicationUpdates\ReleaseApplicationUpdate.cs" />
+    <Compile Include="Model\ApplicationUpdates\BaseApplicationUpdate.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\BaseViewModelGeneric.cs" />
     <Compile Include="ViewModel\ControlViewModel.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Windows;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 
-namespace WindowsFirewallDashboard.ApplicationSystem
+namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
 	public class ApplicationManager
 	{
@@ -35,12 +36,16 @@ namespace WindowsFirewallDashboard.ApplicationSystem
 			Tray = new TrayManager();
 			Firewall = new FirewallManager(Notifications);
 
-			Tray.Icon = new System.Drawing.Icon(Application.GetResourceStream(ApplicationResource.NotifyIconGreen).Stream);
+			Tray.Icon = new Icon(Application.GetResourceStream(ApplicationResource.NotifyIconWhite).Stream);
 		}
 
 		public void Start()
 		{
 			Firewall.StartEventListening();
+
+			Tray.ShowIcon();
+
+			ApplicationUpdater.Instance.CheckForUpdates();
 		}
 
 		public void Activate()

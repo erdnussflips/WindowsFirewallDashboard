@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 
-namespace WindowsFirewallDashboard.ApplicationSystem
+namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
 	public class FirewallManager
 	{
