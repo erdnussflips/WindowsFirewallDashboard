@@ -1,5 +1,4 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,7 +9,7 @@ using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public class FirewallSettingEventArgs : FirewallDataEventArgs<FirewallSetting>
+	public class FirewallSettingEventArgs : FirewallEventArgs<FirewallSetting>
 	{
 		public FirewallSetting Setting
 		{
@@ -25,23 +24,26 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 
 		protected void SetAttributes()
 		{
-			SetAttributes(0, 5, 6, 7);
+			SetAttributes(4, 5, 6);
+			SetSettingAttributes(0, 1, 2, 3);
+		}
 
-			LOG.Debug("ReplacementStrings: {0}", string.Join(",", FirewallLogEvent.ReplacementStrings));
+		protected void SetSettingAttributes(int iSettingType, int iSettingValue, int iSettingValueSize, int iSettingValueDisplay)
+		{
+			Setting.Type = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[iSettingType], FirewallSetting.SettingType.Unkown);
+			Setting.ValueSize = FirewallLogEvent.ReplacementStrings[iSettingValueSize].ParseInteger(0);
 
-			Setting.Type = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[1], FirewallSetting.SettingType.Unkown);
-			Setting.ValueSize = FirewallLogEvent.ReplacementStrings[2].ParseInteger(0);
-
-			if (FirewallLogEvent.ReplacementStrings[3] == string.Empty)
+			var settingValue = FirewallLogEvent.ReplacementStrings[iSettingValue];
+			if (settingValue == string.Empty)
 			{
 				Setting.Value = FirewallSetting.SettingValue.Empty;
 			}
 			else
 			{
-				Setting.Value = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[3], FirewallSetting.SettingValue.Unkown);
+				Setting.Value = EnumUtils.ParseStringValue(settingValue, FirewallSetting.SettingValue.Unkown);
 			}
 
-			Setting.ValueString = FirewallLogEvent.ReplacementStrings[4];
+			Setting.ValueString = FirewallLogEvent.ReplacementStrings[iSettingValueDisplay];
 		}
 	}
 }

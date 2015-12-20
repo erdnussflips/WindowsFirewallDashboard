@@ -10,21 +10,14 @@ using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public abstract class FirewallDataEventArgs<TData> : FirewallEventArgs
-		where TData : FirewallObject, new()
+	public abstract class FirewallDataEventArgs<TData> : FirewallBaseEventArgs
+		where TData : FirewallBaseObject, new()
 	{
 		protected TData Data { get; set; }
 
 		internal FirewallDataEventArgs(EventLogEntry @event) : base (@event)
 		{
 			Data = new TData();
-		}
-
-		protected void SetAttributes(int iProfiles, int iOrigin, int iModifiyingUser, int iModifyingApplication)
-		{
-			SetAttributes(iOrigin, iModifiyingUser, iModifyingApplication);
-
-			Data.Profiles = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[iProfiles], FirewallObject.Profile.Unkown);
 		}
 	}
 }

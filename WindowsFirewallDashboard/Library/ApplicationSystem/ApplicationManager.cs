@@ -46,6 +46,8 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			Tray.ShowIcon();
 
 			ApplicationUpdater.Instance.CheckForUpdates();
+
+			Firewall.EventManager.GetEventHistory();
 		}
 
 		public void Activate()

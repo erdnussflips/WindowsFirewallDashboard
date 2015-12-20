@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsAdvancedFirewallApi.Events.Objects
 {
-	public class FirewallSetting : FirewallObject
+	public class FirewallSetting : FirewallBaseObject
 	{
 		public enum SettingType
 		{
@@ -26,6 +26,8 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 			Private = 02000000,
 			Public = 04000000
 		}
+
+		public Profile Profiles { get; set; }
 
 		public SettingType Type { get; set; }
 		public int ValueSize { get; set; }

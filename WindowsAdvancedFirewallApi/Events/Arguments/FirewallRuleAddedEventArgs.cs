@@ -1,30 +1,23 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Events.Objects;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public class FirewallRuleEventArgs : FirewallDataEventArgs<FirewallRule>
+	public class FirewallRuleAddedEventArgs : FirewallRuleBaseEventArgs
 	{
-		public FirewallRule Rule
-		{
-			get { return Data; }
-			protected set { Data = value; }
-		}
-
-		internal FirewallRuleEventArgs(EventLogEntry @event) : base(@event)
+		public FirewallRuleAddedEventArgs(EventLogEntry @event) : base(@event)
 		{
 			SetAttributes();
 		}
-
 		protected void SetAttributes()
 		{
-			SetAttributes(10, 2, 21, 22);
+			SetAttributes(2, 21, 22);
 
 			try
 			{
@@ -37,6 +30,7 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 				Rule.LocalPorts = FirewallLogEvent.ReplacementStrings[7];
 				Rule.RemotePorts = FirewallLogEvent.ReplacementStrings[8];
 				Rule.Action = FirewallLogEvent.ReplacementStrings[9];
+				Rule.Profiles = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[10], FirewallBaseObject.Profile.Unkown);
 				Rule.LocalAddresses = FirewallLogEvent.ReplacementStrings[11];
 				Rule.RemoteAddresses = FirewallLogEvent.ReplacementStrings[12];
 				Rule.RemoteMachineAuthorizationList = FirewallLogEvent.ReplacementStrings[13];

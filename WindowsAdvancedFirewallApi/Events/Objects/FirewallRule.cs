@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsAdvancedFirewallApi.Events.Objects
 {
-	public class FirewallRule : FirewallObject
+	public class FirewallRule : FirewallBaseObject
 	{
 		public string Id { get; set; }
 		public string Name { get; set; }
@@ -17,6 +17,7 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 		public string LocalPorts { get; set; }
 		public string RemotePorts { get; set; }
 		public string Action { get; set; }
+		public Profile Profiles { get; set; }
 		public string LocalAddresses { get; set; }
 		public string RemoteAddresses { get; set; }
 		public string RemoteMachineAuthorizationList { get; set; }
