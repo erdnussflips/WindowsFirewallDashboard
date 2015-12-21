@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFirewallDashboard.Model
 {
-	public class FWRule
+	class FWRule
 	{
 	}
 }

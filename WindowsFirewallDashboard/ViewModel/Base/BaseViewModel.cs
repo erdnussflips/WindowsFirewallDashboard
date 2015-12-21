@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WindowsFirewallDashboard.ViewModel.Base
 {
 	[Serializable]
-	public abstract class BaseViewModel : IViewModel
+	abstract class BaseViewModel : IViewModel
 	{
 		protected BaseViewModel()
 		{

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Events.Objects;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
@@ -13,6 +14,7 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 		protected static Logger LOG = LogManager.GetCurrentClassLogger();
 
 		protected EventLogEntry FirewallLogEvent { get; set; }
+		public long LogId { get; protected set; }
 		public long EventId { get; protected set; }
 		public DateTime ModifyingTime { get; protected set; }
 
@@ -26,8 +28,20 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 			}
 
 			FirewallLogEvent = eventArgs;
+			LogId = FirewallLogEvent.Index;
 			EventId = FirewallLogEvent.InstanceId;
 			ModifyingTime = FirewallLogEvent.TimeGenerated;
+		}
+	}
+
+	public abstract class FirewallBaseEventArgs<TData> : FirewallBaseEventArgs
+		where TData : FirewallBaseObject, new()
+	{
+		protected TData Data { get; set; }
+
+		internal FirewallBaseEventArgs(EventLogEntry @event) : base(@event)
+		{
+			Data = new TData();
 		}
 	}
 }

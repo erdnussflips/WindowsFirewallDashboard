@@ -8,7 +8,7 @@ using WindowsFirewallDashboard.View;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	public class NotificationManager
+	class NotificationManager
 	{
 		private FirewallEventNotificationWindow notificationWindow;
 
@@ -23,7 +23,10 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			{
 				if(notificationWindow == null)
 				{
-					notificationWindow = new FirewallEventNotificationWindow();
+					notificationWindow = new FirewallEventNotificationWindow
+					{
+						Topmost = true
+					};
 					notificationWindow.AddEvent();
 					notificationWindow.Show();
 

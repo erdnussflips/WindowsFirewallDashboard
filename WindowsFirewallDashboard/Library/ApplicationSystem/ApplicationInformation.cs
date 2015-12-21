@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	public class ApplicationInformation
+	class ApplicationInformation
 	{
 		public static Assembly GetExecutingAssembly()
 		{

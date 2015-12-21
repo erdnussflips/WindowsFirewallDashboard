@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -7,24 +8,28 @@ using System.Threading.Tasks;
 using System.Windows;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
+using WindowsFirewallDashboard.Library.Utils;
+using WindowsFirewallDashboard.Resources.Localization;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	public class ApplicationManager
+	#pragma warning disable CC0091
+	class ApplicationManager
 	{
-		private static ApplicationManager _instance;
-
-		public static ApplicationManager Instance
+		private static ApplicationManager _singleton;
+		protected static ApplicationManager Singleton
 		{
 			get
 			{
-				if(_instance == null)
+				if (_singleton == null)
 				{
-					_instance = new ApplicationManager();
+					_singleton = new ApplicationManager();
 				}
-				return _instance;
+				return _singleton;
 			}
 		}
+
+		public static ApplicationManager Instance => Singleton;
 
 		public FirewallManager Firewall { get; private set; }
 		public NotificationManager Notifications { get; private set; }
@@ -37,6 +42,8 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			Firewall = new FirewallManager(Notifications);
 
 			Tray.Icon = new Icon(Application.GetResourceStream(ApplicationResource.NotifyIconWhite).Stream);
+
+			LocalizationTool.Initialize();
 		}
 
 		public void Start()
@@ -46,8 +53,6 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			Tray.ShowIcon();
 
 			ApplicationUpdater.Instance.CheckForUpdates();
-
-			Firewall.EventManager.GetEventHistory();
 		}
 
 		public void Activate()
@@ -62,6 +67,8 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public void Exit()
 		{
+			Tray.HideIcon();
+
 			Firewall.StopEventListening();
 		}
 

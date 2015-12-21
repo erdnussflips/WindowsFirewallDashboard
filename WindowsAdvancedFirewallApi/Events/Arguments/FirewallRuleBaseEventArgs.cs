@@ -9,7 +9,7 @@ using WindowsAdvancedFirewallApi.Events.Objects;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public abstract class FirewallRuleBaseEventArgs : FirewallEventArgs<FirewallRule>
+	public abstract class FirewallRuleBaseEventArgs : FirewallExtendedOriginEventArgs<FirewallRule>
 	{
 		public FirewallRule Rule
 		{
@@ -19,6 +19,12 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 
 		internal FirewallRuleBaseEventArgs(EventLogEntry @event) : base(@event)
 		{
+		}
+
+		protected void SetRuleAttributes(int iRuleId, int iRuleName)
+		{
+			Rule.Id = FirewallLogEvent.ReplacementStrings[iRuleId];
+			Rule.Name = FirewallLogEvent.ReplacementStrings[iRuleName];
 		}
 	}
 }

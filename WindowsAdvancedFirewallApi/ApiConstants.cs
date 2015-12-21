@@ -15,17 +15,5 @@ namespace WindowsAdvancedFirewallApi
 
 		public const string REGISTRY_KEY_EVENTLOG = @"SYSTEM\CurrentControlSet\Services\EventLog\";
 		public const string REGISTRY_KEY_FIREWALL_LOG = REGISTRY_KEY_EVENTLOG + FIREWALL_EVENT_PROTOCOL;
-
-		internal enum EventID
-		{
-			FIREWALL_SETTING_GENERAL = WFEvents.WFGlobalConfigurationChangedEvent,
-			FIREWALL_SETTING_PROFILE = WFEvents.WFProfileConfigurationChangedEvent,
-
-			FIREWALL_RULE_ADDED = WFEvents.WFRuleAddEvent,
-			FIREWALL_RULE_MODIFIED = WFEvents.WFRuleChangeEvent,
-			FIREWALL_RULE_DELETED = WFEvents.WFRuleDeleteEvent,
-
-			FIREWALL_NETWORKINTERFACE_CHANGED = WFEvents.WFInterfaceProfileChangedEvent
-		}
 	}
 }

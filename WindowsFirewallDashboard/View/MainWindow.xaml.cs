@@ -17,21 +17,20 @@ using MahApps.Metro.Controls.Dialogs;
 using WindowsAdvancedFirewallApi;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsFirewallDashboard.Library.ApplicationSystem;
+using System.Diagnostics;
 
 namespace WindowsFirewallDashboard
 {
 	/// <summary>
 	/// Interaktionslogik für MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : MetroWindow
+	partial class MainWindow : MetroWindow
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
 			InitializeCustomComponents();
 			InitializeEvents();
-
-			StartListening();
 		}
 
 		private void InitializeCustomComponents()
@@ -39,21 +38,29 @@ namespace WindowsFirewallDashboard
 			ApplicationManager.Instance.Tray.RootWindow = this;
 		}
 
+
 		private void InitializeEvents()
 		{
-
+			tabEvents.GotFocus += TabEvents_GotFocus;
+			ApplicationManager.Instance.Firewall.EventManager.HistoryLoaded += EventManager_HistoryLoaded;
 		}
 
-		private void StartListening()
+		private void TabEvents_GotFocus(object sender, RoutedEventArgs e)
 		{
-			//if(FirewallEventManager.Instance.StartListingFirewall())
-				//this.TbNofitications.Text = "Benachrichtigungen aktiv.";
+			ApplicationManager.Instance.Firewall.EventManager.LoadEventHistory();
 		}
 
-		private void StopListening()
+		private void EventManager_HistoryLoaded(object sender, List<WindowsAdvancedFirewallApi.Events.Arguments.FirewallBaseEventArgs> events)
 		{
-			//if(FirewallEventManager.Instance.StopListingFirewall())
-				//this.TbNofitications.Text = "Benachrichtigungen inaktiv.";
+			eventHistory.ItemsSource = events;
+		}
+
+		private void EnableFirewall_Click(object sender, RoutedEventArgs e)
+		{
+		}
+
+		private void DisableFirewall_Click(object sender, RoutedEventArgs e)
+		{
 		}
 	}
 }

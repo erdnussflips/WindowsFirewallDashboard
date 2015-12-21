@@ -18,7 +18,7 @@ namespace WindowsFirewallDashboard.View
     /// <summary>
     /// Interaktionslogik für FirewallEventNotificationWindow.xaml
     /// </summary>
-    public partial class FirewallEventNotificationWindow : MetroWindow
+    partial class FirewallEventNotificationWindow : MetroWindow
     {
         public FirewallEventNotificationWindow()
         {

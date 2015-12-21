@@ -11,7 +11,13 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 	{
 		public FirewallRuleDeletedEventArgs(EventLogEntry @event) : base(@event)
 		{
+			SetAttributes();
+		}
 
+		public void SetAttributes()
+		{
+			SetAttributes(2, 3);
+			SetRuleAttributes(0, 1);
 		}
 	}
 }

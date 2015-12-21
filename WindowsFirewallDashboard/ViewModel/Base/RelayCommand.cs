@@ -9,7 +9,7 @@ using System.Windows.Input;
 namespace WindowsFirewallDashboard.ViewModel.Base
 {
 	[Serializable]
-	public class RelayCommand : ICommand
+	class RelayCommand : ICommand
 	{
 		#region Fields
 		private readonly Action<object> execute;

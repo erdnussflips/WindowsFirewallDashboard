@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace WindowsFirewallDashboard.Library.Utils
 {
-    public static class GeneralUtils
+    static class GeneralUtils
     {
         public static void ShowContextMenu(this NotifyIcon notifyIcon)
         {

@@ -11,7 +11,7 @@ using WindowsFirewallDashboard.Library.Utils;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	public class TrayManager
+	class TrayManager
 	{
 		private Window _rootWindow;
 		public Window RootWindow

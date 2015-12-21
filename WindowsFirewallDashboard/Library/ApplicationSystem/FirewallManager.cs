@@ -8,7 +8,7 @@ using WindowsAdvancedFirewallApi.Events.Arguments;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	public class FirewallManager
+	class FirewallManager
 	{
 		public FirewallEventManager EventManager
 		{

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace WindowsFirewallDashboard.ViewModel.Base
 {
-	public interface IViewModel : INotifyPropertyChanged { }
-	public interface IViewModel<TModel> : IViewModel
+	interface IViewModel : INotifyPropertyChanged { }
+	interface IViewModel<TModel> : IViewModel
 	{
 		[Browsable(false)]
 		[Bindable(false)]

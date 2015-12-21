@@ -21,40 +21,44 @@ namespace WindowsAdvancedFirewallApi.Events
 			Installed, NotInstalled, Unknown
 		}
 
-		const string FIREWALL_EVENT_SOURCE = ApiConstants.FIREWALL_EVENT_SOURCE;
-		const string FIREWALL_EVENT_PROTOCOL = ApiConstants.FIREWALL_EVENT_PROTOCOL;
-		const string FIREWALL_EVENT_LOGNAME = ApiConstants.FIREWALL_EVENT_LOGNAME;
-
-		const string REGISTRY_KEY_EVENTLOG = ApiConstants.REGISTRY_KEY_EVENTLOG;
-		const string REGISTRY_KEY_FIREWALL_LOG = ApiConstants.REGISTRY_KEY_FIREWALL_LOG;
-
-		private static FirewallEventManager instance;
-
-		public static FirewallEventManager Instance
+		private static FirewallEventManager _singleton;
+		private static FirewallEventManager Singleton
 		{
 			get
 			{
-				if (instance == null)
+				if (_singleton == null)
 				{
-					instance = new FirewallEventManager();
+					_singleton = new FirewallEventManager();
 				}
-				return instance;
+				return _singleton;
 			}
 		}
 
-		public static FirewallEventManager Get => Instance;
+		public static FirewallEventManager Instance => Singleton;
+		public static FirewallEventManager Get => Singleton;
 
 		private EventLog _eventLog { get; set; }
 
+		#region EventHander
+
+		public event EventHandler HistoryLoadingStatusChanged;
+		public event EventHandler<List<FirewallBaseEventArgs>> HistoryLoaded;
+
+		public event EventHandler<FirewallBaseEventArgs> DefaultsRestored;
 		public event EventHandler<FirewallSettingEventArgs> SettingsChanged;
 		public event EventHandler<FirewallProfileSettingEventArgs> ProfileSettingsChanged;
 
+		public event EventHandler<FirewallRuleBaseEventArgs> AllRulesDeleted;
 		public event EventHandler<FirewallRuleBaseEventArgs> RulesChanged;
 		public event EventHandler<FirewallRuleAddedEventArgs> RuleAdded;
 		public event EventHandler<FirewallRuleBaseEventArgs> RuleModified;
 		public event EventHandler<FirewallRuleDeletedEventArgs> RuleDeleted;
 
-		public event EventHandler<FirewallNetworkInterfaceProfileChanged> NetworkInterfaceProfileChanged;
+		public event EventHandler<FirewallNetworkInterfaceProfileChangedEventArgs> NetworkInterfaceProfileChanged;
+
+		public event EventHandler<FirewallUserNotificationFailedEventArgs> UserNotificationFailedForBlockedOperation;
+
+		#endregion
 
 		private FirewallEventManager()
 		{
@@ -65,7 +69,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to check installation status.", true);
 
-			using (var key = Registry.LocalMachine.OpenSubKey(REGISTRY_KEY_FIREWALL_LOG))
+			using (var key = Registry.LocalMachine.OpenSubKey(ApiConstants.REGISTRY_KEY_FIREWALL_LOG))
 			{
 				if (key == null)
 				{
@@ -100,7 +104,7 @@ namespace WindowsAdvancedFirewallApi.Events
 
 			if(!IsInstalled())
 			{
-				Registry.LocalMachine.CreateSubKey(REGISTRY_KEY_FIREWALL_LOG);
+				Registry.LocalMachine.CreateSubKey(ApiConstants.REGISTRY_KEY_FIREWALL_LOG);
 			}
 
 			//if (!EventLog.SourceExists(FIREWALL_EVENT_SOURCE))
@@ -115,7 +119,7 @@ namespace WindowsAdvancedFirewallApi.Events
 
 			if(IsInstalled())
 			{
-				Registry.LocalMachine.DeleteSubKey(REGISTRY_KEY_FIREWALL_LOG);
+				Registry.LocalMachine.DeleteSubKey(ApiConstants.REGISTRY_KEY_FIREWALL_LOG);
 			}
 
 			//if(EventLog.SourceExists(FIREWALL_EVENT_SOURCE))
@@ -129,7 +133,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		{
 			try
 			{
-				var temp = new EventLog(FIREWALL_EVENT_LOGNAME)
+				var temp = new EventLog(ApiConstants.FIREWALL_EVENT_LOGNAME)
 				{
 					EnableRaisingEvents = true
 				};
@@ -151,7 +155,7 @@ namespace WindowsAdvancedFirewallApi.Events
 			{
 				if (_eventLog == null)
 				{
-					_eventLog = new EventLog(FIREWALL_EVENT_LOGNAME)
+					_eventLog = new EventLog(ApiConstants.FIREWALL_EVENT_LOGNAME)
 					{
 						EnableRaisingEvents = true,
 					};
@@ -179,8 +183,25 @@ namespace WindowsAdvancedFirewallApi.Events
 
 		private void EventLog_EntryWritten(object sender, EntryWrittenEventArgs e)
 		{
-			var @event = GenerateFirewallEventArgs(e.Entry);
+			var @event = FirewallEventFactory.GenerateFirewallEventArgs(e.Entry);
 			RaiseFirewallEvent(@event);
+		}
+
+		private void RaiseFirewallEvent(FirewallBaseEventArgs e)
+		{
+			InvokeEventHandler(DefaultsRestored, e);
+			InvokeEventHandler(SettingsChanged, e);
+			InvokeEventHandler(ProfileSettingsChanged, e);
+
+			InvokeEventHandler(AllRulesDeleted, e);
+			InvokeEventHandler(RulesChanged, e);
+			InvokeEventHandler(RuleAdded, e);
+			InvokeEventHandler(RuleModified, e);
+			InvokeEventHandler(RuleDeleted, e);
+
+			InvokeEventHandler(NetworkInterfaceProfileChanged, e);
+
+			InvokeEventHandler(UserNotificationFailedForBlockedOperation, e);
 		}
 
 		private void InvokeEventHandler<TData>(EventHandler<TData> handler, FirewallBaseEventArgs e) where TData : FirewallBaseEventArgs
@@ -191,56 +212,34 @@ namespace WindowsAdvancedFirewallApi.Events
 			}
 		}
 
-		private void RaiseFirewallEvent(FirewallBaseEventArgs e)
+		public void LoadEventHistory()
 		{
-			InvokeEventHandler(SettingsChanged, e);
-			InvokeEventHandler(ProfileSettingsChanged, e);
-
-			InvokeEventHandler(RulesChanged, e);
-			InvokeEventHandler(RuleAdded, e);
-			InvokeEventHandler(RuleModified, e);
-			InvokeEventHandler(RuleDeleted, e);
-
-			InvokeEventHandler(NetworkInterfaceProfileChanged, e);
-		}
-
-		public List<FirewallBaseEventArgs> GetEventHistory()
-		{
-			var events = new List<FirewallBaseEventArgs>();
-
-			foreach (EventLogEntry item in _eventLog.Entries)
+			Task.Run(() =>
 			{
-				var @event = GenerateFirewallEventArgs(item);
-				if(@event != null)
+				var events = new List<FirewallBaseEventArgs>();
+				var index = 1;
+
+				foreach (EventLogEntry item in _eventLog.Entries)
 				{
-					events.Add(@event);
+					var @event = FirewallEventFactory.GenerateFirewallEventArgs(item);
+					if (@event != null)
+					{
+						events.Add(@event);
+
+						var loadedEvent = new FirewallHistoryLoadingStatusChangedEventArgs()
+						{
+							MaxCount = _eventLog.Entries.Count,
+							LoadedCount = index,
+							CurrentLoadedEvent = @event
+						};
+						HistoryLoadingStatusChanged.Invoke(this, null);
+					}
+
+					index++;
 				}
-			}
 
-			return events;
-		}
-
-		private FirewallBaseEventArgs GenerateFirewallEventArgs(EventLogEntry e)
-		{
-			var eventId = e?.InstanceId;
-
-			switch ((ApiConstants.EventID)eventId)
-			{
-				case ApiConstants.EventID.FIREWALL_SETTING_GENERAL:
-					return new FirewallSettingEventArgs(e);
-				case ApiConstants.EventID.FIREWALL_SETTING_PROFILE:
-					return new FirewallProfileSettingEventArgs(e);
-				case ApiConstants.EventID.FIREWALL_RULE_ADDED:
-				case ApiConstants.EventID.FIREWALL_RULE_MODIFIED:
-					return new FirewallRuleAddedEventArgs(e);
-				case ApiConstants.EventID.FIREWALL_RULE_DELETED:
-					return new FirewallRuleDeletedEventArgs(e);
-				case ApiConstants.EventID.FIREWALL_NETWORKINTERFACE_CHANGED:
-					return new FirewallNetworkInterfaceProfileChanged(e);
-				default:
-					LOG.Info(string.Format("The event id '{0}' is not handled by this API.", eventId));
-					return null;
-			}
+				HistoryLoaded.Invoke(this, events);
+			});
 		}
 
 		~FirewallEventManager()

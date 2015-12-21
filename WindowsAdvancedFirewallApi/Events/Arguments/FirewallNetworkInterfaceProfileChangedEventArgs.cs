@@ -9,7 +9,7 @@ using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public class FirewallNetworkInterfaceProfileChanged : FirewallDataEventArgs<FirewallNetworkInterfaceProfile>
+	public class FirewallNetworkInterfaceProfileChangedEventArgs : FirewallBaseEventArgs<FirewallNetworkInterfaceProfile>
 	{
 		public FirewallNetworkInterfaceProfile NetworkInterface
 		{
@@ -17,7 +17,7 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 			protected set { Data = value; }
 		}
 
-		public FirewallNetworkInterfaceProfileChanged(EventLogEntry @event) : base(@event)
+		public FirewallNetworkInterfaceProfileChangedEventArgs(EventLogEntry @event) : base(@event)
 		{
 			SetAttributes();
 		}

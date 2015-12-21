@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	public class ApplicationResource
+	class ApplicationResource
 	{
 		public static Uri NotifyIconBlack = new Uri(@"/Resources/Images/NotifyIcon-black.ico", UriKind.Relative);
 		public static Uri NotifyIconWhite = new Uri(@"/Resources/Images/NotifyIcon-white.ico", UriKind.Relative);

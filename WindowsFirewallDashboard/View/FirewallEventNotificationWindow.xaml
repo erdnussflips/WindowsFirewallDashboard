@@ -13,11 +13,9 @@
 		GlowBrush="{DynamicResource AccentColorBrush}"
 		ResizeMode="NoResize"
 		WindowTransitionsEnabled="true">
-	<Grid Margin="5">
-		<Grid Margin="0">
-			<TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-			<Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="62,97,0,0" VerticalAlignment="Top" Width="75"/>
-			<Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="251,117,0,0" VerticalAlignment="Top" Width="75"/>
-		</Grid>
-	</Grid>
+    <Controls:MetroTabControl x:Name="metroTabControl" d:LayoutOverrides="Width">
+        <TabItem Header="TabItem">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+    </Controls:MetroTabControl>
 </Controls:MetroWindow>

@@ -101,7 +101,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.2\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -180,19 +180,25 @@
     <Compile Include="COM\Types\FirewallPolicy.cs" />
     <Compile Include="COM\Types\FirewallProfile.cs" />
     <Compile Include="Events\Arguments\FirewallBaseEventArgs.cs" />
-    <Compile Include="Events\Arguments\FirewallDataEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallExtendedApplicationEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallExtendedOriginEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallEventArgs.cs" />
-    <Compile Include="Events\Arguments\FirewallNetworkInterfaceProfileChanged.cs" />
+    <Compile Include="Events\Arguments\FirewallHistoryLoadingStatusChangedEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallNetworkInterfaceProfileChangedEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallRuleAddedEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallRuleBaseEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallRuleDeletedEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallProfileSettingEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallSettingEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallUserNotificationFailedEventArgs.cs" />
+    <Compile Include="Events\FirewallEventFactory.cs" />
     <Compile Include="Events\FirewallEventManager.cs" />
     <Compile Include="Events\Objects\FirewallBaseObject.cs" />
     <Compile Include="Events\Objects\FirewallNetworkInterfaceProfile.cs" />
+    <Compile Include="Events\Objects\FirewallProfileSetting.cs" />
     <Compile Include="Events\Objects\FirewallRule.cs" />
     <Compile Include="Events\Objects\FirewallSetting.cs" />
+    <Compile Include="Events\Objects\FirewallUserNotificationEvent.cs" />
     <Compile Include="Events\WFEvents.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,8 +11,8 @@ namespace WindowsAdvancedFirewallApi.Events
 		WFStartupConfigurationInfo = 2000,
 		WFStartupProfileConfigurationInfo = 2001,
 		WFGlobalConfigurationChangedEvent = 2002,
-
 		WFProfileConfigurationChangedEvent = 2003,
+
 		WFRuleAddEvent = 2004,
 		WFRuleChangeEvent = 2005,
 		WFRuleDeleteEvent = 2006,
@@ -22,6 +22,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		WFGroupPolicyErrorEvent = 2009,
 		WFInterfaceProfileChangedEvent = 2010,
 		WFUnableToShowQueryUserNotificationEvent = 2011,
+
 		WFRestoreDefaultsEvent = 2032,
 		WFAllFirewallRulesDeletedEvent = 2033,
 

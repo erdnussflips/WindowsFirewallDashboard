@@ -8,7 +8,7 @@ using WindowsFirewallDashboard.ViewModel;
 
 namespace WindowsFirewallDashboard.Locator
 {
-	public class ViewModelLocator
+	class ViewModelLocator
 	{
 		private static ControlViewModel _controlVM;
 
