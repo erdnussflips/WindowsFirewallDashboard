@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
-	public class FirewallHistoryLoadingStatusChangedEventArgs
+	public class FirewallHistoryLoadingStatusChangedEventArgs : EventArgs
 	{
 		public int LoadedCount { get; internal set; }
 		public int MaxCount { get; internal set; }

@@ -67,9 +67,8 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public void Exit()
 		{
-			Tray.HideIcon();
-
 			Firewall.StopEventListening();
+			Tray.HideIcon();
 		}
 
 		public void StartInBackground()

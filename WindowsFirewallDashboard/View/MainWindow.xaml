@@ -89,6 +89,7 @@
                                 <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Type"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Label x:Name="loadingLabel" Content="Lade Ereignis x von y" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" Visibility="Collapsed"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabRules" Header="Regeln">

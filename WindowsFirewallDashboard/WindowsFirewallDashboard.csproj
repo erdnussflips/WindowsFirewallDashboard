@@ -144,10 +144,6 @@
       <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Octokit, Version=0.17.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.0.17.0\lib\net45\Octokit.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -194,9 +190,6 @@
     <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
     <Compile Include="Locator\ViewModelLocator.cs" />
-    <Compile Include="Model\ApplicationUpdates\BetaApplicationUpdate.cs" />
-    <Compile Include="Model\ApplicationUpdates\ReleaseApplicationUpdate.cs" />
-    <Compile Include="Model\ApplicationUpdates\BaseApplicationUpdate.cs" />
     <Compile Include="Resources\Localization\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -274,6 +267,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\GitHubUpdateManger.NET\GitHubUpdateManger.NET.csproj">
+      <Project>{555f5a60-1aad-47b5-b51f-9803da91c5f5}</Project>
+      <Name>GitHubUpdateManger.NET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsAdvancedFirewallApi\WindowsAdvancedFirewallApi.csproj">
       <Project>{a600b42f-23a8-4fbf-a4d1-4fd264c9ed43}</Project>
       <Name>WindowsAdvancedFirewallApi</Name>

@@ -41,7 +41,7 @@ namespace WindowsAdvancedFirewallApi.Events
 
 		#region EventHander
 
-		public event EventHandler HistoryLoadingStatusChanged;
+		public event EventHandler<FirewallHistoryLoadingStatusChangedEventArgs> HistoryLoadingStatusChanged;
 		public event EventHandler<List<FirewallBaseEventArgs>> HistoryLoaded;
 
 		public event EventHandler<FirewallBaseEventArgs> DefaultsRestored;
@@ -204,7 +204,7 @@ namespace WindowsAdvancedFirewallApi.Events
 			InvokeEventHandler(UserNotificationFailedForBlockedOperation, e);
 		}
 
-		private void InvokeEventHandler<TData>(EventHandler<TData> handler, FirewallBaseEventArgs e) where TData : FirewallBaseEventArgs
+		private void InvokeEventHandler<TData>(EventHandler<TData> handler, EventArgs e) where TData : EventArgs
 		{
 			if (e is TData)
 			{
@@ -232,13 +232,14 @@ namespace WindowsAdvancedFirewallApi.Events
 							LoadedCount = index,
 							CurrentLoadedEvent = @event
 						};
-						HistoryLoadingStatusChanged.Invoke(this, null);
+						
+						InvokeEventHandler(HistoryLoadingStatusChanged, loadedEvent);
 					}
 
 					index++;
 				}
 
-				HistoryLoaded.Invoke(this, events);
+				HistoryLoaded?.Invoke(this, events);
 			});
 		}
 

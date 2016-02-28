@@ -20,6 +20,8 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 
 		internal FirewallBaseEventArgs(EventLogEntry eventArgs)
 		{
+			LOG.Debug("Create new instance of " + this.GetType().Name);
+
 			if (eventArgs == null)
 			{
 				var exception = new ArgumentOutOfRangeException("The given parameter " + nameof(eventArgs) + " is null.");

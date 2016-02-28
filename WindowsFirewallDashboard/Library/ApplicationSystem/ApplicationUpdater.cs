@@ -1,14 +1,18 @@
-﻿using Octokit;
+﻿using GitHubUpdateManger;
+using GitHubUpdateManger.Library;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsFirewallDashboard.Model.ApplicationUpdates;
+using GitHubUpdateManger.Model;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	class ApplicationUpdater
+	class ApplicationUpdater : IApplicationUpdater
 	{
 		private static ApplicationUpdater _singleton;
 		protected static ApplicationUpdater Singleton
@@ -25,24 +29,30 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		}
 		public static ApplicationUpdater Instance => Singleton;
 
-		public List<BaseApplicationUpdate> Updates { get; private set; }
+		public GitHubUpdateManager updateManager;
+
+		private DateTime lastCheck = DateTime.Today.AddDays(-1);
 
 		private ApplicationUpdater()
 		{
-			Updates = new List<BaseApplicationUpdate>();
+			updateManager = new GitHubUpdateManager("WindowsFirewallDashboard", "ErdnussFlipS")
+			{
+				ApplicationUpdater = this
+			};
 		}
 
 		public async void CheckForUpdates()
 		{
-			Updates.Clear();
-			var github = new GitHubClient(new ProductHeaderValue(ApplicationInformation.GetApplicationName()));
-			var releases = await github.Release.GetAll(ApplicationConstants.GitHubApplicationUser, ApplicationConstants.GitHubApplicationRepository);
+			await updateManager.CheckForReleases(Assembly.GetExecutingAssembly().GetName().Version, true);
+		}
 
-			foreach (var release in releases)
-			{
-				var update = new ReleaseApplicationUpdate(release);
-				Updates.Add(update);
-			}
+		public void UpdatesAvailable(List<RepositoryRelease> updates)
+		{
+		}
+
+		public void InstallUpdate()
+		{
+
 		}
 	}
 }
