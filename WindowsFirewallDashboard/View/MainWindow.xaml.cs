@@ -18,6 +18,11 @@ using WindowsAdvancedFirewallApi;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsFirewallDashboard.Library.ApplicationSystem;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
+using WindowsAdvancedFirewallApi.Library;
+using WindowsFirewallDashboard.Locator;
+using WindowsFirewallDashboard.ViewModel;
+using WindowsAdvancedFirewallApi.Events.Arguments;
 
 namespace WindowsFirewallDashboard
 {
@@ -26,26 +31,23 @@ namespace WindowsFirewallDashboard
 	/// </summary>
 	partial class MainWindow : MetroWindow
 	{
-		private bool eventListFirstShown = true;
+		private bool eventListFirstShown = false;
+
+		private MainViewModel ViewModel => ViewModelLocator.Main;
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			InitializeCustomComponents();
-			InitializeEvents();
+			InitializeView();
 		}
 
-		private void InitializeCustomComponents()
+		private void InitializeView()
 		{
-			ApplicationManager.Instance.Tray.RootWindow = this;
-		}
+			ViewModel.RootWindow = this;
 
-
-		private void InitializeEvents()
-		{
+			ViewModel.HistoryLoaded += ViewModel_HistoryLoaded;
+			ViewModel.HistoryLoadingStatusChanged += ViewModel_HistoryLoadingStatusChanged;
 			tabEvents.GotFocus += TabEvents_GotFocus;
-			ApplicationManager.Instance.Firewall.EventManager.HistoryLoadingStatusChanged += EventManager_HistoryLoadingStatusChanged;
-			ApplicationManager.Instance.Firewall.EventManager.HistoryLoaded += EventManager_HistoryLoaded;
 		}
 
 		private void TabEvents_GotFocus(object sender, RoutedEventArgs e)
@@ -55,26 +57,25 @@ namespace WindowsFirewallDashboard
 
 		private void EventListFirstShown()
 		{
-			if (eventListFirstShown)
+			if (!eventListFirstShown)
 			{
-				eventListFirstShown = false;
-				loadingLabel.Visibility = Visibility.Visible;
-				ApplicationManager.Instance.Firewall.EventManager.LoadEventHistory();
+				eventListFirstShown = true;
+				ViewModel.LoadEventHistory();
 			}
 		}
 
-		private void EventManager_HistoryLoadingStatusChanged(object sender, WindowsAdvancedFirewallApi.Events.Arguments.FirewallHistoryLoadingStatusChangedEventArgs e)
+		private void ViewModel_HistoryLoadingStatusChanged(object sender, FirewallHistoryLoadingStatusChangedEventArgs e)
 		{
 			Dispatcher.BeginInvoke(new Action(() => {
-				loadingLabel.Content = e.LoadedCount + " Ereignis(e) von " + e.MaxCount + " geladen";
+				loadingLabel.Content = e.LoadedCount + " Ereignis(se) von " + e.MaxCount + " geladen";
 			}), null);
 		}
 
-		private void EventManager_HistoryLoaded(object sender, List<WindowsAdvancedFirewallApi.Events.Arguments.FirewallBaseEventArgs> events)
+		private void ViewModel_HistoryLoaded(object sender, ICollection<FirewallBaseEventArgs> events)
 		{
 			Dispatcher.BeginInvoke(new Action(() => {
-				loadingLabel.Visibility = Visibility.Collapsed;
-				eventHistory.ItemsSource = events;
+				// loadingLabel.Visibility = Visibility.Collapsed;
+				loadingLabel.Content = events.Count + " geladen";
 			}), null);
 		}
 

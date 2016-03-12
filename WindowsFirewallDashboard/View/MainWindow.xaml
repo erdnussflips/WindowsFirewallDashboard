@@ -15,32 +15,32 @@
 		GlowBrush="{DynamicResource AccentColorBrush}"
 		ResizeMode="CanResizeWithGrip"
 		WindowTransitionsEnabled="true"
-		DataContext="{Binding Path=ControlVM, Source={StaticResource Locator}}">
-    <Controls:MetroWindow.Resources>
-        <Style x:Key="StatusIcon" TargetType="{x:Type TextBlock}">
-            <Style.Resources>
-                <Storyboard x:Key="Enabled">
-                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
-                        <EasingColorKeyFrame KeyTime="0" Value="Lime"/>
-                    </ColorAnimationUsingKeyFrames>
-                </Storyboard>
-                <Storyboard x:Key="Disabled">
-                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
-                        <EasingColorKeyFrame KeyTime="0" Value="Red"/>
-                    </ColorAnimationUsingKeyFrames>
-                </Storyboard>
-                <Storyboard x:Key="PartialEnabled">
-                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
-                        <EasingColorKeyFrame KeyTime="0" Value="Orange"/>
-                    </ColorAnimationUsingKeyFrames>
-                </Storyboard>
-            </Style.Resources>
-        </Style>
-    </Controls:MetroWindow.Resources>
-    <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands>
-            <Button Content="Einstellungen" />
-            <!--<Button>
+		DataContext="{Binding Path=Main, Source={StaticResource Locator}}">
+	<Controls:MetroWindow.Resources>
+		<Style x:Key="StatusIcon" TargetType="{x:Type TextBlock}">
+			<Style.Resources>
+				<Storyboard x:Key="Enabled">
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
+						<EasingColorKeyFrame KeyTime="0" Value="Lime"/>
+					</ColorAnimationUsingKeyFrames>
+				</Storyboard>
+				<Storyboard x:Key="Disabled">
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
+						<EasingColorKeyFrame KeyTime="0" Value="Red"/>
+					</ColorAnimationUsingKeyFrames>
+				</Storyboard>
+				<Storyboard x:Key="PartialEnabled">
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="{x:Null}">
+						<EasingColorKeyFrame KeyTime="0" Value="Orange"/>
+					</ColorAnimationUsingKeyFrames>
+				</Storyboard>
+			</Style.Resources>
+		</Style>
+	</Controls:MetroWindow.Resources>
+	<Controls:MetroWindow.RightWindowCommands>
+		<Controls:WindowCommands>
+			<Button Content="Einstellungen" />
+			<!--<Button>
 				<StackPanel Orientation="Horizontal">
 					<Rectangle Width="20" Height="20"
 				   Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
@@ -54,51 +54,58 @@
 				   Text="deploy cupcakes" />
 				</StackPanel>
 			</Button>-->
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
+		</Controls:WindowCommands>
+	</Controls:MetroWindow.RightWindowCommands>
 
-    <Grid>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <StackPanel x:Name="InformationGrid">
-                <Button x:Name="StatusButton" Padding="0,10" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                    <Button.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem x:Name="EnableFirewall" Header="Firewall aktivieren" Click="EnableFirewall_Click" />
-                            <MenuItem x:Name="DisableFirewall" Header="Firewall deaktivieren" Click="DisableFirewall_Click" />
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                    <StackPanel x:Name="Status" Orientation="Vertical" Width="166.667">
-                        <TextBlock x:Name="Logo" TextWrapping="Wrap" FontFamily="{StaticResource WindowsFirewallDashboardFont}" Text="&#xE600;" TextAlignment="Center" VerticalAlignment="Center" Foreground="Black" Style="{DynamicResource StatusIcon}" Margin="0,0,0,10" FontSize="100"/>
-                        <TextBlock x:Name="TbNofitications" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-            <Controls:MetroTabControl x:Name="MainControl" d:LayoutOverrides="Width" Grid.Column="1">
-                <TabItem x:Name="tabOverview" Header="Übersicht">
-                    <Grid Background="#FFE5E5E5"/>
-                </TabItem>
-                <TabItem x:Name="tabEvents" Header="Ereignisse" d:LayoutOverrides="LeftPosition, RightPosition">
-                    <Grid Background="#FFE5E5E5">
-                        <DataGrid x:Name="eventHistory">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="ID"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Type"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Label x:Name="loadingLabel" Content="Lade Ereignis x von y" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" Visibility="Collapsed"/>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabRules" Header="Regeln">
-                    <Grid Background="#FFE5E5E5"/>
-                </TabItem>
-                <TabItem x:Name="tabSettings" Header="Einstellungen">
-                    <Grid Background="#FFE5E5E5"/>
-                </TabItem>
-            </Controls:MetroTabControl>
-        </Grid>
-    </Grid>
+	<Grid>
+		<Grid x:Name="grid" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<StackPanel x:Name="InformationGrid" Margin="0,0,5,0">
+				<Button x:Name="StatusButton" Padding="0,10" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+					<Button.ContextMenu>
+						<ContextMenu>
+							<MenuItem x:Name="EnableFirewall" Header="Firewall aktivieren" Click="EnableFirewall_Click" />
+							<MenuItem x:Name="DisableFirewall" Header="Firewall deaktivieren" Click="DisableFirewall_Click" />
+						</ContextMenu>
+					</Button.ContextMenu>
+					<StackPanel x:Name="Status" Orientation="Vertical" Width="166.667">
+						<TextBlock x:Name="Logo" TextWrapping="Wrap" FontFamily="{StaticResource WindowsFirewallDashboardFont}" Text="&#xE600;" TextAlignment="Center" VerticalAlignment="Center" Foreground="Black" Style="{DynamicResource StatusIcon}" Margin="0,0,0,10" FontSize="100"/>
+						<TextBlock x:Name="TbNofitications" TextWrapping="Wrap"/>
+					</StackPanel>
+				</Button>
+			</StackPanel>
+			<Controls:MetroTabControl x:Name="MainControl" d:LayoutOverrides="Width" Grid.Column="1">
+				<TabItem x:Name="tabOverview" Header="Übersicht">
+					<Grid Background="#FFE5E5E5"/>
+				</TabItem>
+				<TabItem x:Name="tabEvents" Header="Ereignisse" d:LayoutOverrides="LeftPosition, RightPosition">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<DataGrid x:Name="eventHistory" AutoGenerateColumns="False" CanUserReorderColumns="True" ItemsSource="{Binding EventHistory, Mode=OneWay}">
+							<DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding LogId, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+                                <DataGridTextColumn Binding="{Binding EventId, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="Type"/>
+                                <DataGridTextColumn Binding="{Binding ModifyingTime, Mode=OneWay, StringFormat=G}" ClipboardContentBinding="{x:Null}" Header="Timestamp"/>
+							</DataGrid.Columns>
+						</DataGrid>
+						<Grid x:Name="eventStatusBar" Margin="0" Grid.Row="1" VerticalAlignment="Bottom">
+							<Label x:Name="loadingLabel" Content="Lade Ereignis x von y" HorizontalAlignment="Right" VerticalAlignment="Center" d:LayoutOverrides="LeftMargin, RightMargin"/>
+						</Grid>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabRules" Header="Regeln">
+					<Grid Background="#FFE5E5E5"/>
+				</TabItem>
+				<TabItem x:Name="tabSettings" Header="Einstellungen">
+					<Grid Background="#FFE5E5E5"/>
+				</TabItem>
+			</Controls:MetroTabControl>
+		</Grid>
+	</Grid>
 </Controls:MetroWindow>

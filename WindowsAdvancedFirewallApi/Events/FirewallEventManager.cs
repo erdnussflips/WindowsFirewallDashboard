@@ -2,13 +2,17 @@
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Threading;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 using WindowsAdvancedFirewallApi.Events.Objects;
+using WindowsAdvancedFirewallApi.Library;
 
 namespace WindowsAdvancedFirewallApi.Events
 {
@@ -39,10 +43,26 @@ namespace WindowsAdvancedFirewallApi.Events
 
 		private EventLog _eventLog { get; set; }
 
-		#region EventHander
+		private object _historySyncLock = new object();
+		private ICollection<FirewallBaseEventArgs> _history;
+		public ICollection<FirewallBaseEventArgs> History
+		{
+			get
+			{
+				if (_history == null)
+				{
+					_history = new ObservableCollection<FirewallBaseEventArgs>();
+					BindingOperations.EnableCollectionSynchronization(_history, _historySyncLock);
+				}
+
+				return _history;
+			}
+		}
+
+		#region EventHandler
 
 		public event EventHandler<FirewallHistoryLoadingStatusChangedEventArgs> HistoryLoadingStatusChanged;
-		public event EventHandler<List<FirewallBaseEventArgs>> HistoryLoaded;
+		public event EventHandler<ICollection<FirewallBaseEventArgs>> HistoryLoaded;
 
 		public event EventHandler<FirewallBaseEventArgs> DefaultsRestored;
 		public event EventHandler<FirewallSettingEventArgs> SettingsChanged;
@@ -216,30 +236,37 @@ namespace WindowsAdvancedFirewallApi.Events
 		{
 			Task.Run(() =>
 			{
-				var events = new List<FirewallBaseEventArgs>();
-				var index = 1;
+				lock(_historySyncLock)
+				{
+					History.Clear();
+				}
+
+				var currentNumber = 1;
 
 				foreach (EventLogEntry item in _eventLog.Entries)
 				{
 					var @event = FirewallEventFactory.GenerateFirewallEventArgs(item);
 					if (@event != null)
 					{
-						events.Add(@event);
+						lock (_historySyncLock)
+						{
+							History.Add(@event);
+						}
 
-						var loadedEvent = new FirewallHistoryLoadingStatusChangedEventArgs()
+						var loadedEvent = new FirewallHistoryLoadingStatusChangedEventArgs
 						{
 							MaxCount = _eventLog.Entries.Count,
-							LoadedCount = index,
+							LoadedCount = currentNumber,
 							CurrentLoadedEvent = @event
 						};
-						
+
 						InvokeEventHandler(HistoryLoadingStatusChanged, loadedEvent);
 					}
 
-					index++;
+					currentNumber++;
 				}
 
-				HistoryLoaded?.Invoke(this, events);
+				HistoryLoaded?.Invoke(this, History);
 			});
 		}
 

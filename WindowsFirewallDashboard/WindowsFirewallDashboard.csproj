@@ -135,6 +135,9 @@
   <PropertyGroup>
     <StartupObject>WindowsFirewallDashboard.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Images\NotifyIcon-blue.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -197,7 +200,7 @@
     </Compile>
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\BaseViewModelGeneric.cs" />
-    <Compile Include="ViewModel\ControlViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Base\IViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="View\FirewallEventNotificationWindow.xaml.cs">
@@ -281,6 +284,8 @@
     <Resource Include="Resources\Images\NotifyIcon-white.ico" />
     <Resource Include="Resources\Images\NotifyIcon-green.ico" />
     <Resource Include="Resources\Images\NotifyIcon-red.ico" />
+    <Resource Include="Resources\Images\NotifyIcon-blue.ico" />
+    <Resource Include="Resources\Images\NotifyIcon-orange.ico" />
     <Content Include="Resources\Images\shield.svg">
       <SubType>Designer</SubType>
     </Content>

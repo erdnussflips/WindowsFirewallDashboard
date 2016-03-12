@@ -8,6 +8,8 @@ using System.Resources;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Markup;
 using WindowsFirewallDashboard.Resources.Localization;
 
 namespace WindowsFirewallDashboard.Library.Utils
@@ -25,6 +27,16 @@ namespace WindowsFirewallDashboard.Library.Utils
 		public static void Initialize()
 		{
 			_ressourceManager = new ResourceManager(nameof(Language), Assembly.GetExecutingAssembly());
+
+			PrepareUILocalization();
+		}
+
+		public static void PrepareUILocalization()
+		{
+			FrameworkElement.LanguageProperty.OverrideMetadata(
+				typeof(FrameworkElement),
+				new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag))
+			);
 		}
 
 		public static void UpdateLanguage(string langID)

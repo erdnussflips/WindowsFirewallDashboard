@@ -10,18 +10,18 @@ namespace WindowsFirewallDashboard.Locator
 {
 	class ViewModelLocator
 	{
-		private static ControlViewModel _controlVM;
+		private static MainViewModel _main;
 
-		public static ControlViewModel ControlVM
+		public static MainViewModel Main
 		{
 			get
 			{
-				if(_controlVM == null)
+				if(_main == null)
 				{
-					_controlVM = new ControlViewModel();
+					_main = new MainViewModel();
 				}
 
-				return _controlVM;
+				return _main;
 			}
 		}
 
