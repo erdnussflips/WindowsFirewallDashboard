@@ -18,6 +18,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 	#pragma warning disable CC0091
 	class ApplicationManager
 	{
+		#region Singleton
 		private static ApplicationManager _singleton;
 		protected static ApplicationManager Singleton
 		{
@@ -30,40 +31,42 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 				return _singleton;
 			}
 		}
-
 		public static ApplicationManager Instance => Singleton;
+		#endregion
 
 		public UserSettings User { get; private set; }
 
 		public InstallManager Installer { get; private set; }
+		public ApplicationUpdater Updater { get; private set; }
 
 		public FirewallManager Firewall { get; private set; }
 		public NotificationManager Notifications { get; private set; }
-		public TrayManager Tray { get; private set; }
+		public WindowManager WindowManager { get; private set; }
 
 		private ApplicationManager()
 		{
 			Installer = new InstallManager();
+			Updater = new ApplicationUpdater();
+			WindowManager = new WindowManager();
 			Notifications = new NotificationManager();
-			Tray = new TrayManager();
 			Firewall = new FirewallManager(Notifications);
 
-			Tray.Icon = new Icon(Application.GetResourceStream(ApplicationResource.NotifyIconWhite).Stream);
+			WindowManager.TrayIcon = new Icon(Application.GetResourceStream(ApplicationResource.NotifyIconWhite).Stream);
 
 			LocalizationTool.Initialize();
 		}
 
-		#region Application Lifecycle
+		#region Application lifecycle
 		public void OnStart()
 		{
 			Load();
 
 			Firewall.StartEventListening();
-			Tray.ShowIcon();
+			WindowManager.ShowTray();
 
 			if (User.CheckForUpdatesAutomatically)
 			{
-				ApplicationUpdater.Instance.CheckForUpdates();
+				Updater.CheckForUpdates();
 			}
 
 		}
@@ -81,7 +84,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		public void OnExit()
 		{
 			Firewall.StopEventListening();
-			Tray.HideIcon();
+			WindowManager.HideTray();
 		}
 
 		public void StartInBackground()

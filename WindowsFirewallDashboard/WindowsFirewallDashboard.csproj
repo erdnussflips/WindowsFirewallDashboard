@@ -203,7 +203,7 @@
     <Compile Include="Library\ApplicationSystem\InstallManager.cs" />
     <Compile Include="Library\ApplicationSystem\NotificationManager.cs" />
     <Compile Include="Library\ApplicationSystem\ApplicationResource.cs" />
-    <Compile Include="Library\ApplicationSystem\TrayManager.cs" />
+    <Compile Include="Library\ApplicationSystem\WindowManager.cs" />
     <Compile Include="Library\Dependencies\SingleInstance.cs" />
     <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />

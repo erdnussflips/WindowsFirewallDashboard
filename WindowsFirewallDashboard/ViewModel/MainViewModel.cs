@@ -20,11 +20,11 @@ namespace WindowsFirewallDashboard.ViewModel
 		{
 			set
 			{
-				ApplicationManager.Instance.Tray.RootWindow = value;
+				ApplicationManager.Instance.WindowManager.RootWindow = value;
 			}
 			get
 			{
-				return ApplicationManager.Instance.Tray.RootWindow;
+				return ApplicationManager.Instance.WindowManager.RootWindow;
 			}
 		}
 

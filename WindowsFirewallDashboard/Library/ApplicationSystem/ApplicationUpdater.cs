@@ -14,7 +14,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
 	class ApplicationUpdater : IApplicationUpdater
 	{
-		private static ApplicationUpdater _singleton;
+		/*private static ApplicationUpdater _singleton;
 		protected static ApplicationUpdater Singleton
 		{
 			get
@@ -27,13 +27,13 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 				return _singleton;
 			}
 		}
-		public static ApplicationUpdater Instance => Singleton;
+		public static ApplicationUpdater Instance => Singleton;*/
 
 		public GitHubUpdateManager updateManager;
 
 		private DateTime lastCheck = DateTime.Today.AddDays(-1);
 
-		private ApplicationUpdater()
+		public ApplicationUpdater()
 		{
 			updateManager = new GitHubUpdateManager("WindowsFirewallDashboard", "ErdnussFlipS")
 			{

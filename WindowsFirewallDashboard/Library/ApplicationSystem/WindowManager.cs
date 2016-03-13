@@ -11,7 +11,7 @@ using WindowsFirewallDashboard.Library.Utils;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	class TrayManager
+	class WindowManager
 	{
 		private Window _rootWindow;
 		public Window RootWindow
@@ -39,7 +39,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		private NotifyIcon notifyIcon;
 
-		public Icon Icon
+		public Icon TrayIcon
 		{
 			get
 			{
@@ -87,7 +87,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			}
 		}
 
-		public TrayManager()
+		public WindowManager()
 		{
 			ManagedWindows = new List<Window>();
 
@@ -212,12 +212,12 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		}
 
 		#region Icon management
-		public void ShowIcon()
+		public void ShowTray()
 		{
 			notifyIcon.Visible = true;
 		}
 
-		public void HideIcon()
+		public void HideTray()
 		{
 			notifyIcon.Visible = false;
 		}

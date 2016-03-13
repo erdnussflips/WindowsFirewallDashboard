@@ -152,10 +152,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		{
 			try
 			{
-				var temp = new EventLog(ApiConstants.FIREWALL_EVENT_LOGNAME)
-				{
-					EnableRaisingEvents = true
-				};
+				var temp = new EventLog(ApiConstants.FIREWALL_EVENT_LOGNAME);
 				temp.Close();
 				temp.Dispose();
 
