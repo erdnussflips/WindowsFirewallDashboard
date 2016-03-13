@@ -35,12 +35,15 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public UserSettings User { get; private set; }
 
+		public InstallManager Installer { get; private set; }
+
 		public FirewallManager Firewall { get; private set; }
 		public NotificationManager Notifications { get; private set; }
 		public TrayManager Tray { get; private set; }
 
 		private ApplicationManager()
 		{
+			Installer = new InstallManager();
 			Notifications = new NotificationManager();
 			Tray = new TrayManager();
 			Firewall = new FirewallManager(Notifications);

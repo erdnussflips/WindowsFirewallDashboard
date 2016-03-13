@@ -8,7 +8,6 @@ namespace WindowsAdvancedFirewallApi.Utils
 {
 	public static class EnumUtils
 	{
-
 		private static void CheckForEnum<TEnum>() where TEnum : struct, IConvertible, IComparable, IFormattable
 		{
 			if (!typeof(TEnum).IsEnum)
@@ -17,17 +16,29 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 		}
 
+		public static string GetEnumValueName<TEnum>(object value) where TEnum : struct, IConvertible, IComparable, IFormattable
+		{
+			try
+			{
+				return Enum.GetName(typeof(TEnum), value);
+			}
+			catch (Exception ex)
+			{
+				return null;
+			}
+		}
+
 		public static TEnum ParseEnum<TEnum>(this short value, TEnum defaultValue = default(TEnum)) where TEnum : struct, IConvertible, IComparable, IFormattable => Parse(value, defaultValue);
 		public static TEnum ParseEnum<TEnum>(this int value, TEnum defaultValue = default(TEnum)) where TEnum : struct, IConvertible, IComparable, IFormattable => Parse(value, defaultValue);
-		public static TEnum ParseEnum<TEnum>(this long value, TEnum defaultValue = default(TEnum)) where TEnum : struct, IConvertible, IComparable, IFormattable => Parse((int)value, defaultValue);
+		public static TEnum ParseEnum<TEnum>(this long value, TEnum defaultValue = default(TEnum)) where TEnum : struct, IConvertible, IComparable, IFormattable => Parse(value, defaultValue);
 
-		public static TEnum Parse<TEnum>(int value, TEnum defaultValue = default(TEnum)) where TEnum : struct, IConvertible, IComparable, IFormattable
+		private static TEnum Parse<TEnum>(object value, TEnum defaultValue = default(TEnum)) where TEnum : struct, IConvertible, IComparable, IFormattable
 		{
 			CheckForEnum<TEnum>();
 
 			if(Enum.IsDefined(typeof(TEnum), value))
 			{
-				var objectValue = (object)value;
+				var objectValue = value;
 				var enumValue = (TEnum)objectValue;
 				return enumValue;
 			}
@@ -41,7 +52,13 @@ namespace WindowsAdvancedFirewallApi.Utils
 
 			try
 			{
-				var enumValue = PrimitiveUtils.ParseInteger(value);
+				var enumUnderlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+				object enumValue = null;
+
+				if (enumUnderlyingType == typeof(short)) enumValue = (short)PrimitiveUtils.ParseLong(value);
+				if (enumUnderlyingType == typeof(int)) enumValue = (int)PrimitiveUtils.ParseLong(value);
+				if (enumUnderlyingType == typeof(long)) enumValue = PrimitiveUtils.ParseLong(value);
+
 				return Parse(enumValue, defaultValue);
 			}
 			catch (Exception)

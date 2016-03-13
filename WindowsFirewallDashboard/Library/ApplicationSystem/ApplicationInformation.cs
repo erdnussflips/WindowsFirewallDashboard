@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,12 +12,12 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 	{
 		public static Assembly GetExecutingAssembly()
 		{
-			return System.Reflection.Assembly.GetExecutingAssembly();
+			return Assembly.GetExecutingAssembly();
 		}
 
 		public static string GetApplicationFilename()
 		{
-			return System.AppDomain.CurrentDomain.FriendlyName;
+			return AppDomain.CurrentDomain.FriendlyName;
 		}
 
 		public static string GetApplicationName()
@@ -25,9 +26,22 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			//return System.Diagnostics.Process.GetCurrentProcess().ProcessName;
 		}
 
+		public static string GetApplicationCompany()
+		{
+			var versionInfo = FileVersionInfo.GetVersionInfo(GetExecutingAssembly().Location);
+
+			return versionInfo.CompanyName;
+
+		}
+
+		public static string GetApplicationFileInstallPath()
+		{
+			return new Uri(GetExecutingAssembly().CodeBase).LocalPath;
+		}
+
 		public static string GetApplicationFileExecutionPath()
 		{
-			return System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+			return Process.GetCurrentProcess().MainModule.FileName;
 		}
 	}
 }

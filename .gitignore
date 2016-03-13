@@ -18,3 +18,4 @@ publish/
 
 packages/
 !packages/repositories.config
+temp/

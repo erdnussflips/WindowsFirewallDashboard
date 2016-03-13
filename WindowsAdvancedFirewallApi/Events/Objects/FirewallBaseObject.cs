@@ -8,12 +8,13 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 {
 	public abstract class FirewallBaseObject
 	{
-		public enum Profile
+		public enum Profile : long
 		{
 			Unkown = int.MinValue,
 			Domain = 1,
 			Private = 2,
-			Public = 4
+			Public = 4,
+			All = 7
 		}
 	}
 }

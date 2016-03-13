@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Events.Arguments;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Events
 {
@@ -35,7 +36,11 @@ namespace WindowsAdvancedFirewallApi.Events
 				case WFEvents.WFRestoreDefaultsEvent:
 				case WFEvents.WFAllFirewallRulesDeletedEvent:
 				default:
-					LOG.Info(string.Format("The event id '{0}' is not handled by this API.", eventId));
+					var valueName = EnumUtils.GetEnumValueName<WFEvents>(eventId);
+
+					if (valueName != null) LOG.Info(string.Format("The event id '{0}' ({1}) is not handled by this API.", eventId, valueName));
+					else LOG.Info(string.Format("The event id '{0}' is not handled by this API.", eventId));
+
 					return null;
 			}
 		}

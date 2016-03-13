@@ -104,15 +104,9 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			notifyIcon.ContextMenu = contextMenu;
 
 			var menuItemDashboard = new MenuItem("Dashboard anzeigen");
-			menuItemDashboard.Click += delegate (object sender, EventArgs e)
-			{
-				ShowWindows();
-			};
+			menuItemDashboard.Click += ContextMenuShowDashboard;
 			var menuItemExit = new MenuItem("Beenden");
-			menuItemExit.Click += delegate (object sender, EventArgs e)
-			{
-				ApplicationManager.Instance.ExitApplication();
-			};
+			menuItemExit.Click += ContextMenuExitApplication;
 
 			contextMenu.MenuItems.Add(menuItemDashboard);
 			contextMenu.MenuItems.Add(menuItemExit);
@@ -126,6 +120,18 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			};
 		}
 
+		#region ContextMenu actions
+		private void ContextMenuShowDashboard(object sender, EventArgs e)
+		{
+			ShowWindows();
+		}
+		private void ContextMenuExitApplication(object sender, EventArgs e)
+		{
+			ApplicationManager.Instance.ExitApplication();
+		}
+		#endregion
+
+		#region Window management
 		public void ShowWindows()
 		{
 			if (RootWindow != null)
@@ -182,6 +188,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 				item.WindowState = WindowState.Normal;
 			}
 		}
+
 		public void HideManagedWindows()
 		{
 			foreach (var item in ManagedWindows)
@@ -190,6 +197,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 				item.WindowState = WindowState.Minimized;
 			}
 		}
+		#endregion
 
 		private void WindowStateChanged(object sender, EventArgs args)
 		{
@@ -203,6 +211,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			}
 		}
 
+		#region Icon management
 		public void ShowIcon()
 		{
 			notifyIcon.Visible = true;
@@ -217,5 +226,6 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		{
 			notifyIcon.Visible = !notifyIcon.Visible;
 		}
+		#endregion
 	}
 }

@@ -23,6 +23,7 @@ using WindowsAdvancedFirewallApi.Library;
 using WindowsFirewallDashboard.Locator;
 using WindowsFirewallDashboard.ViewModel;
 using WindowsAdvancedFirewallApi.Events.Arguments;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsFirewallDashboard
 {
@@ -47,7 +48,28 @@ namespace WindowsFirewallDashboard
 
 			ViewModel.HistoryLoaded += ViewModel_HistoryLoaded;
 			ViewModel.HistoryLoadingStatusChanged += ViewModel_HistoryLoadingStatusChanged;
+
 			tabEvents.GotFocus += TabEvents_GotFocus;
+			settingsButton.Click += SettingsButton_Click;
+			checkBoxAutostart.Click += CheckBoxAutostart_Click;
+		}
+
+		private void CheckBoxAutostart_Click(object sender, RoutedEventArgs e)
+		{
+			if ((bool)checkBoxAutostart.IsChecked)
+			{
+				ViewModel.EnableAutostart();
+			}
+			else
+			{
+				ViewModel.DisableAutostart();
+			}
+		}
+
+		private void SettingsButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainControl.SelectedItem = tabSettings;
+			labelInstallState.Content = EnumUtils.GetEnumValueName<FirewallEventManager.InstallationStatus>(ViewModel.InstallationStatus);
 		}
 
 		private void TabEvents_GotFocus(object sender, RoutedEventArgs e)

@@ -83,8 +83,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		private FirewallEventManager()
 		{
 		}
-
-
+		
 		public bool IsInstalled()
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to check installation status.", true);
@@ -117,7 +116,7 @@ namespace WindowsAdvancedFirewallApi.Events
 			}
 		}
 
-		//[PrincipalPermission(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
+		// [PrincipalPermission(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
 		public void Install()
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to install the event logger.", true);
@@ -132,7 +131,7 @@ namespace WindowsAdvancedFirewallApi.Events
 			//	EventLog.CreateEventSource(FIREWALL_EVENT_SOURCE, FIREWALL_EVENT_LOGNAME);
 			//}
 		}
-
+		
 		public void Deinstall()
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to deinstall the event logger.", true);
