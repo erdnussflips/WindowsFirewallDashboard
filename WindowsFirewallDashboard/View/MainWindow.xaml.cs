@@ -45,6 +45,12 @@ namespace WindowsFirewallDashboard
 		private void InitializeView()
 		{
 			ViewModel.RootWindow = this;
+			if ((bool)ApplicationManager.Instance.StartupOptions?.StartMinimized)
+			{
+				WindowState = WindowState.Minimized;
+				ShowInTaskbar = false;
+				Hide();
+			}
 
 			ViewModel.HistoryLoaded += ViewModel_HistoryLoaded;
 			ViewModel.HistoryLoadingStatusChanged += ViewModel_HistoryLoadingStatusChanged;

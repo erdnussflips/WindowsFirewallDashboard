@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using GitHubUpdateManger.Model;
 using System.Diagnostics;
 using System.Reflection;
+using NLog;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
 	class ApplicationUpdater : IApplicationUpdater
 	{
+		private Logger LOG = LogManager.GetCurrentClassLogger();
+
 		/*private static ApplicationUpdater _singleton;
 		protected static ApplicationUpdater Singleton
 		{
@@ -43,7 +46,14 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public async void CheckForUpdates()
 		{
-			await updateManager.CheckForReleases(Assembly.GetExecutingAssembly().GetName().Version, true);
+			try
+			{
+				await updateManager.CheckForReleases(Assembly.GetExecutingAssembly().GetName().Version, true);
+			}
+			catch (Exception ex)
+			{
+				LOG.Error(ex);
+			}
 		}
 
 		public void UpdatesAvailable(List<RepositoryRelease> updates)

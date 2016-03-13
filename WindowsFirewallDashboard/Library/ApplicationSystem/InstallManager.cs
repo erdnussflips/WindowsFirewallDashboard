@@ -58,7 +58,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 					td.Triggers.Add(new LogonTrigger { Enabled = true });
 
 					// Create an action that will launch Notepad whenever the trigger fires
-					td.Actions.Add(new ExecAction(ApplicationInformation.GetApplicationFileInstallPath()));
+					td.Actions.Add(new ExecAction(ApplicationInformation.GetApplicationFileInstallPath(), "-m"));
 
 					// Register the task in the root folder
 					ts.RootFolder.RegisterTaskDefinition(ApplicationInformation.GetApplicationName(), td);

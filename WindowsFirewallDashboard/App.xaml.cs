@@ -22,12 +22,18 @@ namespace WindowsFirewallDashboard
 	{
 		private static Logger LOG = LogManager.GetCurrentClassLogger();
 
+		#region Single instance
 		[STAThread]
-		public static void Main()
+		public static void Main(string[] args)
 		{
 			if (SingleInstance<App>.InitializeAsFirstInstance(ApplicationInformation.GetApplicationName()))
 			{
-				new App().Run();
+				var application = new App();
+				if (args != null)
+				{
+					application.PrepareFromCommandline(args);
+				}
+				application.Run();
 
 				// Allow single instance code to perform cleanup operations
 				SingleInstance<App>.Cleanup();
@@ -37,9 +43,10 @@ namespace WindowsFirewallDashboard
 		#region ISingleInstanceApp Members
 		public bool SignalExternalCommandLineArgs(IList<string> args)
 		{
+			ApplicationManager.Instance.WindowManager.ShowWindows();
 			return true;
 		}
-
+		#endregion
 		#endregion
 
 		public App() : base()
@@ -48,10 +55,16 @@ namespace WindowsFirewallDashboard
 			DispatcherUnhandledException += App_DispatcherUnhandledException;
 		}
 
+		private void PrepareFromCommandline(string[] args)
+		{
+			ApplicationManager.Instance.PrepareFromCommandline(args);
+		}
+
 		#region Lifecycle
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
+			LOG.Info(nameof(OnStartup));
 			ApplicationManager.Instance.OnStart();
 			//var systemAccentColors = new ResourceDictionary();
 			//systemAccentColors.Add("HighlightColor", SystemColors.HighlightColor);
@@ -87,29 +100,34 @@ namespace WindowsFirewallDashboard
 		protected override void OnActivated(EventArgs e)
 		{
 			base.OnActivated(e);
+			LOG.Info(nameof(OnActivated));
 			ApplicationManager.Instance.OnActivate();
+		}
+
+		protected override void OnLoadCompleted(NavigationEventArgs e)
+		{
+			base.OnLoadCompleted(e);
+			LOG.Info(nameof(OnLoadCompleted));
 		}
 
 		protected override void OnDeactivated(EventArgs e)
 		{
 			base.OnDeactivated(e);
+			LOG.Info(nameof(OnDeactivated));
 			ApplicationManager.Instance.OnDeactivate();
 		}
 
 		protected override void OnExit(ExitEventArgs e)
 		{
 			base.OnExit(e);
+			LOG.Info(nameof(OnExit));
 			ApplicationManager.Instance.OnExit();
-		}
-
-		protected override void OnLoadCompleted(NavigationEventArgs e)
-		{
-			base.OnLoadCompleted(e);
 		}
 
 		protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
 		{
 			base.OnSessionEnding(e);
+			LOG.Info(nameof(OnSessionEnding));
 		}
 		#endregion
 

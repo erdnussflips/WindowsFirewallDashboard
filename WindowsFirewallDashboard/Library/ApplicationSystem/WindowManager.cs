@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using WindowsFirewallDashboard.Library.IPC;
 using WindowsFirewallDashboard.Library.Utils;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
@@ -31,13 +32,15 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 				{
 					_rootWindow = value;
 					_rootWindow.StateChanged += WindowStateChanged;
-					Text = _rootWindow.Title;
+					TrayText = _rootWindow.Title;
 				}
 			}
 		}
 		private List<Window> ManagedWindows { get; set; }
 
 		private NotifyIcon notifyIcon;
+
+		public IpcCmdOptions StartupOptions { get; set; }
 
 		public Icon TrayIcon
 		{
@@ -51,7 +54,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			}
 		}
 
-		public string Text
+		public string TrayText
 		{
 			get
 			{
@@ -63,7 +66,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			}
 		}
 
-		public event MouseEventHandler MouseClick
+		public event MouseEventHandler TrayMouseClick
 		{
 			add
 			{
@@ -75,7 +78,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			}
 		}
 
-		public event MouseEventHandler MouseDoubleClick
+		public event MouseEventHandler TrayMouseDoubleClick
 		{
 			add
 			{
@@ -111,7 +114,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			contextMenu.MenuItems.Add(menuItemDashboard);
 			contextMenu.MenuItems.Add(menuItemExit);
 
-			MouseDoubleClick += delegate (object sender, MouseEventArgs e)
+			TrayMouseDoubleClick += delegate (object sender, MouseEventArgs e)
 			{
 				if (e.Button == MouseButtons.Left)
 				{
@@ -132,11 +135,23 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		#endregion
 
 		#region Window management
+		public void StartNormal()
+		{
+			ShowWindows();
+		}
+
+		public void StartMinimized()
+		{
+			HideWindows();
+		}
+
 		public void ShowWindows()
 		{
 			if (RootWindow != null)
 			{
 				RootWindow.WindowState = WindowState.Normal;
+				RootWindow.ShowInTaskbar = true;
+				RootWindow.Show();
 			}
 
 			ShowManagedWindows();
@@ -147,6 +162,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			if (RootWindow != null)
 			{
 				RootWindow.WindowState = WindowState.Minimized;
+				RootWindow.ShowInTaskbar = false;
 			}
 
 			HideManagedWindows();

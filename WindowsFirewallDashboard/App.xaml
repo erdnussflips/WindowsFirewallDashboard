@@ -28,8 +28,8 @@
 						<Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Ressources/Fonts/#icomoon" />
 					</Style>
 				</ResourceDictionary>
-                <ResourceDictionary Source="Simple Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Simple Styles.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
 
 			<Style x:Key="ApplicationSubheading" TargetType="{x:Type TextBlock}">
 				<Setter Property="TextWrapping" Value="NoWrap"/>

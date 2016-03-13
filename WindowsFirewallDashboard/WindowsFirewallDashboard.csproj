@@ -139,6 +139,10 @@
     <ApplicationIcon>Resources\Images\NotifyIcon-blue.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine, Version=1.9.71.2, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -205,6 +209,7 @@
     <Compile Include="Library\ApplicationSystem\ApplicationResource.cs" />
     <Compile Include="Library\ApplicationSystem\WindowManager.cs" />
     <Compile Include="Library\Dependencies\SingleInstance.cs" />
+    <Compile Include="Library\IPC\IpcCmdOptions.cs" />
     <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
     <Compile Include="Library\Utils\ReflectionHelper.cs" />

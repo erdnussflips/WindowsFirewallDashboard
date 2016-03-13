@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Threading;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
+using WindowsFirewallDashboard.Library.IPC;
 using WindowsFirewallDashboard.Library.Utils;
 using WindowsFirewallDashboard.Model;
 using WindowsFirewallDashboard.Resources.Localization;
@@ -33,7 +34,8 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		}
 		public static ApplicationManager Instance => Singleton;
 		#endregion
-
+		
+		public IpcCmdOptions StartupOptions { get; private set; }
 		public UserSettings User { get; private set; }
 
 		public InstallManager Installer { get; private set; }
@@ -68,17 +70,14 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			{
 				Updater.CheckForUpdates();
 			}
-
 		}
 
 		public void OnActivate()
 		{
-
 		}
 
 		public void OnDeactivate()
 		{
-
 		}
 
 		public void OnExit()
@@ -89,12 +88,10 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public void StartInBackground()
 		{
-
 		}
 
 		public void StopInBackground()
 		{
-
 		}
 		#endregion
 
@@ -102,6 +99,17 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		private void Load()
 		{
 			User = new UserSettings();
+		}
+
+		public void PrepareFromCommandline(string[] args)
+		{
+			using (var parser = new CommandLine.Parser())
+			{
+				var options = new IpcCmdOptions();
+				parser.ParseArguments(args, options);
+				StartupOptions = options;
+				WindowManager.StartupOptions = options;
+			}
 		}
 
 		public void ExitApplication()
