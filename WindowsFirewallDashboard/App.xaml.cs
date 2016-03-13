@@ -11,18 +11,40 @@ using WindowsFirewallDashboard.Library.ApplicationSystem;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using NLog;
+using Microsoft.Shell;
 
 namespace WindowsFirewallDashboard
 {
 	/// <summary>
 	/// Interaktionslogik für "App.xaml"
 	/// </summary>
-	public partial class App : Application
+	public partial class App : Application, ISingleInstanceApp
 	{
 		private static Logger LOG = LogManager.GetCurrentClassLogger();
 
+		[STAThread]
+		public static void Main()
+		{
+			if (SingleInstance<App>.InitializeAsFirstInstance(ApplicationInformation.GetApplicationName()))
+			{
+				new App().Run();
+
+				// Allow single instance code to perform cleanup operations
+				SingleInstance<App>.Cleanup();
+			}
+		}
+
+		#region ISingleInstanceApp Members
+		public bool SignalExternalCommandLineArgs(IList<string> args)
+		{
+			return true;
+		}
+
+		#endregion
+
 		public App() : base()
 		{
+			InitializeComponent();
 			DispatcherUnhandledException += App_DispatcherUnhandledException;
 		}
 

@@ -155,6 +155,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -174,10 +175,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -203,6 +204,7 @@
     <Compile Include="Library\ApplicationSystem\NotificationManager.cs" />
     <Compile Include="Library\ApplicationSystem\ApplicationResource.cs" />
     <Compile Include="Library\ApplicationSystem\TrayManager.cs" />
+    <Compile Include="Library\Dependencies\SingleInstance.cs" />
     <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
     <Compile Include="Library\Utils\ReflectionHelper.cs" />
