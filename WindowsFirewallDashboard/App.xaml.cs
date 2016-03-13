@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using WindowsFirewallDashboard.Library.ApplicationSystem;
+using System.Windows.Navigation;
+using System.Windows.Threading;
+using NLog;
 
 namespace WindowsFirewallDashboard
 {
@@ -16,14 +19,18 @@ namespace WindowsFirewallDashboard
 	/// </summary>
 	public partial class App : Application
 	{
+		private static Logger LOG = LogManager.GetCurrentClassLogger();
+
 		public App() : base()
 		{
+			DispatcherUnhandledException += App_DispatcherUnhandledException;
 		}
 
+		#region Lifecycle
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
-			ApplicationManager.Instance.Start();
+			ApplicationManager.Instance.OnStart();
 			//var systemAccentColors = new ResourceDictionary();
 			//systemAccentColors.Add("HighlightColor", SystemColors.HighlightColor);
 			//systemAccentColors.Add("AccentColor", SystemColors.HighlightColor);
@@ -58,19 +65,35 @@ namespace WindowsFirewallDashboard
 		protected override void OnActivated(EventArgs e)
 		{
 			base.OnActivated(e);
-			ApplicationManager.Instance.Activate();
+			ApplicationManager.Instance.OnActivate();
 		}
 
 		protected override void OnDeactivated(EventArgs e)
 		{
 			base.OnDeactivated(e);
-			ApplicationManager.Instance.Deactivate();
+			ApplicationManager.Instance.OnDeactivate();
 		}
 
 		protected override void OnExit(ExitEventArgs e)
 		{
 			base.OnExit(e);
-			ApplicationManager.Instance.Exit();
+			ApplicationManager.Instance.OnExit();
+		}
+
+		protected override void OnLoadCompleted(NavigationEventArgs e)
+		{
+			base.OnLoadCompleted(e);
+		}
+
+		protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
+		{
+			base.OnSessionEnding(e);
+		}
+		#endregion
+
+		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+		{
+			LOG.Error(e);
 		}
 	}
 }

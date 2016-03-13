@@ -104,7 +104,15 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			notifyIcon.ContextMenu = contextMenu;
 
 			var menuItemDashboard = new MenuItem("Dashboard anzeigen");
+			menuItemDashboard.Click += delegate (object sender, EventArgs e)
+			{
+				ShowWindows();
+			};
 			var menuItemExit = new MenuItem("Beenden");
+			menuItemExit.Click += delegate (object sender, EventArgs e)
+			{
+				ApplicationManager.Instance.ExitApplication();
+			};
 
 			contextMenu.MenuItems.Add(menuItemDashboard);
 			contextMenu.MenuItems.Add(menuItemExit);
@@ -113,7 +121,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			{
 				if (e.Button == MouseButtons.Left)
 				{
-					ShowWindows();
+					ToggleWindows();
 				}
 			};
 		}
@@ -135,7 +143,22 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 				RootWindow.WindowState = WindowState.Minimized;
 			}
 
-			ShowManagedWindows();
+			HideManagedWindows();
+		}
+
+		public void ToggleWindows()
+		{
+			if (RootWindow != null)
+			{
+				if (RootWindow.WindowState == WindowState.Normal)
+				{
+					HideWindows();
+				}
+				else if (RootWindow.WindowState == WindowState.Minimized)
+				{
+					ShowWindows();
+				}
+			}
 		}
 
 		public void AddManagedWindows(params Window[] windows)

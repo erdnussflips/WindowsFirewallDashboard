@@ -15,7 +15,7 @@
 		GlowBrush="{DynamicResource AccentColorBrush}"
 		ResizeMode="CanResizeWithGrip"
 		WindowTransitionsEnabled="true"
-		DataContext="{Binding Path=Main, Source={StaticResource Locator}}">
+		DataContext="{Binding Path=Main, Source={StaticResource Locator}}" Icon="/WindowsFirewallDashboard;component/Resources/Images/NotifyIcon-blue.ico">
 	<Controls:MetroWindow.Resources>
 		<Style x:Key="StatusIcon" TargetType="{x:Type TextBlock}">
 			<Style.Resources>

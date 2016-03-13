@@ -192,7 +192,9 @@
     <Compile Include="Library\ApplicationSystem\TrayManager.cs" />
     <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
+    <Compile Include="Library\Utils\ReflectionHelper.cs" />
     <Compile Include="Locator\ViewModelLocator.cs" />
+    <Compile Include="Model\UserSettings.cs" />
     <Compile Include="Resources\Localization\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 using WindowsFirewallDashboard.Library.Utils;
+using WindowsFirewallDashboard.Model;
 using WindowsFirewallDashboard.Resources.Localization;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
@@ -31,6 +33,8 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public static ApplicationManager Instance => Singleton;
 
+		public UserSettings User { get; private set; }
+
 		public FirewallManager Firewall { get; private set; }
 		public NotificationManager Notifications { get; private set; }
 		public TrayManager Tray { get; private set; }
@@ -46,26 +50,32 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			LocalizationTool.Initialize();
 		}
 
-		public void Start()
+		#region Application Lifecycle
+		public void OnStart()
 		{
-			Firewall.StartEventListening();
+			Load();
 
+			Firewall.StartEventListening();
 			Tray.ShowIcon();
 
-			ApplicationUpdater.Instance.CheckForUpdates();
+			if (User.CheckForUpdatesAutomatically)
+			{
+				ApplicationUpdater.Instance.CheckForUpdates();
+			}
+
 		}
 
-		public void Activate()
+		public void OnActivate()
 		{
 
 		}
 
-		public void Deactivate()
+		public void OnDeactivate()
 		{
 
 		}
 
-		public void Exit()
+		public void OnExit()
 		{
 			Firewall.StopEventListening();
 			Tray.HideIcon();
@@ -80,5 +90,20 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		{
 
 		}
+		#endregion
+
+		#region Application General methods
+		private void Load()
+		{
+			User = new UserSettings();
+		}
+
+		public void ExitApplication()
+		{
+			Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => {
+				Application.Current.Shutdown();
+			}));
+		}
+		#endregion
 	}
 }
