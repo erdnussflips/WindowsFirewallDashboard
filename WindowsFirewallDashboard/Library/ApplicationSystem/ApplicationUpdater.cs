@@ -38,7 +38,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public ApplicationUpdater()
 		{
-			updateManager = new GitHubUpdateManager("WindowsFirewallDashboard", "ErdnussFlipS")
+			updateManager = new GitHubUpdateManager(ApplicationConstants.GitHubApplicationRepository, ApplicationConstants.GitHubApplicationUser)
 			{
 				ApplicationUpdater = this
 			};

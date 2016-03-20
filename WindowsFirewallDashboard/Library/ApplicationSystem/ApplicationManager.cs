@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
+using WindowsFirewallCore.IPCommunication.ShellIntegration;
+using WindowsFirewallCore.IPCommunication.ShellIntegration.Interfaces;
 using WindowsFirewallDashboard.Library.IPC;
 using WindowsFirewallDashboard.Library.Utils;
 using WindowsFirewallDashboard.Model;
@@ -64,6 +67,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			Load();
 
 			Firewall.StartEventListening();
+			Firewall.StartIPCommunication();
 			WindowManager.ShowTray();
 
 			if (User.CheckForUpdatesAutomatically)
@@ -83,6 +87,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		public void OnExit()
 		{
 			Firewall.StopEventListening();
+			Firewall.StopIPCommunication();
 			WindowManager.HideTray();
 		}
 

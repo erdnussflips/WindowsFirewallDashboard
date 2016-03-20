@@ -1,16 +1,39 @@
 ﻿using Microsoft.Win32.TaskScheduler;
 using NLog;
+using SharpShell.ServerRegistration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFirewallCore;
+using WindowsFirewallCore.Extensions;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
 	class InstallManager
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		#region InstalltionStatus
+		public sealed class InstallationInfoAttribute : Attribute
+		{
+			public bool? Value { get; private set; }
+
+			internal InstallationInfoAttribute(bool value, bool isNull = false)
+			{
+				Value = isNull ? (bool?)null : value;
+			}
+		}
+
+		public enum InstallationStatus
+		{
+			[InstallationInfo(false)] Uninstalled,
+			[InstallationInfo(true)] Installed,
+			[InstallationInfo(false, true)] PartiallyInstalled,
+		}
+		#endregion
+
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly string TaskName = ApplicationInformation.GetApplicationName();
 
 		public void Install()
 		{
@@ -24,31 +47,40 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public bool IsAutostartTaskInstalled()
 		{
-			using (TaskService ts = new TaskService())
+			try
 			{
-				try
+				using (TaskService ts = new TaskService())
 				{
-					return false;
-					// Remove the task we just created
+					var installedTask = ts.FindTask(TaskName, true);
+					var installStatus = installedTask != null;
+
+					LOG.Debug("Task check: " + nameof(installStatus) + "=" + installStatus);
+
+					return installStatus;
 				}
-				catch (Exception ex)
-				{
-					LOG.Error(ex);
-				}
+			}
+			catch (Exception ex)
+			{
+				LOG.Error(ex);
 			}
 
 			return false;
 		}
 
-		public void InstallAutostartTask()
+		public bool InstallAutostartTask()
 		{
-			// Get the service on the local machine
-			using (TaskService ts = new TaskService())
+			if (IsAutostartTaskInstalled())
 			{
-				try
+				return true;
+			}
+
+			try
+			{
+				// Get the service on the local machine
+				using (TaskService ts = new TaskService())
 				{
 					// Create a new task definition and assign properties
-					TaskDefinition td = ts.NewTask();
+					var td = ts.NewTask();
 					td.RegistrationInfo.Author = ApplicationInformation.GetApplicationCompany();
 					td.RegistrationInfo.Date = new DateTime();
 					td.RegistrationInfo.Description = ApplicationInformation.GetApplicationName();
@@ -61,30 +93,125 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 					td.Actions.Add(new ExecAction(ApplicationInformation.GetApplicationFileInstallPath(), "-m"));
 
 					// Register the task in the root folder
-					ts.RootFolder.RegisterTaskDefinition(ApplicationInformation.GetApplicationName(), td);
+					ts.RootFolder.RegisterTaskDefinition(TaskName, td);
+
+					LOG.Debug("Task registered");
+
+					return true;
 				}
-				catch (Exception ex)
+			}
+			catch (Exception ex)
+			{
+				LOG.Error(ex);
+			}
+
+			return false;
+		}
+
+		public bool DeinstallAutostartTask()
+		{
+			if (!IsAutostartTaskInstalled())
+			{
+				return true;
+			}
+
+			try
+			{
+				// Get the service on the local machine
+				using (TaskService ts = new TaskService())
 				{
-					LOG.Error(ex);
+					// Remove the task we just created
+					ts.RootFolder.DeleteTask(TaskName);
+
+					LOG.Debug("Task removed");
+
+					return true;
 				}
+			}
+			catch (Exception ex)
+			{
+				LOG.Error(ex);
+			}
+
+			return false;
+		}
+
+		private SharpShell.ISharpShellServer _shellIntegrationServer;
+		private SharpShell.ISharpShellServer shellIntegrationServer
+		{
+			get
+			{
+				if (_shellIntegrationServer == null)
+				{
+					_shellIntegrationServer = new WindowsFirewallShellExtension();
+				}
+
+				return _shellIntegrationServer;
 			}
 		}
 
-		public void DeinstallAutostartTask()
+		public bool? IsShellIntegrationInstalled()
 		{
-			// Get the service on the local machine
-			using (TaskService ts = new TaskService())
+			var status = InstallationStatus.Uninstalled;
+
+			var os32bit = ServerRegistrationManager.GetServerRegistrationInfo(shellIntegrationServer, RegistrationType.OS32Bit);
+			var os64bit = ServerRegistrationManager.GetServerRegistrationInfo(shellIntegrationServer, RegistrationType.OS64Bit);
+
+			if (os32bit != null)
 			{
-				try
-				{
-					// Remove the task we just created
-					ts.RootFolder.DeleteTask(ApplicationInformation.GetApplicationName());
-				}
-				catch (Exception ex)
-				{
-					LOG.Error(ex);
-				}
+				status = InstallationStatus.PartiallyInstalled;
 			}
+
+			if (os64bit != null && status == InstallationStatus.PartiallyInstalled)
+			{
+				status = InstallationStatus.Installed;
+			}
+			else if(os64bit != null)
+			{
+				status = InstallationStatus.PartiallyInstalled;
+			}
+
+			return status.GetAttribute<InstallationInfoAttribute>().Value;
+		}
+
+		public bool InstallShellIntegration()
+		{
+			try
+			{
+				ServerRegistrationManager.InstallServer(shellIntegrationServer, RegistrationType.OS32Bit, true);
+				ServerRegistrationManager.RegisterServer(shellIntegrationServer, RegistrationType.OS32Bit);
+
+				ServerRegistrationManager.InstallServer(shellIntegrationServer, RegistrationType.OS64Bit, true);
+				ServerRegistrationManager.RegisterServer(shellIntegrationServer, RegistrationType.OS64Bit);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				LOG.Error(ex);
+			}
+
+			return false;
+		}
+
+		public bool DeinstallShellIntegration()
+		{
+			try
+			{
+				ServerRegistrationManager.UnregisterServer(shellIntegrationServer, RegistrationType.OS32Bit);
+				ServerRegistrationManager.UninstallServer(shellIntegrationServer, RegistrationType.OS32Bit);
+
+				ServerRegistrationManager.UnregisterServer(shellIntegrationServer, RegistrationType.OS64Bit);
+				ServerRegistrationManager.UninstallServer(shellIntegrationServer, RegistrationType.OS64Bit);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				LOG.Error(ex);
+			}
+
+			return false;
 		}
 	}
 }

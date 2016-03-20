@@ -109,14 +109,16 @@
 								<Grid.RowDefinitions>
 									<RowDefinition Height="Auto"/>
 									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
 								</Grid.RowDefinitions>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="Auto"/>
 									<ColumnDefinition/>
 								</Grid.ColumnDefinitions>
-								<Label Content="Installationsstatus:" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+								<Label Content="Installationsstatus:" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5"/>
 								<Label x:Name="labelInstallState" Content="[State]" HorizontalAlignment="Left" Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
-								<CheckBox x:Name="checkBoxAutostart" Content="Mit Windows starten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,0,0,0" IsChecked="{Binding IsAutostartEnabled, Mode=OneWay}"/>
+								<CheckBox x:Name="checkBoxAutostart" Content="Mit Windows starten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsAutostartEnabled, Mode=OneWay}"/>
+								<CheckBox x:Name="checkBoxShellIntegration" Content="In Explorer integrieren" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsShellIntegrationEnabled, Mode=OneWay, NotifyOnSourceUpdated=True}"/>
 							</Grid>
 						</ScrollViewer>
 					</Grid>

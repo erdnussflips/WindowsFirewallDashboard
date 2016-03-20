@@ -58,6 +58,19 @@ namespace WindowsFirewallDashboard
 			tabEvents.GotFocus += TabEvents_GotFocus;
 			settingsButton.Click += SettingsButton_Click;
 			checkBoxAutostart.Click += CheckBoxAutostart_Click;
+			checkBoxShellIntegration.Click += CheckBoxShellIntegration_Click;
+		}
+
+		private void CheckBoxShellIntegration_Click(object sender, RoutedEventArgs e)
+		{
+			if ((bool)checkBoxShellIntegration.IsChecked)
+			{
+				ViewModel.EnableShellIntegration();
+			}
+			else
+			{
+				ViewModel.DisableShellIntegration();
+			}
 		}
 
 		private void CheckBoxAutostart_Click(object sender, RoutedEventArgs e)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFirewallLibrary.Communication
+namespace WindowsFirewallCore.IPCommunication.Event
 {
 	[Serializable]
 	public class CommunicationObject : object

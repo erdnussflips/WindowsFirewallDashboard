@@ -10,7 +10,7 @@ using NetFwTypeLib;
 using System.Text.RegularExpressions;
 using System.Diagnostics.Eventing.Reader;
 using Microsoft.Win32;
-using Microsoft.Win32.TaskScheduler;
+//using Microsoft.Win32.TaskScheduler;
 using System.IO;
 using WindowsFirewallLibrary.FirewallEvent;
 
@@ -200,7 +200,7 @@ namespace WindowsFirewallLibrary.FirewallController
 			// enable event logging for allowed connections
 			var exitCodeAllowedConections = RunProcess("netsh", netshFirewallCommand + netshFirewallCommandArgsAllowedConnections + "enable");
 
-			AddFirewallEventTask();
+			//AddFirewallEventTask();
 
 			return exitCodeFilename == 0 && exitCodeFilesize == 0 && exitCodeDoppedConnections == 0 && exitCodeAllowedConections == 0;
 		}
@@ -212,113 +212,113 @@ namespace WindowsFirewallLibrary.FirewallController
 			// disable event logging for allowed connections (default configuration)
 			var exitCodeAllowedConnections = RunProcess("netsh", netshFirewallCommand + netshFirewallCommandArgsAllowedConnections + "disable");
 
-			RemoveAllFirewallEventTasks();
+			//RemoveAllFirewallEventTasks();
 
 			return exitCodeDoppedConnections == 0 && exitCodeAllowedConnections == 0;
 		}
 
-		public void GenerateValueQueries<T>(EventTrigger eventTrigger)
+		public void GenerateValueQueries<T>(System.Windows.EventTrigger eventTrigger)
 		{
 			var type = typeof(T);
 		}
 
 		const string TaskFolder = "WindowsFirewallDashboard";
 
-		public void AddFirewallEventTask()
-		{
-			using (var ts = new TaskService())
-			{
-				var td = ts.NewTask();
+		//public void AddFirewallEventTask()
+		//{
+		//	using (var ts = new TaskService())
+		//	{
+		//		var td = ts.NewTask();
 
-				td.RegistrationInfo.Description = "Runs when Firewall events raised.";
-				td.RegistrationInfo.Author = "Philipp S. aka ErdnussFlipS";
-				td.RegistrationInfo.Date = DateTime.Now;
+		//		td.RegistrationInfo.Description = "Runs when Firewall events raised.";
+		//		td.RegistrationInfo.Author = "Philipp S. aka ErdnussFlipS";
+		//		td.RegistrationInfo.Date = DateTime.Now;
 
-				using (var eventtrigger = new EventTrigger("Microsoft-Windows-Windows Firewall With Advanced Security/Firewall", null, null)
-					{
-						Enabled = true,
-						StartBoundary = td.RegistrationInfo.Date
-					})
-				{
-					eventtrigger.ValueQueries.Add("EventID", "Event/System/EventID");
-					//eventtrigger.ValueQueries.Add("EventContent", "Event/EventData/Data[@Name='']");
+		//		using (var eventtrigger = new EventTrigger("Microsoft-Windows-Windows Firewall With Advanced Security/Firewall", null, null)
+		//			{
+		//				Enabled = true,
+		//				StartBoundary = td.RegistrationInfo.Date
+		//			})
+		//		{
+		//			eventtrigger.ValueQueries.Add("EventID", "Event/System/EventID");
+		//			//eventtrigger.ValueQueries.Add("EventContent", "Event/EventData/Data[@Name='']");
 
-					td.Triggers.Add(eventtrigger);
-				}
+		//			td.Triggers.Add(eventtrigger);
+		//		}
 
-				td.Principal.RunLevel = TaskRunLevel.Highest;
-				td.Principal.LogonType = TaskLogonType.InteractiveToken;
-				td.Settings.MultipleInstances = TaskInstancesPolicy.Queue;
-				td.Settings.DisallowStartIfOnBatteries = false;
-				td.Settings.StopIfGoingOnBatteries = false;
-				td.Settings.AllowHardTerminate = true;
-				td.Settings.StartWhenAvailable = false;
-				td.Settings.RunOnlyIfNetworkAvailable = false;
-				td.Settings.IdleSettings.StopOnIdleEnd = true;
-				td.Settings.IdleSettings.RestartOnIdle = false;
-				td.Settings.AllowDemandStart = false;
-				td.Settings.Enabled = true;
-				td.Settings.Hidden = false;
-				td.Settings.RunOnlyIfIdle = false;
-				td.Settings.WakeToRun = false;
-				//td.Settings.ExecutionTimeLimit = ;
-				td.Settings.Priority = ProcessPriorityClass.High;
+		//		td.Principal.RunLevel = TaskRunLevel.Highest;
+		//		td.Principal.LogonType = TaskLogonType.InteractiveToken;
+		//		td.Settings.MultipleInstances = TaskInstancesPolicy.Queue;
+		//		td.Settings.DisallowStartIfOnBatteries = false;
+		//		td.Settings.StopIfGoingOnBatteries = false;
+		//		td.Settings.AllowHardTerminate = true;
+		//		td.Settings.StartWhenAvailable = false;
+		//		td.Settings.RunOnlyIfNetworkAvailable = false;
+		//		td.Settings.IdleSettings.StopOnIdleEnd = true;
+		//		td.Settings.IdleSettings.RestartOnIdle = false;
+		//		td.Settings.AllowDemandStart = false;
+		//		td.Settings.Enabled = true;
+		//		td.Settings.Hidden = false;
+		//		td.Settings.RunOnlyIfIdle = false;
+		//		td.Settings.WakeToRun = false;
+		//		//td.Settings.ExecutionTimeLimit = ;
+		//		td.Settings.Priority = ProcessPriorityClass.High;
 
-				var dir = Directory.GetCurrentDirectory();
-				Console.WriteLine("Current wdir: " + dir);
-				using (var action = new ExecAction("WindowsFirewallEventListener.exe", "$(EventID)", dir))
-				{
-					td.Actions.Add(action);
-				}
+		//		var dir = Directory.GetCurrentDirectory();
+		//		Console.WriteLine("Current wdir: " + dir);
+		//		using (var action = new ExecAction("WindowsFirewallEventListener.exe", "$(EventID)", dir))
+		//		{
+		//			td.Actions.Add(action);
+		//		}
 
-				try
-				{
-					var taskAdded = false;
-					foreach (var folder in ts.RootFolder.SubFolders)
-					{
-						if (folder.Name == TaskFolder)
-						{
-							folder.RegisterTaskDefinition("Windows Firewall Event", td);
-							taskAdded = true;
-						}
-					}
-					if (!taskAdded)
-					{
-						var folder = ts.RootFolder.CreateFolder(TaskFolder);
-						folder.RegisterTaskDefinition("Windows Firewall Event", td);
-					}
-				}
-				catch (Exception ex)
-				{
-					Debugger.Break();
-				}
-			}
-		}
+		//		try
+		//		{
+		//			var taskAdded = false;
+		//			foreach (var folder in ts.RootFolder.SubFolders)
+		//			{
+		//				if (folder.Name == TaskFolder)
+		//				{
+		//					folder.RegisterTaskDefinition("Windows Firewall Event", td);
+		//					taskAdded = true;
+		//				}
+		//			}
+		//			if (!taskAdded)
+		//			{
+		//				var folder = ts.RootFolder.CreateFolder(TaskFolder);
+		//				folder.RegisterTaskDefinition("Windows Firewall Event", td);
+		//			}
+		//		}
+		//		catch (Exception ex)
+		//		{
+		//			Debugger.Break();
+		//		}
+		//	}
+		//}
 
-		public void RemoveAllFirewallEventTasks()
-		{
-			using (var ts = new TaskService())
-			{
-				try
-				{
-					foreach (var folder in ts.RootFolder.SubFolders)
-					{
-						if (folder.Name == TaskFolder)
-						{
-							foreach (var task in folder.Tasks)
-							{
-								folder.DeleteTask(task.Name);
-							}
+		//public void RemoveAllFirewallEventTasks()
+		//{
+		//	using (var ts = new TaskService())
+		//	{
+		//		try
+		//		{
+		//			foreach (var folder in ts.RootFolder.SubFolders)
+		//			{
+		//				if (folder.Name == TaskFolder)
+		//				{
+		//					foreach (var task in folder.Tasks)
+		//					{
+		//						folder.DeleteTask(task.Name);
+		//					}
 
-							ts.RootFolder.DeleteFolder(folder.Name);
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					Debugger.Break();
-				}
-			}
-		}
+		//					ts.RootFolder.DeleteFolder(folder.Name);
+		//				}
+		//			}
+		//		}
+		//		catch (Exception ex)
+		//		{
+		//			Debugger.Break();
+		//		}
+		//	}
+		//}
 	}
 }

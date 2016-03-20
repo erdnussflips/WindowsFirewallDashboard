@@ -38,7 +38,7 @@ namespace WindowsFirewallDashboard.ViewModel.Base
 
 		public event AsyncCompletedEventHandler InitializationCompleted;
 
-		protected virtual void OnPropertyChanged(string propertyName)
+		protected virtual void RaiseOnPropertyChanged(string propertyName)
 		{
 			var handler = PropertyChanged;
 			if (handler != null)

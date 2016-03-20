@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WindowsFirewallLibrary.Communication
+namespace WindowsFirewallCore.IPCommunication.Event
 {
 	public class Client
 	{

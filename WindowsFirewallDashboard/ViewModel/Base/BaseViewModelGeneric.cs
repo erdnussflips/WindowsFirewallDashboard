@@ -44,7 +44,7 @@ namespace WindowsFirewallDashboard.ViewModel.Base
 							|| (oldValue != null && newValue == null)
 							|| (!oldValue.Equals(newValue)))
 						{
-							OnPropertyChanged(property.Name);
+							RaiseOnPropertyChanged(property.Name);
 						}
 					}
 				}
