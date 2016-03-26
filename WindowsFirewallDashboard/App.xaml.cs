@@ -26,17 +26,24 @@ namespace WindowsFirewallDashboard
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			if (SingleInstance<App>.InitializeAsFirstInstance(ApplicationInformation.GetApplicationName()))
+			try
 			{
-				var application = new App();
-				if (args != null)
+				if (SingleInstance<App>.InitializeAsFirstInstance(ApplicationInformation.GetApplicationName()))
 				{
-					application.PrepareFromCommandline(args);
-				}
-				application.Run();
+					var application = new App();
+					if (args != null)
+					{
+						application.PrepareFromCommandline(args);
+					}
+					application.Run();
 
-				// Allow single instance code to perform cleanup operations
-				SingleInstance<App>.Cleanup();
+					// Allow single instance code to perform cleanup operations
+					SingleInstance<App>.Cleanup();
+				}
+			}
+			catch (Exception ex)
+			{
+				LOG.Error(ex, ex.Message);
 			}
 		}
 
@@ -65,7 +72,7 @@ namespace WindowsFirewallDashboard
 		{
 			base.OnStartup(e);
 			LOG.Info(nameof(OnStartup));
-			ApplicationManager.Instance.OnStart();
+			ApplicationManager.Instance.OnStartup();
 			//var systemAccentColors = new ResourceDictionary();
 			//systemAccentColors.Add("HighlightColor", SystemColors.HighlightColor);
 			//systemAccentColors.Add("AccentColor", SystemColors.HighlightColor);
@@ -101,7 +108,7 @@ namespace WindowsFirewallDashboard
 		{
 			base.OnActivated(e);
 			LOG.Info(nameof(OnActivated));
-			ApplicationManager.Instance.OnActivate();
+			ApplicationManager.Instance.OnActivated();
 		}
 
 		protected override void OnLoadCompleted(NavigationEventArgs e)
@@ -114,7 +121,7 @@ namespace WindowsFirewallDashboard
 		{
 			base.OnDeactivated(e);
 			LOG.Info(nameof(OnDeactivated));
-			ApplicationManager.Instance.OnDeactivate();
+			ApplicationManager.Instance.OnDeactivated();
 		}
 
 		protected override void OnExit(ExitEventArgs e)

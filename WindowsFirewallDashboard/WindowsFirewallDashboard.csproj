@@ -138,6 +138,12 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\Images\NotifyIcon-blue.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>WindowsFirewallDashboard.sky_signature.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine, Version=1.9.71.2, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
@@ -215,7 +221,7 @@
     <Compile Include="Library\ApplicationSystem\WindowManager.cs" />
     <Compile Include="Library\Dependencies\SingleInstance.cs" />
     <Compile Include="Library\IPC\IpcCmdOptions.cs" />
-    <Compile Include="Library\ShellIntegration\WindowsFirewallShellExtension.cs" />
+    <Compile Include="Library\ShellIntegration\ShellServiceListener.cs" />
     <Compile Include="Library\Utils\GeneralUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
     <Compile Include="Library\Utils\ReflectionHelper.cs" />
@@ -276,6 +282,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="WindowsFirewallDashboard.sky_signature.pfx" />
     <Resource Include="Resources\Fonts\icomoon.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -298,7 +305,17 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="NetFwTypeLib">
+      <Guid>{58FBCF7C-E7A9-467C-80B3-FC65E8FCCA08}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GitHubUpdateManger.NET\GitHubUpdateManger.NET.csproj">
       <Project>{555f5a60-1aad-47b5-b51f-9803da91c5f5}</Project>
@@ -311,6 +328,10 @@
     <ProjectReference Include="..\WindowsFirewallCore\WindowsFirewallCore.csproj">
       <Project>{329d8ec7-9d9d-46cf-b93c-849a912d7c66}</Project>
       <Name>WindowsFirewallCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsFirewallShellExtension\WindowsFirewallShellExtension.csproj">
+      <Project>{46f23ee1-5f6a-4e56-88f7-dc9f1cc88ffb}</Project>
+      <Name>WindowsFirewallShellExtension</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

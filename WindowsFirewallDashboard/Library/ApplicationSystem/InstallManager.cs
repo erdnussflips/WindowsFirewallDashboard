@@ -143,7 +143,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			{
 				if (_shellIntegrationServer == null)
 				{
-					_shellIntegrationServer = new WindowsFirewallShellExtension();
+					_shellIntegrationServer = new WindowsFirewallShellExtension.WindowsFirewallShellExtension();
 				}
 
 				return _shellIntegrationServer;

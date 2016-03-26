@@ -95,6 +95,12 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>WindowsFirewallDashboard.sky_signature.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="IPAddressRange, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IPAddressRange.1.5.0.0\lib\net40\IPAddressRange.dll</HintPath>
@@ -175,12 +181,14 @@
     <Compile Include="Commandline\Parameter\Value\NetshControllableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshExtendedParameterValue.cs" />
     <Compile Include="ApiHelper.cs" />
-    <Compile Include="COM\COMTypes.cs" />
-    <Compile Include="COM\Firewall.cs" />
+    <Compile Include="COM\FirewallCOMManager.cs" />
     <Compile Include="COM\FirewallStatus.cs" />
     <Compile Include="COM\Types\COMWrapperType.cs" />
     <Compile Include="COM\Types\FirewallPolicy.cs" />
     <Compile Include="COM\Types\FirewallProfile.cs" />
+    <Compile Include="COM\Types\FirewallRule.cs" />
+    <Compile Include="Data\RuleAction.cs" />
+    <Compile Include="Data\RuleDirection.cs" />
     <Compile Include="Events\Arguments\FirewallBaseEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallExtendedApplicationEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallExtendedOriginEventArgs.cs" />
@@ -202,6 +210,7 @@
     <Compile Include="Events\Objects\FirewallSetting.cs" />
     <Compile Include="Events\Objects\FirewallUserNotificationEvent.cs" />
     <Compile Include="Events\WFEvents.cs" />
+    <Compile Include="Data\Interfaces\IFirewallRule.cs" />
     <Compile Include="Library\FastObservableCollection.cs" />
     <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -222,6 +231,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="README.md" />
+    <None Include="WindowsFirewallDashboard.sky_signature.pfx" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="NetFwTypeLib">
@@ -231,7 +241,7 @@
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>False</Private>
     </COMReference>
   </ItemGroup>

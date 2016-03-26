@@ -95,6 +95,12 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>WindowsFirewallDashboard.sky_signature.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.5.16.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
       <HintPath>..\packages\TaskScheduler.2.5.16\lib\net45\Microsoft.Win32.TaskScheduler.dll</HintPath>
@@ -127,15 +133,17 @@
   <ItemGroup>
     <Compile Include="CoreConstants.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="IPCommunication\Event\Client.cs" />
     <Compile Include="IPCommunication\Event\CommunicationEvent.cs" />
     <Compile Include="IPCommunication\Event\CommunicationObject.cs" />
     <Compile Include="IPCommunication\Event\Server.cs" />
-    <Compile Include="IPCommunication\Interfaces.cs" />
+    <Compile Include="IPCommunication\Interfaces\IShellService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="WindowsFirewallDashboard.sky_signature.pfx" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="NetFwTypeLib">
@@ -149,13 +157,13 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Library\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\WindowsAdvancedFirewallApi\WindowsAdvancedFirewallApi.csproj">
       <Project>{a600b42f-23a8-4fbf-a4d1-4fd264c9ed43}</Project>
       <Name>WindowsAdvancedFirewallApi</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Library\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

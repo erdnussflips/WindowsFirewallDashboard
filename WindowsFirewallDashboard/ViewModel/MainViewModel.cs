@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WindowsAdvancedFirewallApi.Data.Interfaces;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 using WindowsFirewallDashboard.Library.ApplicationSystem;
@@ -36,13 +37,7 @@ namespace WindowsFirewallDashboard.ViewModel
 			}
 		}
 
-		public ICollection<FirewallBaseEventArgs> EventHistory
-		{
-			get
-			{
-				return ApplicationManager.Instance.Firewall.EventManager.History;
-			}
-		}
+		public ICollection<FirewallBaseEventArgs> EventHistory => ApplicationManager.Instance.Firewall.EventManager.History;
 		public event EventHandler<FirewallHistoryLoadingStatusChangedEventArgs> HistoryLoadingStatusChanged
 		{
 			add
@@ -66,6 +61,8 @@ namespace WindowsFirewallDashboard.ViewModel
 			}
 		}
 		public void LoadEventHistory() => ApplicationManager.Instance.Firewall.EventManager.LoadEventHistory();
+
+		public ICollection<IFirewallRule> Rules => ApplicationManager.Instance.Firewall.Rules;
 
 		public bool IsAutostartEnabled
 		{

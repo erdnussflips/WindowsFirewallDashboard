@@ -10,8 +10,6 @@ using System.Windows;
 using System.Windows.Threading;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
-using WindowsFirewallCore.IPCommunication.ShellIntegration;
-using WindowsFirewallCore.IPCommunication.ShellIntegration.Interfaces;
 using WindowsFirewallDashboard.Library.IPC;
 using WindowsFirewallDashboard.Library.Utils;
 using WindowsFirewallDashboard.Model;
@@ -62,7 +60,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		}
 
 		#region Application lifecycle
-		public void OnStart()
+		public void OnStartup()
 		{
 			Load();
 
@@ -76,11 +74,11 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			}
 		}
 
-		public void OnActivate()
+		public void OnActivated()
 		{
 		}
 
-		public void OnDeactivate()
+		public void OnDeactivated()
 		{
 		}
 

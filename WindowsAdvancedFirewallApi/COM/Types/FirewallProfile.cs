@@ -23,19 +23,40 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		{
 			get
 			{
-				return FirewallPolicy.Instance.GetProfileStatus(this);
+				return FirewallCOMManager.Instance.Policy.GetProfileStatus(this);
 			}
 			set
 			{
-				FirewallPolicy.Instance.SetProfileStatus(this, value);
+				FirewallCOMManager.Instance.Policy.SetProfileStatus(this, value);
 			}
 		}
 
-		internal FirewallProfile(NET_FW_PROFILE_TYPE2_ type) : base()
-		{
+		internal FirewallProfile(NET_FW_PROFILE_TYPE2_ type) {
 			COMObject = type;
 		}
 
 		internal FirewallProfile(int type) : this((NET_FW_PROFILE_TYPE2_)type) { }
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || !(obj is FirewallProfile)) return false;
+			var profile = obj as FirewallProfile;
+
+			return COMObject == profile.COMObject;
+		}
+
+		public static bool operator == (FirewallProfile obj1, FirewallProfile obj2)
+		{
+			return obj1.COMObject == obj2.COMObject;
+		}
+		public static bool operator != (FirewallProfile obj1, FirewallProfile obj2)
+		{
+			return obj1.COMObject != obj2.COMObject;
+		}
 	}
 }

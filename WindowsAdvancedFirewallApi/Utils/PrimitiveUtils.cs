@@ -11,6 +11,16 @@ namespace WindowsAdvancedFirewallApi.Utils
 	{
 		private static Logger LOG = LogManager.GetCurrentClassLogger();
 
+		public static bool ConvertToBool(this int value)
+		{
+			return value > 0;
+		}
+
+		public static int ConvertToInteger(this bool value)
+		{
+			return value ? 1 : 0;
+		}
+
 		public static int ParseInteger(this string value)
 		{
 			try

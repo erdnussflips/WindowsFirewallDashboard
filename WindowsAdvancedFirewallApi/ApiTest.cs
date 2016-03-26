@@ -23,8 +23,8 @@ namespace WindowsAdvancedFirewallApi
 
 		public static void comTest()
 		{
-			Firewall.Disable(FirewallProfile.Private);
-			Firewall.Enable(FirewallProfile.Private);
+			FirewallCOMManager.Instance.Disable(FirewallProfile.Private);
+			FirewallCOMManager.Instance.Enable(FirewallProfile.Private);
 		}
 
 		public static void netshTest()

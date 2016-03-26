@@ -19,5 +19,4 @@ publish/
 packages/
 !packages/repositories.config
 temp/
-"# learning/"
-$ learning/
+$*

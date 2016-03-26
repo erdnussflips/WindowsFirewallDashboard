@@ -100,7 +100,12 @@
 					</Grid>
 				</TabItem>
 				<TabItem x:Name="tabRules" Header="Regeln">
-					<Grid Background="#FFE5E5E5"/>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<DataGrid x:Name="rules" ItemsSource="{Binding Rules, Mode=OneTime}"/>
+					</Grid>
 				</TabItem>
 				<TabItem x:Name="tabSettings" Header="Einstellungen" Visibility="Hidden">
 					<Grid>

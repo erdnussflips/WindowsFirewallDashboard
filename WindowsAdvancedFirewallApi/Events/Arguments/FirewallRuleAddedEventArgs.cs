@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Events.Objects;
 using WindowsAdvancedFirewallApi.Utils;
 
@@ -22,11 +23,13 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 
 			Rule.ApplicationPath = FirewallLogEvent.ReplacementStrings[3];
 			Rule.ServiceName = FirewallLogEvent.ReplacementStrings[4];
-			Rule.Direction = FirewallLogEvent.ReplacementStrings[5].ParseInteger(0);
+			Rule.Direction = (RuleDirection)FirewallLogEvent.ReplacementStrings[5].ParseInteger(0);
 			Rule.Protocol = FirewallLogEvent.ReplacementStrings[6].ParseInteger();
 			Rule.LocalPorts = FirewallLogEvent.ReplacementStrings[7];
 			Rule.RemotePorts = FirewallLogEvent.ReplacementStrings[8];
-			Rule.Action = FirewallLogEvent.ReplacementStrings[9];
+			// TODO:
+			LOG.Warn("TODO");
+			// Rule.Action = (RuleAction)FirewallLogEvent.ReplacementStrings[9];
 			Rule.Profiles = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[10], FirewallBaseObject.Profile.Unkown);
 			Rule.LocalAddresses = FirewallLogEvent.ReplacementStrings[11];
 			Rule.RemoteAddresses = FirewallLogEvent.ReplacementStrings[12];

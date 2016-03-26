@@ -5,7 +5,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFirewallCore.IPCommunication.ShellIntegration.Interfaces
+namespace WindowsFirewallCore.IPCommunication.Interfaces
 {
 	//[ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IChatCallback))]
 
