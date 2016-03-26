@@ -23,14 +23,12 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 
 			Rule.ApplicationPath = FirewallLogEvent.ReplacementStrings[3];
 			Rule.ServiceName = FirewallLogEvent.ReplacementStrings[4];
-			Rule.Direction = (RuleDirection)FirewallLogEvent.ReplacementStrings[5].ParseInteger(0);
-			Rule.Protocol = FirewallLogEvent.ReplacementStrings[6].ParseInteger();
+			Rule.Direction = FirewallLogEvent.ReplacementStrings[5].ParseInteger(int.MinValue).ToFirewallDirection();
+			Rule.Protocol = FirewallLogEvent.ReplacementStrings[6].ParseInteger().ToFirewallProtocol();
 			Rule.LocalPorts = FirewallLogEvent.ReplacementStrings[7];
 			Rule.RemotePorts = FirewallLogEvent.ReplacementStrings[8];
-			// TODO:
-			LOG.Warn("TODO");
-			// Rule.Action = (RuleAction)FirewallLogEvent.ReplacementStrings[9];
-			Rule.Profiles = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[10], FirewallBaseObject.Profile.Unkown);
+			Rule.Action = FirewallLogEvent.ReplacementStrings[9].ParseInteger(int.MinValue).ToFirewallAction();
+			Rule.Profiles = FirewallLogEvent.ReplacementStrings[10].ParseInteger(int.MinValue).ToFirewallProfileTypes();
 			Rule.LocalAddresses = FirewallLogEvent.ReplacementStrings[11];
 			Rule.RemoteAddresses = FirewallLogEvent.ReplacementStrings[12];
 			Rule.RemoteMachineAuthorizationList = FirewallLogEvent.ReplacementStrings[13];

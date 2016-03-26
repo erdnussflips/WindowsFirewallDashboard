@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Events.Objects;
 using WindowsAdvancedFirewallApi.Utils;
 
@@ -22,7 +23,7 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 			SetAttributes(5, 6, 7);
 			SetSettingAttributes(1, 3, 2, 4);
 
-			Setting.Profiles = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[0], FirewallBaseObject.Profile.Unkown);
+			Setting.Profiles = FirewallLogEvent.ReplacementStrings[0].ParseInteger(int.MinValue).ToFirewallProfileTypes();
 		}
 	}
 }

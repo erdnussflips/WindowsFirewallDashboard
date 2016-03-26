@@ -2,9 +2,11 @@
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
 
 namespace WindowsAdvancedFirewallApi.COM.Types
@@ -14,7 +16,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		private FirewallProfile _currentProfile;
-		public FirewallProfile CurrrentProfile
+		public FirewallProfile CurrentProfile
 		{
 			get
 			{
@@ -27,18 +29,20 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		internal FirewallPolicy() : base(Native<INetFwPolicy2>.INetFwPolicy2) { }
+		internal FirewallPolicy() : base(Native<INetFwPolicy2>.INetFwPolicy2) {
+
+		}
 
 		public void RestoreDefaults()
 		{
 			COMObject.RestoreLocalFirewallDefaults();
 		}
 
-		private bool SetFirewallStatus(FirewallProfile profile, bool status)
+		private bool SetFirewallStatus(FirewallProfile profile, Status status)
 		{
 			try
 			{
-				COMObject.FirewallEnabled[profile.COMObject] = status;
+				COMObject.FirewallEnabled[profile.COMObject] = status.ToBoolean();
 			}
 			catch (Exception ex)
 			{
@@ -50,26 +54,24 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 
 		public bool Enable(FirewallProfile profile)
 		{
-			return SetFirewallStatus(profile, true);
+			return SetFirewallStatus(profile, Status.Enabled);
 		}
 
 		public bool Disable(FirewallProfile profile)
 		{
-			return SetFirewallStatus(profile, false);
+			return SetFirewallStatus(profile, Status.Disabled);
 		}
 
-		public FirewallProfile.Status GetProfileStatus(FirewallProfile profile)
+		public Status GetProfileStatus(FirewallProfile profile)
 		{
-			return COMObject.FirewallEnabled[profile.COMObject] ? FirewallProfile.Status.Enabled : FirewallProfile.Status.Disabled;
+			return COMObject.FirewallEnabled[profile.COMObject].ToStatusEnum();
 		}
 
-		public void SetProfileStatus(FirewallProfile profile, FirewallProfile.Status status)
+		public void SetProfileStatus(FirewallProfile profile, Status status)
 		{
-			COMObject.FirewallEnabled[profile.COMObject] = (status == FirewallProfile.Status.Enabled);
+			COMObject.FirewallEnabled[profile.COMObject] = status.ToBoolean();
 		}
 
-
-		[STAThread]
 		public IList<IFirewallRule> GetRules()
 		{
 			LOG.Debug("List rules");
@@ -85,6 +87,36 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 
 			return rules;
+		}
+
+		public void SetBlockAllInboundTraffic(FirewallProfile profile, Status status)
+		{
+			COMObject.BlockAllInboundTraffic[profile.COMObject] = status.ToBoolean();
+		}
+
+		public Status GetBlockAllInboundTraffic(FirewallProfile profile)
+		{
+			return COMObject.BlockAllInboundTraffic[profile.COMObject].ToStatusEnum();
+		}
+
+		public void SetDefaultInboundAction(FirewallProfile profile, FirewallAction action)
+		{
+			COMObject.DefaultInboundAction[profile.COMObject] = action.ToNativeEnum();
+		}
+
+		public FirewallAction GetDefaultInboundAction(FirewallProfile profile)
+		{
+			return COMObject.DefaultInboundAction[profile.COMObject].ToManagedEnum();
+		}
+
+		public void SetDefaultOutboundAction(FirewallProfile profile, FirewallAction action)
+		{
+			COMObject.DefaultOutboundAction[profile.COMObject] = action.ToNativeEnum();
+		}
+
+		public FirewallAction GetDefaultOutboundAction(FirewallProfile profile)
+		{
+			return COMObject.DefaultOutboundAction[profile.COMObject].ToManagedEnum();
 		}
 	}
 }

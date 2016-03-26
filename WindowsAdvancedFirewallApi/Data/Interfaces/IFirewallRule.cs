@@ -14,11 +14,12 @@ namespace WindowsAdvancedFirewallApi.Data.Interfaces
 		string ApplicationName { get; set; }
 		string ApplicationPath { get; set; }
 		string ServiceName { get; set; }
-		RuleDirection Direction { get; set; }
-		int Protocol { get; set; }
+		FirewallDirection Direction { get; set; }
+		FirewallProtocol Protocol { get; set; }
 		string LocalPorts { get; set; }
 		string RemotePorts { get; set; }
-		RuleAction Action { get; set; }
+		FirewallAction Action { get; set; }
+		IList<FirewallProfileType> Profiles { get; set; }
 		string LocalAddresses { get; set; }
 		string LocalAppPackageId { get; set; }
 		string LocalUserAuthorizedList { get; set; }

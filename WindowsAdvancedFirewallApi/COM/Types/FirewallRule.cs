@@ -25,76 +25,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 
 		}
 
-		#region Convert functions
-		private static RuleAction Convert(NET_FW_ACTION_ _action)
-		{
-			switch (_action)
-			{
-				case NET_FW_ACTION_.NET_FW_ACTION_BLOCK:
-					return RuleAction.Block;
-				case NET_FW_ACTION_.NET_FW_ACTION_ALLOW:
-					return RuleAction.Allow;
-				case NET_FW_ACTION_.NET_FW_ACTION_MAX:
-					return RuleAction.Max;
-				default:
-					return RuleAction.Unknown;
-			}
-		}
-
-		private static NET_FW_ACTION_ Convert(RuleAction _action)
-		{
-			switch (_action)
-			{
-				case RuleAction.Block:
-					return NET_FW_ACTION_.NET_FW_ACTION_BLOCK;
-				case RuleAction.Allow:
-					return NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
-				case RuleAction.Max:
-				default:
-					return NET_FW_ACTION_.NET_FW_ACTION_MAX;
-			}
-		}
-
-		private static RuleDirection Convert(NET_FW_RULE_DIRECTION_ _direction)
-		{
-			switch (_direction)
-			{
-				case NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN:
-					return RuleDirection.In;
-				case NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT:
-					return RuleDirection.Out;
-				case NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_MAX:
-					return RuleDirection.Max;
-				default:
-					return RuleDirection.Unkown;
-			}
-		}
-
-		private static NET_FW_RULE_DIRECTION_ Convert(RuleDirection _direction)
-		{
-			switch (_direction)
-			{
-				case RuleDirection.In:
-					return NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN;
-				case RuleDirection.Out:
-					return NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT;
-				case RuleDirection.Max:
-				default:
-					return NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_MAX;
-			}
-		}
-		#endregion
-
-		public RuleAction Action
+		public FirewallAction Action
 		{
 			get
 			{
-				return Convert(COMObject.Action);
+				return COMObject.Action.ToManagedEnum();
 			}
 
 			set
 			{
-				COMObject.Action = Convert(value);
+				COMObject.Action = value.ToNativeEnum();
 			}
 		}
 
@@ -137,16 +77,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		public RuleDirection Direction
+		public FirewallDirection Direction
 		{
 			get
 			{
-				return Convert(COMObject.Direction);
+				return COMObject.Direction.ToManagedEnum();
 			}
 
 			set
 			{
-				COMObject.Direction = Convert(value);
+				COMObject.Direction = value.ToNativeEnum();
 			}
 		}
 
@@ -206,6 +146,18 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		}
 
 		public string Id { get; set; }
+
+		public IList<FirewallProfileType> Profiles
+		{
+			get
+			{
+				return COMObject.Profiles.ToFirewallProfileTypes();
+			}
+			set
+			{
+				COMObject.Profiles = value.ToNativeBitmask();
+			}
+		}
 
 		public dynamic Interfaces
 		{
@@ -312,16 +264,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		public int Protocol
+		public FirewallProtocol Protocol
 		{
 			get
 			{
-				return COMObject.Protocol;
+				return COMObject.Protocol.ToFirewallProtocol();
 			}
 
 			set
 			{
-				COMObject.Protocol = value;
+				COMObject.Protocol = value.Value;
 			}
 		}
 

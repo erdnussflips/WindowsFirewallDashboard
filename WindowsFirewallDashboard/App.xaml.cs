@@ -141,6 +141,7 @@ namespace WindowsFirewallDashboard
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
 			LOG.Error(e);
+			e.Handled = true;
 		}
 	}
 }

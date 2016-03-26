@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.COM.Types;
+using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
 
 namespace WindowsAdvancedFirewallApi.COM
 {
 	public sealed class FirewallCOMManager
 	{
-		public enum Status
+		public enum FirewallStatus
 		{
 			Enabled, PartiallyEnabled, Disabled
 		}
@@ -53,7 +54,7 @@ namespace WindowsAdvancedFirewallApi.COM
 			get
 			{
 				checkForAdminRights();
-				return Policy.CurrrentProfile;
+				return Policy.CurrentProfile;
 			}
 		}
 
@@ -63,25 +64,25 @@ namespace WindowsAdvancedFirewallApi.COM
 			Policy.RestoreDefaults();
 		}
 
-		public Status CurrentStatus
+		public FirewallStatus CurrentStatus
 		{
 			get
 			{
 				checkForAdminRights();
-				var states = new List<FirewallProfile.Status>
+				var states = new List<Status>
 				{
 					FirewallProfile.Public.CurrentStatus,
 					FirewallProfile.Domain.CurrentStatus,
 					FirewallProfile.Private.CurrentStatus
 				};
 
-				var enabledProfiles = states.Contains(FirewallProfile.Status.Enabled);
-				var disabledProfiles = states.Contains(FirewallProfile.Status.Disabled);
+				var enabledProfiles = states.Contains(Status.Enabled);
+				var disabledProfiles = states.Contains(Status.Disabled);
 
-				if (enabledProfiles && !disabledProfiles) return Status.Enabled;
-				if (!enabledProfiles && disabledProfiles) return Status.Disabled;
+				if (enabledProfiles && !disabledProfiles) return FirewallStatus.Enabled;
+				if (!enabledProfiles && disabledProfiles) return FirewallStatus.Disabled;
 
-				return Status.PartiallyEnabled;
+				return FirewallStatus.PartiallyEnabled;
 			}
 		}
 
@@ -99,6 +100,13 @@ namespace WindowsAdvancedFirewallApi.COM
 			return Policy.Disable(profile);
 		}
 
-		public IList<IFirewallRule> Rules => Policy.GetRules();
+		public IList<IFirewallRule> Rules
+		{
+			get
+			{
+				checkForAdminRights();
+				return Policy.GetRules();
+			}
+		}
 	}
 }

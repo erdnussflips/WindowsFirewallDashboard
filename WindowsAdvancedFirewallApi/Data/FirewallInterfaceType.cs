@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
-	public enum RuleAction
+	public enum FirewallInterfaceType
 	{
-		Unknown, Block, Allow, Max
+		ALL, LAN, Wireless, RemoteAccess
 	}
 }

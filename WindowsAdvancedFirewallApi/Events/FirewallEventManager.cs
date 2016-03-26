@@ -190,6 +190,7 @@ namespace WindowsAdvancedFirewallApi.Events
 			{
 				_eventLog.Close();
 				_eventLog.Dispose();
+				_eventLog = null;
 
 				return true;
 			}

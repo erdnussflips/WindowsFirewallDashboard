@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Events.Objects;
 using WindowsAdvancedFirewallApi.Utils;
 
@@ -26,8 +27,8 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 		{
 			NetworkInterface.InterfaceGUID = FirewallLogEvent.ReplacementStrings[0];
 			NetworkInterface.InterfaceName = FirewallLogEvent.ReplacementStrings[1];
-			NetworkInterface.OldProfile = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[2], FirewallBaseObject.Profile.Unkown);
-			NetworkInterface.NewProfile = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[3], FirewallBaseObject.Profile.Unkown);
+			NetworkInterface.OldProfile = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[2], FirewallProfileType.Unknown);
+			NetworkInterface.NewProfile = EnumUtils.ParseStringValue(FirewallLogEvent.ReplacementStrings[3], FirewallProfileType.Unknown);
 		}
 	}
 }

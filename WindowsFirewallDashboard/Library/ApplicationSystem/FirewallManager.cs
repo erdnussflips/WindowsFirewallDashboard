@@ -60,16 +60,16 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			EventManager.RulesChanged += EventManager_RulesChanged;
 		}
 
+		public void StopEventListening()
+		{
+			EventManager.StopListingFirewall();
+		}
+
 		private void EventManager_RulesChanged(object sender, FirewallRuleBaseEventArgs e)
 		{
 			LOG.Debug("Rules changed");
 			Rules.Clear();
 			Rules.AddRange(FirewallCOMManager.Instance.Rules);
-		}
-
-		public void StopEventListening()
-		{
-			EventManager.StopListingFirewall();
 		}
 
 		private void EventManager_SettingsChanged(object sender, FirewallSettingEventArgs e)

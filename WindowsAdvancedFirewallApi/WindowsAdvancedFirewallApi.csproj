@@ -187,8 +187,12 @@
     <Compile Include="COM\Types\FirewallPolicy.cs" />
     <Compile Include="COM\Types\FirewallProfile.cs" />
     <Compile Include="COM\Types\FirewallRule.cs" />
-    <Compile Include="Data\RuleAction.cs" />
-    <Compile Include="Data\RuleDirection.cs" />
+    <Compile Include="Data\FirewallAction.cs" />
+    <Compile Include="Data\FirewallDirection.cs" />
+    <Compile Include="Data\FirewallInterfaceType.cs" />
+    <Compile Include="Data\FirewallProfileType.cs" />
+    <Compile Include="Data\FirewallProtocol.cs" />
+    <Compile Include="Data\Status.cs" />
     <Compile Include="Events\Arguments\FirewallBaseEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallExtendedApplicationEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallExtendedOriginEventArgs.cs" />
@@ -212,7 +216,6 @@
     <Compile Include="Events\WFEvents.cs" />
     <Compile Include="Data\Interfaces\IFirewallRule.cs" />
     <Compile Include="Library\FastObservableCollection.cs" />
-    <Compile Include="Objects\FirewallProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
     <Compile Include="Utils\PrimitiveUtils.cs" />

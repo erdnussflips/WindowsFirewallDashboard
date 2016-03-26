@@ -14,12 +14,12 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 		public string Name { get; set; }
 		public string ApplicationPath { get; set; }
 		public string ServiceName { get; set; }
-		public RuleDirection Direction { get; set; }
-		public int Protocol { get; set; }
+		public FirewallDirection Direction { get; set; }
+		public FirewallProtocol Protocol { get; set; }
 		public string LocalPorts { get; set; }
 		public string RemotePorts { get; set; }
-		public RuleAction Action { get; set; }
-		public Profile Profiles { get; set; }
+		public FirewallAction Action { get; set; }
+		public IList<FirewallProfileType> Profiles { get; set; }
 		public string LocalAddresses { get; set; }
 		public string RemoteAddresses { get; set; }
 		public string RemoteMachineAuthorizationList { get; set; }
