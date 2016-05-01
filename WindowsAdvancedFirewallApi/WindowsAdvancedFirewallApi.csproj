@@ -189,7 +189,9 @@
     <Compile Include="COM\Types\FirewallRule.cs" />
     <Compile Include="Data\FirewallAction.cs" />
     <Compile Include="Data\FirewallDirection.cs" />
+    <Compile Include="Data\FirewallEdgeTraversal.cs" />
     <Compile Include="Data\FirewallInterfaceType.cs" />
+    <Compile Include="Data\FirewallPorts.cs" />
     <Compile Include="Data\FirewallProfileType.cs" />
     <Compile Include="Data\FirewallProtocol.cs" />
     <Compile Include="Data\Status.cs" />
@@ -215,10 +217,14 @@
     <Compile Include="Events\Objects\FirewallUserNotificationEvent.cs" />
     <Compile Include="Events\WFEvents.cs" />
     <Compile Include="Data\Interfaces\IFirewallRule.cs" />
+    <Compile Include="Library\ComparableList.cs" />
     <Compile Include="Library\FastObservableCollection.cs" />
+    <Compile Include="Library\IComparableList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CollectionUtils.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
     <Compile Include="Utils\PrimitiveUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Powershell\" />

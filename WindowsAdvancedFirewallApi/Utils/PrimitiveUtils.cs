@@ -21,6 +21,12 @@ namespace WindowsAdvancedFirewallApi.Utils
 			return value ? 1 : 0;
 		}
 
+		public static bool IsNumber(this string value)
+		{
+			double number;
+			return double.TryParse(value, out number);
+		}
+
 		public static int ParseInteger(this string value)
 		{
 			try

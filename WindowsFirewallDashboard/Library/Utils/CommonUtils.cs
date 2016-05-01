@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace WindowsFirewallDashboard.Library.Utils
 {
-	static class GeneralUtils
+	static class CommonUtils
 	{
 		private static Logger LOG = LogManager.GetCurrentClassLogger();
 
@@ -23,6 +23,14 @@ namespace WindowsFirewallDashboard.Library.Utils
 			{
 				LOG.Error(ex);
 			}
+		}
+
+		public static bool ImplementsGenericInterface(this object value, Type interfaceType)
+		{
+			var interfaces = value.GetType().GetInterfaces();
+			var genericTypes = interfaces.Where(i => i.IsGenericType);
+			var result = genericTypes.Any(i => i.GetGenericTypeDefinition() == interfaceType);
+			return result;
 		}
 	}
 }

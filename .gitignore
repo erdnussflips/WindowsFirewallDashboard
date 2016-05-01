@@ -21,3 +21,4 @@ packages/
 temp/
 $*
 *.pfx
+WindowsFirewallShellExtension/NLog.config

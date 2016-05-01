@@ -4,56 +4,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
 	public enum FirewallDirection
 	{
-		Unkown, In, Out, Max
+		Unknown, In, Out, Max
 	}
 
-	internal static class  FirewallDirectionUtil
+	internal static class FirewallDirectionUtil
 	{
-		public static FirewallDirection ToManagedEnum(this NET_FW_RULE_DIRECTION_ _direction)
+		private static Dictionary<FirewallDirection, NET_FW_RULE_DIRECTION_> _mappingNatives = new Dictionary<FirewallDirection, NET_FW_RULE_DIRECTION_>
 		{
-			switch (_direction)
-			{
-				case NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN:
-					return FirewallDirection.In;
-				case NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT:
-					return FirewallDirection.Out;
-				case NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_MAX:
-					return FirewallDirection.Max;
-				default:
-					return FirewallDirection.Unkown;
-			}
+			{ FirewallDirection.In, NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN },
+			{ FirewallDirection.Out, NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT },
+			{ FirewallDirection.Max, NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_MAX },
+		};
+
+		private static Dictionary<FirewallDirection, int> _mappingEvents = new Dictionary<FirewallDirection, int>
+		{
+			{ FirewallDirection.In, 1 },
+			{ FirewallDirection.Out, 2 },
+		};
+
+		public static FirewallDirection ToManagedEnum(this NET_FW_RULE_DIRECTION_ _value)
+		{
+			return _mappingNatives.GetKey(_value, FirewallDirection.Unknown);
 		}
 
-		public static NET_FW_RULE_DIRECTION_ ToNativeEnum(this FirewallDirection _direction)
+		public static NET_FW_RULE_DIRECTION_ ToNativeEnum(this FirewallDirection _value)
 		{
-			switch (_direction)
-			{
-				case FirewallDirection.In:
-					return NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN;
-				case FirewallDirection.Out:
-					return NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT;
-				case FirewallDirection.Max:
-				default:
-					return NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_MAX;
-			}
+			return _mappingNatives.GetValue(_value, NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_MAX);
 		}
 
-		public static FirewallDirection ToFirewallDirection(this int _eventDirection)
+		public static FirewallDirection ToFirewallDirection(this int _eventAction)
 		{
-			switch (_eventDirection)
-			{
-				case 1:
-					return FirewallDirection.In;
-				case 2:
-					return FirewallDirection.Out;
-				default:
-					return FirewallDirection.Unkown;
-			}
+			return _mappingEvents.GetKey(_eventAction, FirewallDirection.Unknown);
 		}
 	}
 }
