@@ -188,12 +188,14 @@
     <Compile Include="COM\Types\FirewallProfile.cs" />
     <Compile Include="COM\Types\FirewallRule.cs" />
     <Compile Include="Data\FirewallAction.cs" />
+    <Compile Include="Data\FirewallAddresses.cs" />
     <Compile Include="Data\FirewallDirection.cs" />
     <Compile Include="Data\FirewallEdgeTraversal.cs" />
     <Compile Include="Data\FirewallInterfaceType.cs" />
     <Compile Include="Data\FirewallPorts.cs" />
     <Compile Include="Data\FirewallProfileType.cs" />
     <Compile Include="Data\FirewallProtocol.cs" />
+    <Compile Include="Data\Generics\FirewallValuableProperty.cs" />
     <Compile Include="Data\Status.cs" />
     <Compile Include="Events\Arguments\FirewallBaseEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallExtendedApplicationEventArgs.cs" />
@@ -218,8 +220,12 @@
     <Compile Include="Events\WFEvents.cs" />
     <Compile Include="Data\Interfaces\IFirewallRule.cs" />
     <Compile Include="Library\ComparableList.cs" />
+    <Compile Include="Library\Ensure.cs" />
     <Compile Include="Library\FastObservableCollection.cs" />
     <Compile Include="Library\IComparableList.cs" />
+    <Compile Include="Library\GenericValue.cs" />
+    <Compile Include="Library\GenericValueRange.cs" />
+    <Compile Include="Library\IValuable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CollectionUtils.cs" />
     <Compile Include="Utils\EnumUtils.cs" />

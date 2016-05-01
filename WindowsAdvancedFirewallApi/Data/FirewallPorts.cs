@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Data.Generics;
+using WindowsAdvancedFirewallApi.Library;
 using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
-	public sealed class FirewallPorts : IComparable
+	public sealed class FirewallPorts : FirewallValuableProperty
 	{
 		public enum Types {
 			Unknown, All, Specific, RPC, RPC_EPMap, IP_HTTPS
@@ -15,7 +17,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 		public Types Type { private set; get; }
 		public string Native { private set; get; }
-		private List<int> Ports = new List<int>();
+		private List<IValuable> Ports => Values;
 
 		private FirewallPorts(Types type, string native)
 		{
@@ -23,7 +25,7 @@ namespace WindowsAdvancedFirewallApi.Data
 			Native = native;
 		}
 
-		public FirewallPorts(params int[] ports) : this(Types.Specific, null)
+		public FirewallPorts(params IValuable[] ports) : this(Types.Specific, null)
 		{
 			Ports.AddRange(ports);
 		}
@@ -32,15 +34,10 @@ namespace WindowsAdvancedFirewallApi.Data
 		{
 			if (Type == Types.Specific)
 			{
-				return Ports.Stringify();
+				return base.ToString();
 			}
 
 			return Type.ToString();
-		}
-
-		public int CompareTo(object obj)
-		{
-			return ToString().CompareTo(obj?.ToString());
 		}
 
 		public static readonly FirewallPorts All = new FirewallPorts(Types.All, "*");
@@ -56,7 +53,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 		public static readonly IList<FirewallPorts> Predefined = new List<FirewallPorts> { All, RPC, RPC_EPMap, IPHTTPS, mDNS, Teredo, Ply2Disc };
 
-		public static FirewallPorts Specific(params int[] ports)
+		public static FirewallPorts Specific(params IValuable[] ports)
 		{
 			return new FirewallPorts(ports);
 		}
@@ -69,21 +66,44 @@ namespace WindowsAdvancedFirewallApi.Data
 
 	internal static class FirewallPortsUtils
 	{
-		public static FirewallPorts ToFirewallPorts(this string value)
+		class Factory : IValuableFactory<int>
 		{
-			var trimmedValue = value?.TrimEnd(',');
-			var splittedPorts = trimmedValue?.Split(',');
-
-			if (splittedPorts == null || splittedPorts.Length < 1)
+			public IValuableRange<int> CreateValueRange(int lowest, int highest)
 			{
-				return null;
+				return new IntegerValueRange(lowest, highest);
 			}
 
-			var isNumber = !splittedPorts.Any(port => !port.IsNumber());
-			if (isNumber)
+			public IValuableSingle<int> CreateValueSingle(int value)
 			{
-				var ports = splittedPorts.Select(port => port.ParseInteger());
-				return new FirewallPorts(ports.ToArray());
+				return new IntegerValue(value);
+			}
+
+			public int ParseValue(string value)
+			{
+				return value.ParseInteger();
+			}
+
+			public bool ValidateValue(string value)
+			{
+				return value?.IsNumber() ?? false;
+			}
+		}
+
+		public static FirewallPorts ToFirewallPorts(this string value)
+		{
+			var result = value.ToFirewallValuableProperty<FirewallPorts, int>(new Factory());
+
+			if (result != null)
+			{
+				return new FirewallPorts(result.ToArray());
+			}
+
+			var trimmedValue = value?.TrimEnd(',');
+			var splittedPortValues = trimmedValue?.Split(',');
+
+			if (splittedPortValues == null || splittedPortValues.Length < 1)
+			{
+				return null;
 			}
 
 			foreach (var item in FirewallPorts.Predefined)
@@ -99,7 +119,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 		public static string ToNativeValue(this FirewallPorts ports)
 		{
-			return ports.ToString();
+			return ports.ToNativeValueGeneric();
 		}
 	}
 }
