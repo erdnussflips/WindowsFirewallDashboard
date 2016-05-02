@@ -1,0 +1,25 @@
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+.vs/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+x64/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Click-Once directory
+publish/
+
+packages/
+!packages/repositories.config
+temp/
+$*
+*.pfx
+WindowsFirewallShellExtension/NLog.config
