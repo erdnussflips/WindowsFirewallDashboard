@@ -17,7 +17,7 @@ The Windows Firewall Dashboard is an alternative administration panel for the Wi
 
 It should be easier to configure the Windows Firewall for normal users.
 
-Get first impressions [here](Documentation/Screenshots.md).
+Get first impressions [here](Documentation/First_impressions.md).
 
 ## Project Structure
 This Application is separated into GUI-Client "Windows Firewall Dashboard" and .NET-API "Windows Advanced Firewall API" to access the windows advanced firewall. The API is as git-subtree into this repository integrated.
