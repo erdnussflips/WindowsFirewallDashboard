@@ -13,9 +13,9 @@ version: 0.0.0.{build}
 # branches to build
 branches:
   # whitelist
-  only:
-    - master
-    - dev
+  # only:
+  #   - master
+  #   - dev
 
   # blacklist
   except:
