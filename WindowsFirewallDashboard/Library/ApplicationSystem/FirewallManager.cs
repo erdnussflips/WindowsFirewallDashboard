@@ -68,8 +68,8 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		private void EventManager_RulesChanged(object sender, FirewallRuleBaseEventArgs e)
 		{
 			LOG.Debug("Rules changed");
-			Rules.Clear();
-			Rules.AddRange(FirewallCOMManager.Instance.Rules);
+			//Rules.Clear();
+			//Rules.AddRange(FirewallCOMManager.Instance.Rules);
 		}
 
 		private void EventManager_SettingsChanged(object sender, FirewallSettingEventArgs e)

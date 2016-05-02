@@ -15,7 +15,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		{
 			public Type NativeType { get; private set; }
 
-			internal Native(Type comType)
+			private Native(Type comType)
 			{
 				this.NativeType = comType;
 			}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
-	public sealed class FirewallProtocol
+	public sealed class FirewallProtocol : IComparable
 	{
 		public enum ProtocolName
 		{
@@ -34,6 +34,11 @@ namespace WindowsAdvancedFirewallApi.Data
 			return Enum.GetName(typeof(ProtocolName), Name);
 		}
 
+		public int CompareTo(object obj)
+		{
+			return ToString().CompareTo(obj?.ToString());
+		}
+
 		public static readonly FirewallProtocol HOPOPT = new FirewallProtocol(0, ProtocolName.HOPOPT);
 		public static readonly FirewallProtocol ICMPv4 = new FirewallProtocol(1, ProtocolName.ICMPv4);
 		public static readonly FirewallProtocol IGMP = new FirewallProtocol(2, ProtocolName.IGMP);
@@ -52,6 +57,11 @@ namespace WindowsAdvancedFirewallApi.Data
 		public static readonly FirewallProtocol All = new FirewallProtocol(256, ProtocolName.All);
 
 		public static readonly IList<FirewallProtocol> DefaultProtocols = new List<FirewallProtocol> { HOPOPT, ICMPv4, IGMP, TCP, UDP, IPv6, IPv6_Route, IPv6_Flag, GRE, ICMP_v6, IPv6_NoNxt, IPv6_Opts, VRRP, PGM, L2TP, All };
+
+		public static FirewallProtocol Custom(short protocolValue)
+		{
+			return new FirewallProtocol(protocolValue);
+		}
 	}
 
 	internal static class FirewallProtocolUtil

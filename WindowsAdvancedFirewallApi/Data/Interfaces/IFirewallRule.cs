@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Library;
 
 namespace WindowsAdvancedFirewallApi.Data.Interfaces
 {
@@ -11,16 +12,16 @@ namespace WindowsAdvancedFirewallApi.Data.Interfaces
 		string Id { get; set; }
 		string Name { get; set; }
 		string Description { get; set; }
-		string ApplicationName { get; set; }
+		string ApplicationName { get; }
 		string ApplicationPath { get; set; }
 		string ServiceName { get; set; }
 		FirewallDirection Direction { get; set; }
 		FirewallProtocol Protocol { get; set; }
-		string LocalPorts { get; set; }
-		string RemotePorts { get; set; }
+		FirewallPorts LocalPorts { get; set; }
+		FirewallPorts RemotePorts { get; set; }
 		FirewallAction Action { get; set; }
-		IList<FirewallProfileType> Profiles { get; set; }
-		string LocalAddresses { get; set; }
+		IComparableList<FirewallProfileType> Profiles { get; set; }
+		FirewallAddresses LocalAddresses { get; set; }
 		string LocalAppPackageId { get; set; }
 		string LocalUserAuthorizedList { get; set; }
 		string LocalUserOwner { get; set; }
@@ -30,7 +31,7 @@ namespace WindowsAdvancedFirewallApi.Data.Interfaces
 		string EmbeddedContext { get; set; }
 		int Flags { get; set; }
 		bool Active { get; set; }
-		int EdgeTraversal { get; set; }
+		FirewallEdgeTraversal EdgeTraversal { get; set; }
 		int LooseSourceMapped { get; set; }
 		int SecurityOptions { get; set; }
 		int SchemaVersion { get; set; }

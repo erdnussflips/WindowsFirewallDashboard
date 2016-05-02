@@ -219,10 +219,13 @@
     <Compile Include="Library\ApplicationSystem\InstallManager.cs" />
     <Compile Include="Library\ApplicationSystem\NotificationManager.cs" />
     <Compile Include="Library\ApplicationSystem\WindowManager.cs" />
+    <Compile Include="Library\Converter\ColorToBrushConverter.cs" />
+    <Compile Include="Library\Converter\IListToStringConverter.cs" />
+    <Compile Include="Library\Converter\UniversalValueConverter.cs" />
     <Compile Include="Library\Dependencies\SingleInstance.cs" />
     <Compile Include="Library\IPC\IpcCmdOptions.cs" />
     <Compile Include="Library\ShellIntegration\ShellServiceListener.cs" />
-    <Compile Include="Library\Utils\GeneralUtils.cs" />
+    <Compile Include="Library\Utils\CommonUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
     <Compile Include="Library\Utils\ReflectionHelper.cs" />
     <Compile Include="Locator\ViewModelLocator.cs" />

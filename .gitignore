@@ -2,6 +2,7 @@
 *.suo
 *.user
 *.sln.docstates
+.vs/
 
 # Build results
 [Dd]ebug/
@@ -21,3 +22,4 @@ packages/
 temp/
 $*
 *.pfx
+WindowsFirewallShellExtension/NLog.config

@@ -7,6 +7,7 @@
 		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 		xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 		xmlns:root="clr-namespace:WindowsFirewallDashboard"
+		xmlns:Converter="clr-namespace:WindowsFirewallDashboard.Library.Converter"
 		mc:Ignorable="d"
 		x:Class="WindowsFirewallDashboard.MainWindow"
 		Title="Windows Firewall Dashboard" TitleCaps="False"
@@ -15,8 +16,9 @@
 		GlowBrush="{DynamicResource AccentColorBrush}"
 		ResizeMode="CanResize"
 		WindowTransitionsEnabled="true"
-		DataContext="{Binding Path=Main, Source={StaticResource Locator}}" Icon="/WindowsFirewallDashboard;component/Resources/Images/NotifyIcon-blue.ico">
+		Icon="/WindowsFirewallDashboard;component/Resources/Images/NotifyIcon-blue.ico">
 	<Controls:MetroWindow.Resources>
+		<Converter:IListToStringConverter x:Key="IListToStringConverter"/>
 		<Style x:Key="StatusIcon" TargetType="{x:Type TextBlock}">
 			<Style.Resources>
 				<Storyboard x:Key="Enabled">
@@ -37,6 +39,9 @@
 			</Style.Resources>
 		</Style>
 	</Controls:MetroWindow.Resources>
+	<Controls:MetroWindow.DataContext>
+		<Binding Path="Main" Source="{StaticResource Locator}"/>
+	</Controls:MetroWindow.DataContext>
 	<Controls:MetroWindow.RightWindowCommands>
 		<Controls:WindowCommands>
 			<Button x:Name="settingsButton" Content="Einstellungen" />
@@ -57,6 +62,37 @@
 		</Controls:WindowCommands>
 	</Controls:MetroWindow.RightWindowCommands>
 
+	<Controls:MetroWindow.Flyouts>
+		<Controls:FlyoutsControl>
+			<Controls:Flyout 
+				x:Name="settingsFlyout"
+				Header="Settings"
+				Position="Right"
+				AnimateOpacity="True"
+				Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type root:MainWindow}}}">
+				<Grid Margin="20,0,0,0">
+					<ScrollViewer>
+						<Grid VerticalAlignment="Top">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition/>
+							</Grid.ColumnDefinitions>
+							<Label Content="Installationsstatus:" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5"/>
+							<Label x:Name="labelInstallState" Content="[State]" HorizontalAlignment="Left" Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
+							<CheckBox x:Name="checkBoxAutostart" Content="Mit Windows starten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsAutostartEnabled, Mode=OneWay}"/>
+							<CheckBox x:Name="checkBoxShellIntegration" Content="In Explorer integrieren" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsShellIntegrationEnabled, Mode=OneWay, NotifyOnSourceUpdated=True}"/>
+						</Grid>
+					</ScrollViewer>
+				</Grid>
+			</Controls:Flyout>
+		</Controls:FlyoutsControl>
+	</Controls:MetroWindow.Flyouts>
+	
 	<Grid>
 		<Grid x:Name="grid" Margin="5">
 			<Grid.ColumnDefinitions>
@@ -105,29 +141,28 @@
 						<Grid.RowDefinitions>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
-						<DataGrid x:Name="rules" ItemsSource="{Binding Rules, Mode=OneTime}" EnableColumnVirtualization="True"/>
+						<DataGrid x:Name="rules" ItemsSource="{Binding Rules, Mode=OneTime}" EnableColumnVirtualization="True" AutoGenerateColumns="False">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="Name" Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="ApplicationName" Binding="{Binding ApplicationName}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="ApplicationPath" Binding="{Binding ApplicationPath}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="Protocol" Binding="{Binding Protocol}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="Action" Binding="{Binding Action}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="Group" Binding="{Binding Grouping}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="Profiles" ClipboardContentBinding="{x:Null}" IsReadOnly="True" Binding="{Binding Profiles, Converter={StaticResource IListToStringConverter}, Mode=OneWay}"/>
+								<DataGridTextColumn Header="Interfaces" Binding="{Binding InterfaceTypes}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="Direction" Binding="{Binding Direction}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="LocalAddresses" Binding="{Binding LocalAddresses}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="LocalPorts" Binding="{Binding LocalPorts}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="RemoteAddresses" Binding="{Binding RemoteAddresses}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+								<DataGridTextColumn Header="RemotePorts" Binding="{Binding RemotePorts}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
+							</DataGrid.Columns>
+						</DataGrid>
 					</Grid>
 				</TabItem>
 				<TabItem x:Name="tabSettings" Header="Einstellungen" Visibility="Hidden">
-					<Grid>
-						<ScrollViewer>
-							<Grid VerticalAlignment="Top">
-								<Grid.RowDefinitions>
-									<RowDefinition Height="Auto"/>
-									<RowDefinition Height="Auto"/>
-									<RowDefinition Height="Auto"/>
-								</Grid.RowDefinitions>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="Auto"/>
-									<ColumnDefinition/>
-								</Grid.ColumnDefinitions>
-								<Label Content="Installationsstatus:" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5"/>
-								<Label x:Name="labelInstallState" Content="[State]" HorizontalAlignment="Left" Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
-								<CheckBox x:Name="checkBoxAutostart" Content="Mit Windows starten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsAutostartEnabled, Mode=OneWay}"/>
-								<CheckBox x:Name="checkBoxShellIntegration" Content="In Explorer integrieren" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsShellIntegrationEnabled, Mode=OneWay, NotifyOnSourceUpdated=True}"/>
-							</Grid>
-						</ScrollViewer>
-					</Grid>
+					
 				</TabItem>
 			</Controls:MetroTabControl>
 		</Grid>

@@ -29,9 +29,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		internal FirewallPolicy() : base(Native<INetFwPolicy2>.INetFwPolicy2) {
-
-		}
+		internal FirewallPolicy() : base(Native<INetFwPolicy2>.INetFwPolicy2) { }
 
 		public void RestoreDefaults()
 		{
@@ -87,6 +85,11 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 
 			return rules;
+		}
+
+		public IFirewallRule GetRule()
+		{
+			return null;
 		}
 
 		public void SetBlockAllInboundTraffic(FirewallProfile profile, Status status)

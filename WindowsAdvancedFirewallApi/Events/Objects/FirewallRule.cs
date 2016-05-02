@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
+using WindowsAdvancedFirewallApi.Library;
 
 namespace WindowsAdvancedFirewallApi.Events.Objects
 {
@@ -16,18 +17,18 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 		public string ServiceName { get; set; }
 		public FirewallDirection Direction { get; set; }
 		public FirewallProtocol Protocol { get; set; }
-		public string LocalPorts { get; set; }
-		public string RemotePorts { get; set; }
+		public FirewallPorts LocalPorts { get; set; }
+		public FirewallPorts RemotePorts { get; set; }
 		public FirewallAction Action { get; set; }
-		public IList<FirewallProfileType> Profiles { get; set; }
-		public string LocalAddresses { get; set; }
+		public IComparableList<FirewallProfileType> Profiles { get; set; }
+		public FirewallAddresses LocalAddresses { get; set; }
 		public string RemoteAddresses { get; set; }
 		public string RemoteMachineAuthorizationList { get; set; }
 		public string RemoteUserAuthorizationList { get; set; }
 		public string EmbeddedContext { get; set; }
 		public int Flags { get; set; }
 		public bool Active { get; set; }
-		public int EdgeTraversal { get; set; }
+		public FirewallEdgeTraversal EdgeTraversal { get; set; }
 		public int LooseSourceMapped { get; set; }
 		public int SecurityOptions { get; set; }
 		public int SchemaVersion { get; set; }

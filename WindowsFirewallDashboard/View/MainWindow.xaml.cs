@@ -63,6 +63,11 @@ namespace WindowsFirewallDashboard
 
 		private void CheckBoxShellIntegration_Click(object sender, RoutedEventArgs e)
 		{
+			MessageBox.Show("Coming soon");
+
+			checkBoxShellIntegration.IsChecked = false;
+			return;
+
 			if ((bool)checkBoxShellIntegration.IsChecked)
 			{
 				ViewModel.EnableShellIntegration();
@@ -87,7 +92,8 @@ namespace WindowsFirewallDashboard
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainControl.SelectedItem = tabSettings;
+			//MainControl.SelectedItem = tabSettings;
+			settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
 			labelInstallState.Content = EnumUtils.GetEnumValueName<FirewallEventManager.InstallationStatus>(ViewModel.InstallationStatus);
 		}
 

@@ -13,19 +13,19 @@ namespace WindowsFirewallDashboard.Library.ShellIntegration
 	class ShellServiceListener : IShellService
 	{
 		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
-
-		public void AddApplicationRule(string applicationFilePath)
-		{
-			LOG.Info(applicationFilePath);
-		}
 		public void GetApplicationStatus(string applicationFilePath)
 		{
 			LOG.Info(applicationFilePath);
 		}
 
-		public void RemoveApplicationRule(string applicationFilePath)
+		public void AddApplicationRule(IEnumerable<string> applicationFilePaths)
 		{
-			LOG.Info(applicationFilePath);
+			LOG.Info(applicationFilePaths);
+		}
+
+		public void RemoveApplicationRule(IEnumerable<string> applicationFilePaths)
+		{
+			LOG.Info(applicationFilePaths);
 		}
 	}
 }

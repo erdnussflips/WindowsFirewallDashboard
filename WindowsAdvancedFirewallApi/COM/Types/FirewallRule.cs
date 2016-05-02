@@ -2,11 +2,13 @@
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
+using WindowsAdvancedFirewallApi.Library;
 using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.COM.Types
@@ -54,15 +56,28 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		{
 			get
 			{
-				return COMObject.ApplicationName;
+				return COMObject.ApplicationName.GetFileNameOfPath();
 			}
+		}
+
+		public string ApplicationPath
+		{
+			get
+			{
+				var applicationName = COMObject.ApplicationName;
+				if (!applicationName.IsPath())
+				{
+					return null;
+				}
+
+				return applicationName;
+			}
+
 			set
 			{
 				COMObject.ApplicationName = value;
 			}
 		}
-
-		public string ApplicationPath { get; set; }
 
 		public string Description
 		{
@@ -90,16 +105,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		public int EdgeTraversal
+		public FirewallEdgeTraversal EdgeTraversal
 		{
 			get
 			{
-				return COMObject.EdgeTraversal.ConvertToInteger();
+				return COMObject.EdgeTraversalOptions.ToFirewallEdgeTraversal();
 			}
 
 			set
 			{
-				COMObject.EdgeTraversal = value.ConvertToBool();
+				COMObject.EdgeTraversalOptions = value.ToNativeValue();
 			}
 		}
 
@@ -147,11 +162,11 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 
 		public string Id { get; set; }
 
-		public IList<FirewallProfileType> Profiles
+		public IComparableList<FirewallProfileType> Profiles
 		{
 			get
 			{
-				return COMObject.Profiles.ToFirewallProfileTypes();
+				return new ComparableList<FirewallProfileType>(COMObject.Profiles.ToFirewallProfileTypes());
 			}
 			set
 			{
@@ -185,16 +200,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		public string LocalAddresses
+		public FirewallAddresses LocalAddresses
 		{
 			get
 			{
-				return COMObject.LocalAddresses;
+				return COMObject.LocalAddresses.ToFirewallAddresses();
 			}
 
 			set
 			{
-				COMObject.LocalAddresses = value;
+				COMObject.LocalAddresses = value.ToNativeValue();
 			}
 		}
 
@@ -236,16 +251,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 
 		public int LocalOnlyMapped { get; set; }
 
-		public string LocalPorts
+		public FirewallPorts LocalPorts
 		{
 			get
 			{
-				return COMObject.LocalPorts;
+				return COMObject.LocalPorts?.ToFirewallPorts();
 			}
 
 			set
 			{
-				COMObject.LocalPorts = value;
+				COMObject.LocalPorts = value?.ToNativeValue();
 			}
 		}
 
@@ -302,16 +317,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		public string RemotePorts
+		public FirewallPorts RemotePorts
 		{
 			get
 			{
-				return COMObject.RemotePorts;
+				return COMObject.RemotePorts.ToFirewallPorts();
 			}
 
 			set
 			{
-				COMObject.RemotePorts = value;
+				COMObject.RemotePorts = value.ToNativeValue();
 			}
 		}
 

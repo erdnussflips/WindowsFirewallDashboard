@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
@@ -14,46 +15,32 @@ namespace WindowsAdvancedFirewallApi.Data
 
 	internal static class FirewallActionUtil
 	{
-		public static FirewallAction ToManagedEnum(this NET_FW_ACTION_ _action)
+		private static Dictionary<FirewallAction, NET_FW_ACTION_> _mappingNatives = new Dictionary<FirewallAction, NET_FW_ACTION_>
 		{
-			switch (_action)
-			{
-				case NET_FW_ACTION_.NET_FW_ACTION_BLOCK:
-					return FirewallAction.Block;
-				case NET_FW_ACTION_.NET_FW_ACTION_ALLOW:
-					return FirewallAction.Allow;
-				case NET_FW_ACTION_.NET_FW_ACTION_MAX:
-					return FirewallAction.Max;
-				default:
-					return FirewallAction.Unknown;
-			}
+			{ FirewallAction.Block, NET_FW_ACTION_.NET_FW_ACTION_BLOCK },
+			{ FirewallAction.Allow, NET_FW_ACTION_.NET_FW_ACTION_ALLOW },
+			{ FirewallAction.Max, NET_FW_ACTION_.NET_FW_ACTION_MAX },
+		};
+
+		private static Dictionary<FirewallAction, int> _mappingEvents = new Dictionary<FirewallAction, int>
+		{
+			{ FirewallAction.Allow, 2 },
+			{ FirewallAction.Block, 3 },
+		};
+
+		public static FirewallAction ToManagedEnum(this NET_FW_ACTION_ _value)
+		{
+			return _mappingNatives.GetKey(_value, FirewallAction.Unknown);
 		}
 
-		public static NET_FW_ACTION_ ToNativeEnum(this FirewallAction _action)
+		public static NET_FW_ACTION_ ToNativeEnum(this FirewallAction _value)
 		{
-			switch (_action)
-			{
-				case FirewallAction.Block:
-					return NET_FW_ACTION_.NET_FW_ACTION_BLOCK;
-				case FirewallAction.Allow:
-					return NET_FW_ACTION_.NET_FW_ACTION_ALLOW;
-				case FirewallAction.Max:
-				default:
-					return NET_FW_ACTION_.NET_FW_ACTION_MAX;
-			}
+			return _mappingNatives.GetValue(_value, NET_FW_ACTION_.NET_FW_ACTION_BLOCK);
 		}
 
 		public static FirewallAction ToFirewallAction(this int _eventAction)
 		{
-			switch (_eventAction)
-			{
-				case 2:
-					return FirewallAction.Allow;
-				case 3:
-					return FirewallAction.Block;
-				default:
-					return FirewallAction.Unknown;
-			}
+			return _mappingEvents.GetKey(_eventAction, FirewallAction.Unknown);
 		}
 	}
 }

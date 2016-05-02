@@ -66,7 +66,12 @@ namespace WindowsFirewallShellExtension
 				itemRemoveApplicationRule.Click += RemoveApplicationRule;
 				#endregion
 
-				//itemFirewallDashboard.DropDownItems.Add(itemStatusApplicationRule);
+				// application status (later implementation)
+				if (SelectedItemPaths.Count() == 1)
+				{
+					//itemFirewallDashboard.DropDownItems.Add(itemStatusApplicationRule);
+				}
+
 				itemFirewallDashboard.DropDownItems.Add(itemAddApplicationRule);
 				itemFirewallDashboard.DropDownItems.Add(itemRemoveApplicationRule);
 
@@ -86,10 +91,8 @@ namespace WindowsFirewallShellExtension
 		{
 			try
 			{
-				var firstElement = SelectedItemPaths.ElementAt(0);
-				LOG.Debug("adding application rule for " + firstElement);
 				var shellService = OpenChannel();
-				shellService.AddApplicationRule(firstElement);
+				shellService.AddApplicationRule(SelectedItemPaths);
 				CloseChannel();
 			}
 			catch (Exception ex)
@@ -103,10 +106,8 @@ namespace WindowsFirewallShellExtension
 		{
 			try
 			{
-				var firstElement = SelectedItemPaths.ElementAt(0);
-				LOG.Debug("removing application rule for " + firstElement);
 				var shellService = OpenChannel();
-				shellService.RemoveApplicationRule(firstElement);
+				shellService.RemoveApplicationRule(SelectedItemPaths);
 				CloseChannel();
 			}
 			catch (Exception ex)

@@ -16,9 +16,9 @@ namespace WindowsFirewallCore.IPCommunication.Interfaces
 		void GetApplicationStatus(string applicationFilePath);
 
 		[OperationContract]
-		void AddApplicationRule(string applicationFilePath);
+		void AddApplicationRule(IEnumerable<string> applicationFilePaths);
 
 		[OperationContract]
-		void RemoveApplicationRule(string applicationFilePath);
+		void RemoveApplicationRule(IEnumerable<string> applicationFilePaths);
 	}
 }
