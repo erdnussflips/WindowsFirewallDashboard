@@ -63,6 +63,11 @@ namespace WindowsFirewallDashboard
 
 		private void CheckBoxShellIntegration_Click(object sender, RoutedEventArgs e)
 		{
+			MessageBox.Show("Coming soon");
+
+			checkBoxShellIntegration.IsChecked = false;
+			return;
+
 			if ((bool)checkBoxShellIntegration.IsChecked)
 			{
 				ViewModel.EnableShellIntegration();

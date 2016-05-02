@@ -35,7 +35,6 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		}
 		public static ApplicationManager Instance => Singleton;
 		#endregion
-		
 		public IpcCmdOptions StartupOptions { get; private set; }
 		public UserSettings User { get; private set; }
 
