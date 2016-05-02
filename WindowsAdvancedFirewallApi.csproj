@@ -95,22 +95,36 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>WindowsFirewallDashboard.sky_signature.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IPAddressRange, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IPAddressRange.1.4.0.0\lib\net40\IPAddressRange.dll</HintPath>
+    <Reference Include="IPAddressRange, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IPAddressRange.1.5.0.0\lib\net40\IPAddressRange.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management.Automation" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiConstants.cs" />
     <Compile Include="ApiTest.cs" />
     <Compile Include="Commandline\Commands\ConsecCommands.cs" />
     <Compile Include="Commandline\Commands\FirewallCommands.cs" />
@@ -168,17 +182,73 @@
     <Compile Include="Commandline\Parameter\Value\NetshControllableValue.cs" />
     <Compile Include="Commandline\Parameter\Value\NetshExtendedParameterValue.cs" />
     <Compile Include="ApiHelper.cs" />
+    <Compile Include="COM\FirewallCOMManager.cs" />
+    <Compile Include="COM\FirewallStatus.cs" />
     <Compile Include="COM\Types\COMWrapperType.cs" />
     <Compile Include="COM\Types\FirewallPolicy.cs" />
     <Compile Include="COM\Types\FirewallProfile.cs" />
-    <Compile Include="Objects\FirewallProfile.cs" />
+    <Compile Include="COM\Types\FirewallRule.cs" />
+    <Compile Include="Data\FirewallAction.cs" />
+    <Compile Include="Data\FirewallAddresses.cs" />
+    <Compile Include="Data\FirewallDirection.cs" />
+    <Compile Include="Data\FirewallEdgeTraversal.cs" />
+    <Compile Include="Data\FirewallInterfaceType.cs" />
+    <Compile Include="Data\FirewallPorts.cs" />
+    <Compile Include="Data\FirewallProfileType.cs" />
+    <Compile Include="Data\FirewallProtocol.cs" />
+    <Compile Include="Data\BaseObjects\FirewallValuableProperty.cs" />
+    <Compile Include="Data\Status.cs" />
+    <Compile Include="Events\Arguments\FirewallBaseEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallExtendedApplicationEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallExtendedOriginEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallHistoryLoadingStatusChangedEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallNetworkInterfaceProfileChangedEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallRuleAddedEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallRuleBaseEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallRuleDeletedEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallProfileSettingEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallSettingEventArgs.cs" />
+    <Compile Include="Events\Arguments\FirewallUserNotificationFailedEventArgs.cs" />
+    <Compile Include="Events\FirewallEventFactory.cs" />
+    <Compile Include="Events\FirewallEventManager.cs" />
+    <Compile Include="Events\Objects\FirewallBaseObject.cs" />
+    <Compile Include="Events\Objects\FirewallNetworkInterfaceProfile.cs" />
+    <Compile Include="Events\Objects\FirewallProfileSetting.cs" />
+    <Compile Include="Events\Objects\FirewallRule.cs" />
+    <Compile Include="Events\Objects\FirewallSetting.cs" />
+    <Compile Include="Events\Objects\FirewallUserNotificationEvent.cs" />
+    <Compile Include="Events\WFEvents.cs" />
+    <Compile Include="Data\Interfaces\IFirewallRule.cs" />
+    <Compile Include="Library\ComparableList.cs" />
+    <Compile Include="Library\Ensure.cs" />
+    <Compile Include="Library\FastObservableCollection.cs" />
+    <Compile Include="Library\IComparableList.cs" />
+    <Compile Include="Library\GenericValue.cs" />
+    <Compile Include="Library\GenericValueRange.cs" />
+    <Compile Include="Library\IPAddress.cs" />
+    <Compile Include="Library\IValuable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CollectionUtils.cs" />
+    <Compile Include="Utils\EnumUtils.cs" />
+    <Compile Include="Utils\PrimitiveUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Powershell\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="LICENSE" />
+    <None Include="LICENSE.md" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="README.md" />
+    <None Include="WindowsFirewallDashboard.sky_signature.pfx" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="NetFwTypeLib">
@@ -188,7 +258,8 @@
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
     </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
