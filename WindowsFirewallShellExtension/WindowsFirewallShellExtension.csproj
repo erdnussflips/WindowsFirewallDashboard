@@ -68,9 +68,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="NLog.config" />
     <None Include="packages.config" />
     <None Include="WindowsFirewallDashboard.sky_signature.pfx" />
   </ItemGroup>
