@@ -62,37 +62,37 @@
 		</Controls:WindowCommands>
 	</Controls:MetroWindow.RightWindowCommands>
 
-    <Controls:MetroWindow.Flyouts>
-        <Controls:FlyoutsControl>
-            <Controls:Flyout 
-                x:Name="settingsFlyout"
-                Header="Settings"
-                Position="Right"
-                AnimateOpacity="True"
-                Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type root:MainWindow}}}">
-                <Grid Margin="20,0,0,0">
-                    <ScrollViewer>
-                        <Grid VerticalAlignment="Top">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Installationsstatus:" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5"/>
-                            <Label x:Name="labelInstallState" Content="[State]" HorizontalAlignment="Left" Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
-                            <CheckBox x:Name="checkBoxAutostart" Content="Mit Windows starten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsAutostartEnabled, Mode=OneWay}"/>
-                            <CheckBox x:Name="checkBoxShellIntegration" Content="In Explorer integrieren" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsShellIntegrationEnabled, Mode=OneWay, NotifyOnSourceUpdated=True}"/>
-                        </Grid>
-                    </ScrollViewer>
-                </Grid>
-            </Controls:Flyout>
-        </Controls:FlyoutsControl>
-    </Controls:MetroWindow.Flyouts>
-    
+	<Controls:MetroWindow.Flyouts>
+		<Controls:FlyoutsControl>
+			<Controls:Flyout 
+				x:Name="settingsFlyout"
+				Header="Settings"
+				Position="Right"
+				AnimateOpacity="True"
+				Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type root:MainWindow}}}">
+				<Grid Margin="20,0,0,0">
+					<ScrollViewer>
+						<Grid VerticalAlignment="Top">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition/>
+							</Grid.ColumnDefinitions>
+							<Label Content="Installationsstatus:" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5"/>
+							<Label x:Name="labelInstallState" Content="[State]" HorizontalAlignment="Left" Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
+							<CheckBox x:Name="checkBoxAutostart" Content="Mit Windows starten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsAutostartEnabled, Mode=OneWay}"/>
+							<CheckBox x:Name="checkBoxShellIntegration" Content="In Explorer integrieren" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsShellIntegrationEnabled, Mode=OneWay, NotifyOnSourceUpdated=True}"/>
+						</Grid>
+					</ScrollViewer>
+				</Grid>
+			</Controls:Flyout>
+		</Controls:FlyoutsControl>
+	</Controls:MetroWindow.Flyouts>
+	
 	<Grid>
 		<Grid x:Name="grid" Margin="5">
 			<Grid.ColumnDefinitions>
