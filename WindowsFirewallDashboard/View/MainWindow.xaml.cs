@@ -87,7 +87,8 @@ namespace WindowsFirewallDashboard
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainControl.SelectedItem = tabSettings;
+			//MainControl.SelectedItem = tabSettings;
+			settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
 			labelInstallState.Content = EnumUtils.GetEnumValueName<FirewallEventManager.InstallationStatus>(ViewModel.InstallationStatus);
 		}
 

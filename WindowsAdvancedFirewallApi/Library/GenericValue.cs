@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,8 +48,8 @@ namespace WindowsAdvancedFirewallApi.Library
 		public IntegerValue(int value) : base(value) { }
 	}
 
-	public class IPAddressValue : GenericValue<string>
+	public class IPAddressValue : GenericValue<IPAddress>
 	{
-		public IPAddressValue(string value) : base(value) { }
+		public IPAddressValue(IPAddress value) : base(value) { }
 	}
 }

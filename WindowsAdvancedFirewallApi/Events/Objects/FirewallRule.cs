@@ -21,7 +21,7 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 		public FirewallPorts RemotePorts { get; set; }
 		public FirewallAction Action { get; set; }
 		public IComparableList<FirewallProfileType> Profiles { get; set; }
-		public string LocalAddresses { get; set; }
+		public FirewallAddresses LocalAddresses { get; set; }
 		public string RemoteAddresses { get; set; }
 		public string RemoteMachineAuthorizationList { get; set; }
 		public string RemoteUserAuthorizationList { get; set; }

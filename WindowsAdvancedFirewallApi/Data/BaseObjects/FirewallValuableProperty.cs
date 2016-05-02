@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Library;
 using WindowsAdvancedFirewallApi.Utils;
 
-namespace WindowsAdvancedFirewallApi.Data.Generics
+namespace WindowsAdvancedFirewallApi.Data.BaseObjects
 {
-	public abstract class FirewallValuableProperty : IComparable
+	public abstract class FirewallValuableProperty<TValueType> : IComparable where TValueType : IComparable
 	{
-		protected List<IValuable> Values = new List<IValuable>();
+		protected List<IValuable<TValueType>> Values = new List<IValuable<TValueType>>();
 
 		public override string ToString()
 		{
@@ -25,9 +25,9 @@ namespace WindowsAdvancedFirewallApi.Data.Generics
 
 	internal static class FirewallValuablePropertyUtils
 	{
-		public static IEnumerable<IValuable> ToFirewallValuableProperty<TFirewallValuableProperty, TValueType>(this string value, IValuableFactory<TValueType> factory)
-			where TFirewallValuableProperty : FirewallValuableProperty
+		public static IEnumerable<IValuable<TValueType>> ToFirewallValuableProperty<TFirewallValuableProperty, TValueType>(this string value, IValuableFactory<TValueType> factory)
 			where TValueType : IComparable
+			where TFirewallValuableProperty : FirewallValuableProperty<TValueType>
 		{
 			var trimmedValue = value?.TrimEnd(',');
 			var splittedValues = trimmedValue?.Split(',');
@@ -37,7 +37,7 @@ namespace WindowsAdvancedFirewallApi.Data.Generics
 				return null;
 			}
 
-			var items = splittedValues.Select<string, IValuable>(item =>
+			var items = splittedValues.Select<string, IValuable<TValueType>>(item =>
 			{
 				var splittedValueItems = item?.Split('-');
 				if (splittedValueItems?.Count() < 1 || splittedValueItems?.Count() > 2)
@@ -68,8 +68,9 @@ namespace WindowsAdvancedFirewallApi.Data.Generics
 			return null;
 		}
 
-		public static string ToNativeValueGeneric<TFirewallValuableProperty>(this TFirewallValuableProperty value)
-			where TFirewallValuableProperty : FirewallValuableProperty
+		public static string ToNativeValueGeneric<TFirewallValuableProperty, TValueType>(this TFirewallValuableProperty value)
+			where TValueType : IComparable
+			where TFirewallValuableProperty : FirewallValuableProperty<TValueType>
 		{
 			return value.ToString();
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,8 +58,8 @@ namespace WindowsAdvancedFirewallApi.Library
 		public IntegerValueRange(int lowest, int highest) : base(lowest, highest) { }
 	}
 
-	public class IPAddressValueRange : GenericValueRange<string>
+	public class IPAddressValueRange : GenericValueRange<IPAddress>
 	{
-		public IPAddressValueRange(string lowest, string highest) : base(lowest, highest) { }
+		public IPAddressValueRange(IPAddress lowest, IPAddress highest) : base(lowest, highest) { }
 	}
 }

@@ -200,16 +200,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		public string LocalAddresses
+		public FirewallAddresses LocalAddresses
 		{
 			get
 			{
-				return COMObject.LocalAddresses;
+				return COMObject.LocalAddresses.ToFirewallAddresses();
 			}
 
 			set
 			{
-				COMObject.LocalAddresses = value;
+				COMObject.LocalAddresses = value.ToNativeValue();
 			}
 		}
 

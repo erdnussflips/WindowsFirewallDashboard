@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsAdvancedFirewallApi.Data.Generics;
+using WindowsAdvancedFirewallApi.Data.BaseObjects;
 using WindowsAdvancedFirewallApi.Library;
 using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
-	public sealed class FirewallPorts : FirewallValuableProperty
+	public sealed class FirewallPorts : FirewallValuableProperty<int>
 	{
 		public enum Types {
 			Unknown, All, Specific, RPC, RPC_EPMap, IP_HTTPS
@@ -17,7 +17,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 		public Types Type { private set; get; }
 		public string Native { private set; get; }
-		private List<IValuable> Ports => Values;
+		private List<IValuable<int>> Ports => Values;
 
 		private FirewallPorts(Types type, string native)
 		{
@@ -25,7 +25,7 @@ namespace WindowsAdvancedFirewallApi.Data
 			Native = native;
 		}
 
-		public FirewallPorts(params IValuable[] ports) : this(Types.Specific, null)
+		public FirewallPorts(params IValuable<int>[] ports) : this(Types.Specific, null)
 		{
 			Ports.AddRange(ports);
 		}
@@ -40,6 +40,7 @@ namespace WindowsAdvancedFirewallApi.Data
 			return Type.ToString();
 		}
 
+		// all ports
 		public static readonly FirewallPorts All = new FirewallPorts(Types.All, "*");
 		// dynamic rpc ports
 		public static readonly FirewallPorts RPC = new FirewallPorts(Types.RPC, "RPC");
@@ -53,7 +54,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 		public static readonly IList<FirewallPorts> Predefined = new List<FirewallPorts> { All, RPC, RPC_EPMap, IPHTTPS, mDNS, Teredo, Ply2Disc };
 
-		public static FirewallPorts Specific(params IValuable[] ports)
+		public static FirewallPorts Specific(params IValuable<int>[] ports)
 		{
 			return new FirewallPorts(ports);
 		}
@@ -119,7 +120,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 		public static string ToNativeValue(this FirewallPorts ports)
 		{
-			return ports.ToNativeValueGeneric();
+			return ports.ToNativeValueGeneric<FirewallPorts, int>();
 		}
 	}
 }

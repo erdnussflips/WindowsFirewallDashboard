@@ -21,7 +21,7 @@ namespace WindowsAdvancedFirewallApi.Data.Interfaces
 		FirewallPorts RemotePorts { get; set; }
 		FirewallAction Action { get; set; }
 		IComparableList<FirewallProfileType> Profiles { get; set; }
-		string LocalAddresses { get; set; }
+		FirewallAddresses LocalAddresses { get; set; }
 		string LocalAppPackageId { get; set; }
 		string LocalUserAuthorizedList { get; set; }
 		string LocalUserOwner { get; set; }

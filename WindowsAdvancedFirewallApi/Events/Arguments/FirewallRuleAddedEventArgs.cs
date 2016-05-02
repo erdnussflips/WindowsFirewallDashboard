@@ -30,7 +30,7 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 			Rule.RemotePorts = FirewallLogEvent.ReplacementStrings[8].ToFirewallPorts();
 			Rule.Action = FirewallLogEvent.ReplacementStrings[9].ParseInteger(int.MinValue).ToFirewallAction();
 			Rule.Profiles = new ComparableList<FirewallProfileType>(FirewallLogEvent.ReplacementStrings[10].ParseInteger(int.MinValue).ToFirewallProfileTypes());
-			Rule.LocalAddresses = FirewallLogEvent.ReplacementStrings[11];
+			Rule.LocalAddresses = FirewallLogEvent.ReplacementStrings[11].ToFirewallAddresses();
 			Rule.RemoteAddresses = FirewallLogEvent.ReplacementStrings[12];
 			Rule.RemoteMachineAuthorizationList = FirewallLogEvent.ReplacementStrings[13];
 			Rule.RemoteUserAuthorizationList = FirewallLogEvent.ReplacementStrings[14];
