@@ -15,14 +15,14 @@ namespace WindowsAdvancedFirewallApi.Data
 
 	internal static class FirewallActionUtil
 	{
-		private static Dictionary<FirewallAction, NET_FW_ACTION_> _mappingNatives = new Dictionary<FirewallAction, NET_FW_ACTION_>
+		private static readonly Dictionary<FirewallAction, NET_FW_ACTION_> _mappingNatives = new Dictionary<FirewallAction, NET_FW_ACTION_>
 		{
 			{ FirewallAction.Block, NET_FW_ACTION_.NET_FW_ACTION_BLOCK },
 			{ FirewallAction.Allow, NET_FW_ACTION_.NET_FW_ACTION_ALLOW },
 			{ FirewallAction.Max, NET_FW_ACTION_.NET_FW_ACTION_MAX },
 		};
 
-		private static Dictionary<FirewallAction, int> _mappingEvents = new Dictionary<FirewallAction, int>
+		private static readonly Dictionary<FirewallAction, int> _mappingEvents = new Dictionary<FirewallAction, int>
 		{
 			{ FirewallAction.Allow, 2 },
 			{ FirewallAction.Block, 3 },

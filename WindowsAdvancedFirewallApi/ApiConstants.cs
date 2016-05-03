@@ -7,7 +7,7 @@ using WindowsAdvancedFirewallApi.Events;
 
 namespace WindowsAdvancedFirewallApi
 {
-	internal class ApiConstants
+	internal static class ApiConstants
 	{
 		public const string FIREWALL_EVENT_SOURCE = "Windows Firewall With Advanced Security";
 		public const string FIREWALL_EVENT_PROTOCOL = "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall";

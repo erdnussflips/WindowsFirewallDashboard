@@ -53,7 +53,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 				if (dictionary.TryGetValue(key, out value))
 				{
 					return value;
-				};
+				}
 			}
 			catch (Exception ex)
 			{

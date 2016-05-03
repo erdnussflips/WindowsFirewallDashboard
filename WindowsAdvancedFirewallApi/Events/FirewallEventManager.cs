@@ -18,7 +18,7 @@ namespace WindowsAdvancedFirewallApi.Events
 {
 	public class FirewallEventManager
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		public enum InstallationStatus
 		{
@@ -43,7 +43,7 @@ namespace WindowsAdvancedFirewallApi.Events
 
 		private EventLog _eventLog { get; set; }
 
-		private object _historySyncLock = new object();
+		private readonly object _historySyncLock = new object();
 		private ICollection<FirewallBaseEventArgs> _history;
 		public ICollection<FirewallBaseEventArgs> History
 		{
@@ -83,7 +83,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		private FirewallEventManager()
 		{
 		}
-		
+
 		public bool IsInstalled()
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to check installation status.", true);
@@ -110,7 +110,7 @@ namespace WindowsAdvancedFirewallApi.Events
 
 				return InstallationStatus.NotInstalled;
 			}
-			catch (UnauthorizedAccessException ex)
+			catch (UnauthorizedAccessException)
 			{
 				return InstallationStatus.Unknown;
 			}
@@ -131,7 +131,7 @@ namespace WindowsAdvancedFirewallApi.Events
 			//	EventLog.CreateEventSource(FIREWALL_EVENT_SOURCE, FIREWALL_EVENT_LOGNAME);
 			//}
 		}
-		
+
 		public void Deinstall()
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to deinstall the event logger.", true);

@@ -51,7 +51,7 @@ namespace WindowsFirewallDashboard.ViewModel.Base
 			}
 		}
 
-		protected BaseViewModel(TModel model) : base()
+		protected BaseViewModel(TModel model)
 		{
 			this.model = model;
 		}

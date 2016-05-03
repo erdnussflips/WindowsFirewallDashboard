@@ -16,7 +16,7 @@ namespace WindowsAdvancedFirewallApi.Library
 		{
 			get
 			{
-				return string.Format("{0}-{1}", Lowest, Highest);
+				return $"{Lowest}-{Highest}";
 			}
 		}
 

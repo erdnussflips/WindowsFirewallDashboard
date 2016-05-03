@@ -14,9 +14,9 @@ using WindowsFirewallDashboard.Resources.Localization;
 
 namespace WindowsFirewallDashboard.Library.Utils
 {
-	sealed class LocalizationTool
+	static class LocalizationTool
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		private static ResourceManager _ressourceManager;
 

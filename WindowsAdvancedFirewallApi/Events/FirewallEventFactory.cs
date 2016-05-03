@@ -12,7 +12,7 @@ namespace WindowsAdvancedFirewallApi.Events
 {
 	class FirewallEventFactory
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		public static FirewallBaseEventArgs GenerateFirewallEventArgs(EventLogEntry e)
 		{
@@ -38,8 +38,8 @@ namespace WindowsAdvancedFirewallApi.Events
 				default:
 					var valueName = EnumUtils.GetEnumValueName<WFEvents>(eventId);
 
-					if (valueName != null) LOG.Info(string.Format("The event id '{0}' ({1}) is not handled by this API.", eventId, valueName));
-					else LOG.Info(string.Format("The event id '{0}' is not handled by this API.", eventId));
+					if (valueName != null) LOG.Info($"The event id '{eventId}' ({valueName}) is not handled by this API.");
+					else LOG.Info($"The event id '{eventId}' is not handled by this API.");
 
 					return null;
 			}

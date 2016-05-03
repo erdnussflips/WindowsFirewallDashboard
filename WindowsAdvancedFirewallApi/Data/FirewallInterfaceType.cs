@@ -14,7 +14,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 	internal static class FirewallInterfaceTypeUtil
 	{
-		private static Dictionary<FirewallInterfaceType, string> _mappingStrings = new Dictionary<FirewallInterfaceType, string>
+		private static readonly Dictionary<FirewallInterfaceType, string> _mappingStrings = new Dictionary<FirewallInterfaceType, string>
 		{
 			{ FirewallInterfaceType.All, "ALL" },
 			{ FirewallInterfaceType.LAN, "LAN" },

@@ -18,14 +18,14 @@ namespace WindowsFirewallCore.IPCommunication.Event
 			pipeServer = new NamedPipeServer<CommunicationObject>(CommunicationPipeName);
 			pipeServer.ClientConnected += delegate (NamedPipeConnection<CommunicationObject, CommunicationObject> connection)
 			{
-				Console.WriteLine("Client {0} is now connected!", connection.Id);
+				Console.WriteLine($"Client {connection.Id} is now connected!");
 				connection.PushMessage(new CommunicationObject { Message = "Welcome!" });
 			};
 
 			pipeServer.ClientMessage += delegate (NamedPipeConnection<CommunicationObject, CommunicationObject> connection, CommunicationObject message)
 			{
-				Console.WriteLine("Client {0} says: {1}", connection.Id, message.Message);
-				connection.PushMessage(new CommunicationObject() { Status = CommunicationObject.CommunicationStatus.MessageRecieved });
+				Console.WriteLine($"Client {connection.Id} says: {message.Message}");
+				connection.PushMessage(new CommunicationObject { Status = CommunicationObject.CommunicationStatus.MessageRecieved });
 			};
 		}
 

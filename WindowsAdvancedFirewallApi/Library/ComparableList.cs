@@ -13,7 +13,7 @@ namespace WindowsAdvancedFirewallApi.Library
 		// Zusammenfassung:
 		//     Initialisiert eine neue, leere Instanz der System.Collections.Generic.List`1-Klasse,
 		//     die die Standardanfangskapazität aufweist.
-		public ComparableList() : base() { }
+		public ComparableList() { }
 
 		//
 		// Zusammenfassung:

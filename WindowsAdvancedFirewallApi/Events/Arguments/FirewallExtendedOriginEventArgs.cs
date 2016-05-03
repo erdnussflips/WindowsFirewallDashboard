@@ -22,7 +22,7 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 		{
 			SetAttributes(iModifiyingUser, iModifyingApplication);
 
-			Origin = PrimitiveUtils.ParseInteger(FirewallLogEvent.ReplacementStrings[iOrigin], 0);
+			Origin = FirewallLogEvent.ReplacementStrings[iOrigin].ParseInteger(0);
 		}
 	}
 }

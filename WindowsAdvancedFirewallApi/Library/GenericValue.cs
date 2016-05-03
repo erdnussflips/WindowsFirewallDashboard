@@ -15,7 +15,7 @@ namespace WindowsAdvancedFirewallApi.Library
 		{
 			get
 			{
-				return string.Format("{0}", Value);
+				return $"{Value}";
 			}
 		}
 

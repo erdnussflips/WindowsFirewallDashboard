@@ -11,7 +11,7 @@ namespace WindowsAdvancedFirewallApi.Events.Arguments
 {
 	public abstract class FirewallBaseEventArgs : EventArgs
 	{
-		protected static Logger LOG = LogManager.GetCurrentClassLogger();
+		protected static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		protected EventLogEntry FirewallLogEvent { get; set; }
 		public long LogId { get; protected set; }

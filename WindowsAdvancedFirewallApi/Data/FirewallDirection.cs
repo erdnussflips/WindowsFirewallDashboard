@@ -15,14 +15,14 @@ namespace WindowsAdvancedFirewallApi.Data
 
 	internal static class FirewallDirectionUtil
 	{
-		private static Dictionary<FirewallDirection, NET_FW_RULE_DIRECTION_> _mappingNatives = new Dictionary<FirewallDirection, NET_FW_RULE_DIRECTION_>
+		private static readonly Dictionary<FirewallDirection, NET_FW_RULE_DIRECTION_> _mappingNatives = new Dictionary<FirewallDirection, NET_FW_RULE_DIRECTION_>
 		{
 			{ FirewallDirection.In, NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN },
 			{ FirewallDirection.Out, NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT },
 			{ FirewallDirection.Max, NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_MAX },
 		};
 
-		private static Dictionary<FirewallDirection, int> _mappingEvents = new Dictionary<FirewallDirection, int>
+		private static readonly Dictionary<FirewallDirection, int> _mappingEvents = new Dictionary<FirewallDirection, int>
 		{
 			{ FirewallDirection.In, 1 },
 			{ FirewallDirection.Out, 2 },

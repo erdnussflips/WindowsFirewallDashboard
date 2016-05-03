@@ -12,7 +12,7 @@ namespace GitHubUpdateManger.Library.CustomOctokit
 		public ReleasesClient(IApiConnection con) : base(con) { }
 
 
-		public Task<IReadOnlyList<Release>> GetPaginated(string owner, string name, int page, int perPage)
+		public Task<IReadOnlyList<Release>> GetPaginatedAsync(string owner, string name, int page, int perPage)
 		{
 			Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
 			Ensure.ArgumentNotNullOrEmptyString(name, "repository name");

@@ -14,7 +14,7 @@ using Debugger = System.Diagnostics.Debugger;
 
 namespace WindowsAdvancedFirewallApi
 {
-	public class ApiTest
+	public static class ApiTest
 	{
 		public static void run()
 		{
@@ -41,10 +41,10 @@ namespace WindowsAdvancedFirewallApi
 		}
 		public static void test()
 		{
-			InitialSessionState session = InitialSessionState.CreateDefault();
+			var session = InitialSessionState.CreateDefault();
 			//session.ImportPSModule(new string[] { "NetSecurity" });
 
-			Runspace umgebung = RunspaceFactory.CreateRunspace(session);
+			var umgebung = RunspaceFactory.CreateRunspace(session);
 			umgebung.Open();
 
 			using (PowerShell ps = PowerShell.Create())

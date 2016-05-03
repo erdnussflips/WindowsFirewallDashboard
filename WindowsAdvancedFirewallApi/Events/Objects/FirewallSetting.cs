@@ -20,9 +20,9 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 			IncomingStandardAction = 17
 		}
 
-		public class ValueTypes
+		public static class ValueTypes
 		{
-			public static List<Type> Collection = new List<Type> { typeof(Common), typeof(StandardAction) };
+			public static readonly List<Type> Collection = new List<Type> { typeof(Common), typeof(StandardAction) };
 
 			public enum Common
 			{
@@ -52,7 +52,7 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 			{
 				if (!ValueTypes.Collection.Contains(value.GetType()))
 				{
-					throw new ArgumentOutOfRangeException(nameof(ValueType), string.Format("Only enumeration types from class {0} are allowed.", nameof(ValueTypes)));
+					throw new ArgumentOutOfRangeException(nameof(ValueType), $"Only enumeration types from class {nameof(ValueTypes)} are allowed.");
 				}
 
 				_value = value;

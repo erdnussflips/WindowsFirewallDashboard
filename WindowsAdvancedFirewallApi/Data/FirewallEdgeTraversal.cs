@@ -17,7 +17,7 @@ namespace WindowsAdvancedFirewallApi.Data
 	}
 	internal static class FirewallEdgeTraversalUtil
 	{
-		private static Dictionary<FirewallEdgeTraversal, int> _mappingNatives = new Dictionary<FirewallEdgeTraversal, int>
+		private static readonly Dictionary<FirewallEdgeTraversal, int> _mappingNatives = new Dictionary<FirewallEdgeTraversal, int>
 		{
 			{ FirewallEdgeTraversal.Deny, 0 },
 			{ FirewallEdgeTraversal.Allow, 1 },

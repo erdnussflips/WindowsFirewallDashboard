@@ -8,6 +8,6 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 {
 	public abstract class FirewallBaseObject
 	{
-		
+
 	}
 }

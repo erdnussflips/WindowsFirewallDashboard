@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WindowsFirewallCore
 {
-	public class CoreConstants
+	public static class CoreConstants
 	{
-		public static string PipeEndpoint = "net.pipe://localhost/" + nameof(WindowsFirewallCore);
+		public static readonly string PipeEndpoint = "net.pipe://localhost/" + nameof(WindowsFirewallCore);
 	}
 }

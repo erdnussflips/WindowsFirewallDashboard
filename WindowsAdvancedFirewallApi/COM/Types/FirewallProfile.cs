@@ -11,10 +11,10 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 {
 	public class FirewallProfile : COMWrapperType<NET_FW_PROFILE_TYPE2_>
 	{
-		public static FirewallProfile All = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_ALL);
-		public static FirewallProfile Private = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE);
-		public static FirewallProfile Domain = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN);
-		public static FirewallProfile Public = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC);
+		public static readonly FirewallProfile All = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_ALL);
+		public static readonly FirewallProfile Private = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE);
+		public static readonly FirewallProfile Domain = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN);
+		public static readonly FirewallProfile Public = new FirewallProfile(NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC);
 
 		public Status CurrentStatus
 		{

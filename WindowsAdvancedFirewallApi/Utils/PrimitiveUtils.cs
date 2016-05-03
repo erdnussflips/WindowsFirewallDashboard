@@ -9,7 +9,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 {
 	public static class PrimitiveUtils
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		public static bool ConvertToBool(this int value)
 		{
@@ -35,7 +35,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
 			{
-				LOG.Info(string.Format("Primitive parse error: {0}", value));
+				LOG.Info($"Primitive parse error: {value}");
 				LOG.Debug(ex);
 				throw;
 			}
@@ -49,7 +49,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
 			{
-				LOG.Info(string.Format("Return default value: {0}", defaultValue));
+				LOG.Info($"Return default value: {defaultValue}");
 				return defaultValue;
 			}
 		}
@@ -61,7 +61,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
 			{
-				LOG.Info(string.Format("Primitive parse error: {0}", value));
+				LOG.Info($"Primitive parse error: {value}");
 				LOG.Debug(ex);
 				throw;
 			}
@@ -75,7 +75,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
 			{
-				LOG.Info(string.Format("Return default value: {0}", defaultValue));
+				LOG.Info($"Return default value: {defaultValue}");
 				return defaultValue;
 			}
 		}

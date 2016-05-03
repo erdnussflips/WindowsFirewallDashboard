@@ -20,7 +20,7 @@ namespace WindowsFirewallDashboard
 	/// </summary>
 	public partial class App : Application, ISingleInstanceApp
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		#region Single instance
 		[STAThread]
@@ -56,7 +56,7 @@ namespace WindowsFirewallDashboard
 		#endregion
 		#endregion
 
-		public App() : base()
+		public App()
 		{
 			InitializeComponent();
 			DispatcherUnhandledException += App_DispatcherUnhandledException;

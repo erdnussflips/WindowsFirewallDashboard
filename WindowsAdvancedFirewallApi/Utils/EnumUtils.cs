@@ -12,7 +12,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 		{
 			if (!typeof(TEnum).IsEnum)
 			{
-				throw new ArgumentException(string.Format("{0} must be an enumerated type", nameof(TEnum)));
+				throw new ArgumentException($"{nameof(TEnum)} must be an enumerated type");
 			}
 		}
 
@@ -20,14 +20,14 @@ namespace WindowsAdvancedFirewallApi.Utils
 		{
 			if (!enumType.IsEnum)
 			{
-				throw new ArgumentException(string.Format("{0} must be an enumerated type", nameof(enumType)));
+				throw new ArgumentException($"{nameof(enumType)} must be an enumerated type");
 			}
 
 			try
 			{
 				return Enum.GetName(enumType, value);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return null;
 			}
@@ -70,9 +70,9 @@ namespace WindowsAdvancedFirewallApi.Utils
 				var enumUnderlyingType = Enum.GetUnderlyingType(typeof(TEnum));
 				object enumValue = null;
 
-				if (enumUnderlyingType == typeof(short)) enumValue = (short)PrimitiveUtils.ParseLong(value);
-				if (enumUnderlyingType == typeof(int)) enumValue = (int)PrimitiveUtils.ParseLong(value);
-				if (enumUnderlyingType == typeof(long)) enumValue = PrimitiveUtils.ParseLong(value);
+				if (enumUnderlyingType == typeof(short)) enumValue = (short)value.ParseLong();
+				if (enumUnderlyingType == typeof(int)) enumValue = (int)value.ParseLong();
+				if (enumUnderlyingType == typeof(long)) enumValue = value.ParseLong();
 
 				return Parse(enumValue, defaultValue);
 			}

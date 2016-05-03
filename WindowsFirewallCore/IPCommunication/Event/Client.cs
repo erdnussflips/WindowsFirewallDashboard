@@ -14,7 +14,7 @@ namespace WindowsFirewallCore.IPCommunication.Event
 		private NamedPipeClient<CommunicationObject> pipeClient;
 		private int processID;
 
-		private bool _messageRecievedByServer = false;
+		private bool _messageRecievedByServer;
 
 		public Client()
 		{
@@ -32,12 +32,9 @@ namespace WindowsFirewallCore.IPCommunication.Event
 			};
 			pipeClient.ServerMessage += delegate (NamedPipeConnection<CommunicationObject, CommunicationObject> connection, CommunicationObject message)
 			{
-				Console.WriteLine("Server says: {0}", message.Message);
+				Console.WriteLine($"Server says: {message.Message}");
 
-				if(message.Status == CommunicationObject.CommunicationStatus.MessageRecieved)
-				{
-					_messageRecievedByServer = true;
-				}
+				_messageRecievedByServer |= message.Status == CommunicationObject.CommunicationStatus.MessageRecieved;
 			};
 		}
 

@@ -42,7 +42,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			{
 				COMObject.FirewallEnabled[profile.COMObject] = status.ToBoolean();
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return false;
 			}

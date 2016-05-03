@@ -31,10 +31,10 @@ namespace GitHubUpdateManger
 			Updates = new List<RepositoryRelease>();
 		}
 
-		public async Task CheckForReleases(Version currentVersion, bool allowPrereleases = false)
+		public async Task CheckForReleasesAsync(Version currentVersion, bool allowPrereleases = false)
 		{
 			Updates.Clear();
-			var releases = await github.Release.GetPaginated(RepositoryOwnerName, RepositoryName, 1, 10);
+			var releases = await github.Release.GetPaginatedAsync(RepositoryOwnerName, RepositoryName, 1, 10);
 
 			foreach (var release in releases)
 			{
@@ -72,9 +72,8 @@ namespace GitHubUpdateManger
 			ApplicationUpdater.UpdatesAvailable(relevantUpdates);
 		}
 
-		public async Task DownloadReleaseAssets(RepositoryRelease update)
+		public async Task DownloadReleaseAssetsAsync(RepositoryRelease update)
 		{
-			
 		}
 	}
 }

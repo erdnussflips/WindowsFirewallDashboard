@@ -33,7 +33,7 @@ namespace WindowsFirewallDashboard
 	/// </summary>
 	partial class MainWindow : MetroWindow
 	{
-		private bool eventListFirstShown = false;
+		private bool eventListFirstShown;
 
 		private MainViewModel ViewModel => ViewModelLocator.Main;
 

@@ -10,7 +10,7 @@ namespace WindowsAdvancedFirewallApi
 {
 	public static class ApiHelper
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		[DllImport("shell32.dll", EntryPoint = "IsUserAnAdmin")]
 		public static extern bool HasAdministratorPrivileges();
@@ -19,25 +19,11 @@ namespace WindowsAdvancedFirewallApi
 		{
 			if(!HasAdministratorPrivileges())
 			{
-				var messageNormal = "You need administrator rights for this action.";
-				var messageAppend = "You need administrator rights ";
-				var message = String.Empty;
+				const string messageNormal = "You need administrator rights for this action.";
+				const string messageAppend = "You need administrator rights ";
+				var message = string.Empty;
 
-				if(customMessage != null)
-				{
-					if(append)
-					{
-						 message = messageAppend + customMessage;
-					}
-					else
-					{
-						message = customMessage;
-					}
-				}
-				else
-				{
-					message = messageNormal;
-				}
+				message = customMessage != null ? (append ? messageAppend + customMessage : customMessage) : messageNormal;
 
 				var ex = new UnauthorizedAccessException(message);
 				LOG.Debug(ex.Message);

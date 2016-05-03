@@ -15,7 +15,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
 	class ApplicationUpdater : IApplicationUpdater
 	{
-		private Logger LOG = LogManager.GetCurrentClassLogger();
+		private readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		/*private static ApplicationUpdater _singleton;
 		protected static ApplicationUpdater Singleton
@@ -32,9 +32,9 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		}
 		public static ApplicationUpdater Instance => Singleton;*/
 
-		public GitHubUpdateManager updateManager;
+		public readonly GitHubUpdateManager updateManager;
 
-		private DateTime lastCheck = DateTime.Today.AddDays(-1);
+		private readonly DateTime lastCheck = DateTime.Today.AddDays(-1);
 
 		public ApplicationUpdater()
 		{
@@ -44,11 +44,11 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			};
 		}
 
-		public async void CheckForUpdates()
+		public async Task CheckForUpdatesAsync()
 		{
 			try
 			{
-				await updateManager.CheckForReleases(Assembly.GetExecutingAssembly().GetName().Version, true);
+				await updateManager.CheckForReleasesAsync(Assembly.GetExecutingAssembly().GetName().Version, true);
 			}
 			catch (Exception ex)
 			{

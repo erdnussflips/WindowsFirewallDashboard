@@ -10,7 +10,7 @@ namespace WindowsAdvancedFirewallApi.Data.Base
 {
 	public abstract class FirewallValuableProperty<TValueType> : IComparable where TValueType : IComparable
 	{
-		protected List<IValuable<TValueType>> Values = new List<IValuable<TValueType>>();
+		protected readonly List<IValuable<TValueType>> Values = new List<IValuable<TValueType>>();
 
 		public override string ToString()
 		{

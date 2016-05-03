@@ -13,7 +13,7 @@ namespace WindowsFirewallDashboard.ViewModel.Base
 	{
 		protected BaseViewModel()
 		{
-			var initializationTask = new Task(() => Initialize());
+			var initializationTask = new Task(Initialize);
 			initializationTask.ContinueWith(result => InitializationCompletedCallback(result));
 			initializationTask.Start();
 		}
@@ -27,11 +27,7 @@ namespace WindowsFirewallDashboard.ViewModel.Base
 			var initializationCompleted = InitializationCompleted;
 			if (initializationCompleted != null)
 			{
-				var handler = InitializationCompleted;
-				if (handler != null)
-				{
-					handler(this, new AsyncCompletedEventArgs(null, !result.IsCompleted, result.AsyncState));
-				}
+				InitializationCompleted?.Invoke(this, new AsyncCompletedEventArgs(null, !result.IsCompleted, result.AsyncState));
 			}
 			InitializationCompleted = null;
 		}
