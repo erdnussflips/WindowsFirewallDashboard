@@ -11,11 +11,11 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : NetshAnyValue<Value>
 		{
-			public static Value Default = Any;
+			public static readonly Value Default = Any;
 
-			public static Value Wireless = new Value { Value = "wireless" };
-			public static Value LAN = new Value { Value = "lan" };
-			public static Value RAS = new Value { Value = "ras" };
+			public static readonly Value Wireless = new Value { Value = "wireless" };
+			public static readonly Value LAN = new Value { Value = "lan" };
+			public static readonly Value RAS = new Value { Value = "ras" };
 		}
 
 		public InterfaceTypeParameter(Value value) : base("interfacetype", value) { }

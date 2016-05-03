@@ -11,13 +11,13 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : NetshAnyValue<Value>
 		{
-			public static Value Default = Any;
+			public static readonly Value Default = Any;
 
-			public static Value LocalSubnet = new Value { Value = "localsubnet" };
-			public static Value DNS = new Value { Value = "dns" };
-			public static Value DHCP = new Value { Value = "dhcp" };
-			public static Value WINS = new Value { Value = "wins" };
-			public static Value StandardGateway = new Value { Value = "defaultgateway" };
+			public static readonly Value LocalSubnet = new Value { Value = "localsubnet" };
+			public static readonly Value DNS = new Value { Value = "dns" };
+			public static readonly Value DHCP = new Value { Value = "dhcp" };
+			public static readonly Value WINS = new Value { Value = "wins" };
+			public static readonly Value StandardGateway = new Value { Value = "defaultgateway" };
 
 			public static Value Custom(string address)
 			{

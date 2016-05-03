@@ -11,9 +11,9 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : NetshExtendedParameterValue<Value>
 		{
-			public static Value Yes = new Value { Value = "yes" };
-			public static Value No = new Value { Value = "no" };
-			public static Value Default = Yes;
+			public static readonly Value Yes = new Value { Value = "yes" };
+			public static readonly Value No = new Value { Value = "no" };
+			public static readonly Value Default = Yes;
 		}
 
 		public EnableParameter(Value value) : base("dir", value) { }

@@ -31,10 +31,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Objects
 			}
 			set
 			{
-				if (_enable != value)
-				{
-					_enable = value;
-				}
+				_enable = value;
 			}
 		}
 
@@ -74,11 +71,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Objects
 			}
 			set
 			{
-				if (_localIp != value)
-				{
-					_localIp = value;
-				}
-			}
+                _localIp = value;
+            }
 		}
 
 		private RemoteIpAddressParameter _remoteIp;
@@ -95,11 +89,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Objects
 			}
 			set
 			{
-				if (_remoteIp != value)
-				{
-					_remoteIp = value;
-				}
-			}
+                _remoteIp = value;
+            }
 		}
 
 		private LocalPortParameter _localPort;
@@ -116,11 +107,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Objects
 			}
 			set
 			{
-				if (_localPort != value)
-				{
-					_localPort = value;
-				}
-			}
+                _localPort = value;
+            }
 		}
 
 		private RemotePortParameter _remotePort;
@@ -137,11 +125,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Objects
 			}
 			set
 			{
-				if (_remotePort != value)
-				{
-					_remotePort = value;
-				}
-			}
+                _remotePort = value;
+            }
 		}
 
 		private ProtocolParameter _protocol;
@@ -158,11 +143,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Objects
 			}
 			set
 			{
-				if (_protocol != value)
-				{
-					_protocol = value;
-				}
-			}
+                _protocol = value;
+            }
 		}
 
 		private InterfaceTypeParameter _interfaceType;
@@ -179,11 +161,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Objects
 			}
 			set
 			{
-				if (_interfaceType != value)
-				{
-					_interfaceType = value;
-				}
-			}
+                _interfaceType = value;
+            }
 		}
 
 		public RemoteComputerGroupParameter RemoteComputerGroup;

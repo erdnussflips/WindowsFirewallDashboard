@@ -11,8 +11,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 	{
 		public class Value : NetshConfigurableValue<Value>
 		{
-			public static Value Default = Custom(4096);
-			public static Value DefaultForGPO = NotConfigured;
+			public static readonly Value Default = Custom(4096);
+			public static readonly Value DefaultForGPO = NotConfigured;
 
 			public static Value Custom(short maxfilesize)
 			{

@@ -8,10 +8,10 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 {
 	public class StateParameter : NetshConfigurableParameter<StateParameter>
 	{
-		public static StateParameter On = new StateParameter { Value = "on" };
-		public static StateParameter Off = new StateParameter { Value = "off" };
+		public static readonly StateParameter On = new StateParameter { Value = "on" };
+		public static readonly StateParameter Off = new StateParameter { Value = "off" };
 
-		public static StateParameter Default = On;
-		public static StateParameter DefaultForServer2008 = On;
+		public static readonly StateParameter Default = On;
+		public static readonly StateParameter DefaultForServer2008 = On;
 	}
 }

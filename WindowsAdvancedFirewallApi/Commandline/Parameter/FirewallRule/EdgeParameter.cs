@@ -11,10 +11,10 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : NetshExtendedParameterValue<Value>
 		{
-			public static Value Yes = new Value { Value = "yes" };
-			public static Value No = new Value { Value = "no" };
-			public static Value DeferApplication = new Value { Value = "deferapp" };
-			public static Value DeferUser = new Value { Value = "deferuser" };
+			public static readonly Value Yes = new Value { Value = "yes" };
+			public static readonly Value No = new Value { Value = "no" };
+			public static readonly Value DeferApplication = new Value { Value = "deferapp" };
+			public static readonly Value DeferUser = new Value { Value = "deferuser" };
 		}
 
 		public EdgeParameter(Value value) : base("edge", value) { }

@@ -11,8 +11,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Settings
 	{
 		public class Value : NetshControllableValue<Value>
 		{
-			public static Value Default = Enable;
-			public static Value DefaultForGPO = NotConfigured;
+			public static readonly Value Default = Enable;
+			public static readonly Value DefaultForGPO = NotConfigured;
 		}
 
 		public LocalConsecRulesParameter(Value value) : base("localconsecrules", value) { }

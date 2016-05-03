@@ -27,7 +27,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule.Value
 		public static ParameterValueType Custom(int portBegin, int portEnd)
 		{
 			checkPortnumber(portBegin); checkPortnumber(portEnd);
-			return new ParameterValueType { Value = portBegin.ToString() + "-" + portEnd.ToString() };
+			return new ParameterValueType { Value = $"{portBegin} - {portEnd}" };
 		}
 	}
 }

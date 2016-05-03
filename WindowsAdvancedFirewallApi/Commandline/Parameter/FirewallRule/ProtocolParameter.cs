@@ -11,14 +11,14 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : NetshAnyValue<Value>
 		{
-			public static Value Default = Any;
+			public static readonly Value Default = Any;
 
-			public static Value ICMPv4 = new Value { Value = "icmpv4" };
-			public static Value ICMPv6 = new Value { Value = "icmpv6" };
+			public static readonly Value ICMPv4 = new Value { Value = "icmpv4" };
+			public static readonly Value ICMPv6 = new Value { Value = "icmpv6" };
 			public static Value ICMPv4_Custom(int type, int code) => ICMP_Custom(ICMPv4.Value, type, code);
 			public static Value ICMPv6_Custom(int type, int code) => ICMP_Custom(ICMPv6.Value, type, code);
-			public static Value TCP = new Value { Value = "tcp" };
-			public static Value UDP = new Value { Value = "udp" };
+			public static readonly Value TCP = new Value { Value = "tcp" };
+			public static readonly Value UDP = new Value { Value = "udp" };
 
 			private static void checkRange(int number)
 			{

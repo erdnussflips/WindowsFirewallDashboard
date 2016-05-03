@@ -11,7 +11,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : NetshAnyValue<Value>
 		{
-			public static Value Default = Any;
+			public static readonly Value Default = Any;
 
 			public static Value Custom(string address)
 			{

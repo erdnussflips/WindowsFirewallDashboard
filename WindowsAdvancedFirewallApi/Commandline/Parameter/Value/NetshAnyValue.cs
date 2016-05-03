@@ -9,6 +9,6 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Value
 	public class NetshAnyValue<ParameterValueType> : NetshExtendedParameterValue<ParameterValueType>
 		where ParameterValueType : NetshAnyValue<ParameterValueType>, new()
 	{
-		public static ParameterValueType Any = new ParameterValueType { Value = "any" };
+		public static readonly ParameterValueType Any = new ParameterValueType { Value = "any" };
 	}
 }

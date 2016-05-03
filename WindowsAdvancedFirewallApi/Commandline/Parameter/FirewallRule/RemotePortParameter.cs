@@ -12,7 +12,7 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : PortValue<Value>
 		{
-			public static Value Default = Any;
+			public static readonly Value Default = Any;
 		}
 
 		public RemotePortParameter(params Value[] values) : base("remoteport", values) { }

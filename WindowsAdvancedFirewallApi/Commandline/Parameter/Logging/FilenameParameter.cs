@@ -11,8 +11,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 	{
 		public class Value : NetshConfigurableValue<Value>
 		{
-			public static Value Default = new Value { Value = new Uri(@"%windir%\system32\logfiles\firewall\pfirewall.log", UriKind.RelativeOrAbsolute).AbsolutePath };
-			public static Value DefaultForGPO = NotConfigured;
+			public static readonly Value Default = new Value { Value = new Uri(@"%windir%\system32\logfiles\firewall\pfirewall.log", UriKind.RelativeOrAbsolute).AbsolutePath };
+			public static readonly Value DefaultForGPO = NotConfigured;
 
 			public static Value Custom(Uri filepath)
 			{

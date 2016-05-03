@@ -11,9 +11,9 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Settings
 	{
 		public class Value : NetshControllableValue<Value>
 		{
-			public static Value Default = Enable;
-			public static Value DefaultForServer2008 = Disable;
-			public static Value DefaultForGPO = NotConfigured;
+			public static readonly Value Default = Enable;
+			public static readonly Value DefaultForServer2008 = Disable;
+			public static readonly Value DefaultForGPO = NotConfigured;
 		}
 
 		public InboundUserNotificationParameter(Value value) : base("inboundusernotification", value) { }

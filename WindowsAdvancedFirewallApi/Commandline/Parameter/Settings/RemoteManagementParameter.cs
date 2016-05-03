@@ -11,8 +11,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Settings
 	{
 		public class Value : NetshControllableValue<Value>
 		{
-			public static Value Default = Disable;
-			public static Value DefaultForGPO = NotConfigured;
+			public static readonly Value Default = Disable;
+			public static readonly Value DefaultForGPO = NotConfigured;
 		}
 
 		public RemoteManagementParameter(Value value) : base("remotemanagement", value) { }

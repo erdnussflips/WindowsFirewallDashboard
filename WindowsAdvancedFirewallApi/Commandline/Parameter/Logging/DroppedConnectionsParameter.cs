@@ -11,8 +11,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.Logging
 	{
 		public class Value : NetshControllableValue<Value>
 		{
-			public static Value Default = Disable;
-			public static Value DefaultGPO = NotConfigured;
+			public static readonly Value Default = Disable;
+			public static readonly Value DefaultGPO = NotConfigured;
 		}
 
 		public DroppedConnectionsParameter(Value value) : base("droppedconnections", value) { }

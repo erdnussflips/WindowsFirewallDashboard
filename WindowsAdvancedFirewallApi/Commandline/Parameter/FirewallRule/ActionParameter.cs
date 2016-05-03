@@ -11,9 +11,9 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : NetshExtendedParameterValue<Value>
 		{
-			public static Value Allow = new Value { Value = "allow" };
-			public static Value Block = new Value { Value = "block" };
-			public static Value Bypass = new Value { Value = "bypass" };
+			public static readonly Value Allow = new Value { Value = "allow" };
+			public static readonly Value Block = new Value { Value = "block" };
+			public static readonly Value Bypass = new Value { Value = "bypass" };
 		}
 
 		public ActionParameter(Value value) : base("action", value) { }

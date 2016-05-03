@@ -27,11 +27,8 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 
 			internal set
 			{
-				if(_parameterValues != value)
-				{
-					_parameterValues = value;
-				}
-			}
+                _parameterValues = value;
+            }
 		}
 
 		internal NetshExtendedMultipleValueParameter(string name, params ParameterValueType[] values) : base(name)

@@ -12,12 +12,12 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter.FirewallRule
 	{
 		public class Value : PortValue<Value>
 		{
-			public static Value Default = Any;
+			public static readonly Value Default = Any;
 
-			public static Value RPC = new Value { Value = "rpc" };
-			public static Value RPC_EPMAP = new Value { Value = "rpc-epmap" };
-			public static Value Teredo = new Value { Value = "teredo" };
-			public static Value IP_HTTPS = new Value { Value = "iphttps" };
+			public static readonly Value RPC = new Value { Value = "rpc" };
+			public static readonly Value RPC_EPMAP = new Value { Value = "rpc-epmap" };
+			public static readonly Value Teredo = new Value { Value = "teredo" };
+			public static readonly Value IP_HTTPS = new Value { Value = "iphttps" };
 		}
 
 		public LocalPortParameter(params Value[] values) : base("localport", values) { }

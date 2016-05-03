@@ -9,6 +9,6 @@ namespace WindowsAdvancedFirewallApi.Commandline.Parameter
 	public class NetshConfigurableParameter<ParameterType> : NetshSimpleParameter
 		where ParameterType : NetshConfigurableParameter<ParameterType>, new()
 	{
-		public static ParameterType NotConfigured = new ParameterType { Value = NetshConstants.NOT_CONFIGURED };
+		public static readonly ParameterType NotConfigured = new ParameterType { Value = NetshConstants.NOT_CONFIGURED };
 	}
 }
