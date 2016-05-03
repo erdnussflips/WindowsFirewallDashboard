@@ -29,14 +29,6 @@ namespace WindowsFirewallDashboard.ViewModel
 			}
 		}
 
-		public FirewallEventManager.InstallationStatus InstallationStatus
-		{
-			get
-			{
-				return FirewallEventManager.Instance.GetInstallationStatus();
-			}
-		}
-
 		public ICollection<FirewallBaseEventArgs> EventHistory => ApplicationManager.Instance.Firewall.EventManager.History;
 		public event EventHandler<FirewallHistoryLoadingStatusChangedEventArgs> HistoryLoadingStatusChanged
 		{
@@ -63,41 +55,5 @@ namespace WindowsFirewallDashboard.ViewModel
 		public void LoadEventHistory() => ApplicationManager.Instance.Firewall.EventManager.LoadEventHistory();
 
 		public ICollection<IFirewallRule> Rules => ApplicationManager.Instance.Firewall.Rules;
-
-		public bool IsAutostartEnabled
-		{
-			get
-			{
-				return ApplicationManager.Instance.Installer.IsAutostartTaskInstalled();
-			}
-		}
-		public void EnableAutostart()
-		{
-			ApplicationManager.Instance.Installer.InstallAutostartTask();
-			RaiseOnPropertyChanged(nameof(IsAutostartEnabled));
-		}
-		public void DisableAutostart()
-		{
-			ApplicationManager.Instance.Installer.DeinstallAutostartTask();
-			RaiseOnPropertyChanged(nameof(IsAutostartEnabled));
-		}
-
-		public bool? IsShellIntegrationEnabled
-		{
-			get
-			{
-				return ApplicationManager.Instance.Installer.IsShellIntegrationInstalled();
-			}
-		}
-		public void EnableShellIntegration()
-		{
-			ApplicationManager.Instance.Installer.InstallShellIntegration();
-			RaiseOnPropertyChanged(nameof(IsShellIntegrationEnabled));
-		}
-		public void DisableShellIntegration()
-		{
-			ApplicationManager.Instance.Installer.DeinstallShellIntegration();
-			RaiseOnPropertyChanged(nameof(IsShellIntegrationEnabled));
-		}
 	}
 }

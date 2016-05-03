@@ -1,0 +1,74 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WindowsFirewallDashboard.View.Components"
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" xmlns:mui="http://firstfloorsoftware.com/ModernUI" x:Class="WindowsFirewallDashboard.View.Components.SettingsGrid"
+             mc:Ignorable="d"
+             d:DesignHeight="391.2" d:DesignWidth="588">
+    <UserControl.DataContext>
+        <Binding Path="Settings" Source="{StaticResource Locator}"/>
+    </UserControl.DataContext>
+    <TabControl x:Name="tabControl" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+        <TabItem Header="General">
+            <ScrollViewer>
+                <Grid d:LayoutOverrides="LeftPosition, RightPosition">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Installationsstatus:" d:LayoutOverrides="Width, Height" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5"/>
+                    <Label x:Name="labelInstallState" Content="{Binding InstallationStatus, Mode=OneWay}" HorizontalAlignment="Left" Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="checkBoxAutostart" Content="Mit Windows starten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsAutostartEnabled, Mode=OneWay}"/>
+                    <CheckBox x:Name="checkBoxShellIntegration" Content="In Explorer integrieren" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="5,5,0,5" IsChecked="{Binding IsShellIntegrationEnabled, Mode=OneWay, NotifyOnSourceUpdated=True}"/>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Firewall Settings">
+            <ScrollViewer>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock x:Name="InfoText" TextWrapping="Wrap" Text="[InfoText]" Padding="5" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                        <Label Content="Current profile" ContentStringFormat="{}{0}:"/>
+                        <Label x:Name="CurrentProfile" Content="{Binding CurrentProfile.ManagedType, Mode=OneWay}"/>
+                    </StackPanel>
+                    <Grid x:Name="ProfileSettings" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="100"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Stroke="Black" Grid.Column="1" Grid.RowSpan="99" Fill="#FFECFFEE"/>
+                        <Label Margin="0,0,-0.001,0" d:LayoutOverrides="Width, Height" Grid.Column="1" Content="Private" Foreground="Black"/>
+                        <Rectangle Stroke="Black" Grid.Column="2" Grid.RowSpan="4" Fill="#FFFFECEC"/>
+                        <Label Content="Public" Margin="0,0,-0.002,0" Grid.Column="2" d:LayoutOverrides="Width, Height" Foreground="Black"/>
+                        <Rectangle Stroke="Black" Grid.Column="3" Grid.RowSpan="4" Fill="#FFEDECFF"/>
+                        <Label Content="Domain" Margin="0,0,-0.002,0" Grid.Column="3" d:LayoutOverrides="Width, Height" Foreground="Black"/>
+                        <Rectangle Stroke="Black" Fill="#FFFFE3BD" Grid.Row="1" Grid.ColumnSpan="99"/>
+                        <Label Content="Windows Firewall global status" d:LayoutOverrides="Width, Height" Grid.Row="1" Grid.ColumnSpan="4" Foreground="Black"/>
+                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding PrivateProfile.IsEnabled, Mode=TwoWay}"/>
+                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding PublicProfile.IsEnabled, Mode=TwoWay}"/>
+                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding DomainProfile.IsEnabled, Mode=TwoWay}"/>
+                        <Rectangle Stroke="Black" Fill="#FFFFE3BD" Grid.Row="3" Grid.ColumnSpan="4"/>
+                        <Label Content="Default actions (when no filtering rule matches)" Grid.Row="3" Grid.ColumnSpan="4" d:LayoutOverrides="Width, Height" Foreground="Black"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
+</UserControl>

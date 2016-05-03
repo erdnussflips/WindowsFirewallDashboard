@@ -17,6 +17,11 @@ namespace WindowsAdvancedFirewallApi.Data
 
 	public static class FirewallProfileTypeUtil
 	{
+		public static IList<FirewallProfileType> ToFirewallProfileTypes(this NET_FW_PROFILE_TYPE2_ nativeType)
+		{
+			return ToFirewallProfileTypes((int)nativeType);
+		}
+
 		public static IList<FirewallProfileType> ToFirewallProfileTypes(this int profileTypeBitmask)
 		{
 			var profiles = new List<FirewallProfileType>();

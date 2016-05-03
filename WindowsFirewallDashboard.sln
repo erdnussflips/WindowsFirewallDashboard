@@ -24,6 +24,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFirewallCore", "Wind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFirewallShellExtension", "WindowsFirewallShellExtension\WindowsFirewallShellExtension.csproj", "{46F23EE1-5F6A-4E56-88F7-DC9F1CC88FFB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{88928D28-F442-4176-90AE-D48F720A6B4A}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\First_impressions.md = Documentation\First_impressions.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{847E0DC2-E03A-4159-B305-0E2435364D54}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\Screenshots\Events.png = Documentation\Screenshots\Events.png
+		Documentation\Screenshots\Overview.png = Documentation\Screenshots\Overview.png
+		Documentation\Screenshots\Rules.png = Documentation\Screenshots\Rules.png
+		Documentation\Screenshots\Settings.png = Documentation\Screenshots\Settings.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug as different User|Any CPU = Debug as different User|Any CPU
@@ -130,5 +143,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88928D28-F442-4176-90AE-D48F720A6B4A} = {517CEC21-A90A-4AAE-A485-4A5F9A0A36B2}
+		{847E0DC2-E03A-4159-B305-0E2435364D54} = {88928D28-F442-4176-90AE-D48F720A6B4A}
 	EndGlobalSection
 EndGlobal

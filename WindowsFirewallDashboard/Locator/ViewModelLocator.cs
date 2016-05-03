@@ -11,7 +11,6 @@ namespace WindowsFirewallDashboard.Locator
 	class ViewModelLocator
 	{
 		private static MainViewModel _main;
-
 		public static MainViewModel Main
 		{
 			get
@@ -25,5 +24,18 @@ namespace WindowsFirewallDashboard.Locator
 			}
 		}
 
+		private static SettingsViewModel _settings;
+		public static SettingsViewModel Settings
+		{
+			get
+			{
+				if (_settings == null)
+				{
+					_settings = new SettingsViewModel();
+				}
+
+				return _settings;
+			}
+		}
 	}
 }

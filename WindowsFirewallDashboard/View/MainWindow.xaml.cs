@@ -24,6 +24,7 @@ using WindowsFirewallDashboard.Locator;
 using WindowsFirewallDashboard.ViewModel;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 using WindowsAdvancedFirewallApi.Utils;
+using WindowsFirewallDashboard.Library.Utils;
 
 namespace WindowsFirewallDashboard
 {
@@ -57,44 +58,16 @@ namespace WindowsFirewallDashboard
 
 			tabEvents.GotFocus += TabEvents_GotFocus;
 			settingsButton.Click += SettingsButton_Click;
-			checkBoxAutostart.Click += CheckBoxAutostart_Click;
-			checkBoxShellIntegration.Click += CheckBoxShellIntegration_Click;
-		}
-
-		private void CheckBoxShellIntegration_Click(object sender, RoutedEventArgs e)
-		{
-			MessageBox.Show("Coming soon");
-
-			checkBoxShellIntegration.IsChecked = false;
-			return;
-
-			if ((bool)checkBoxShellIntegration.IsChecked)
-			{
-				ViewModel.EnableShellIntegration();
-			}
-			else
-			{
-				ViewModel.DisableShellIntegration();
-			}
-		}
-
-		private void CheckBoxAutostart_Click(object sender, RoutedEventArgs e)
-		{
-			if ((bool)checkBoxAutostart.IsChecked)
-			{
-				ViewModel.EnableAutostart();
-			}
-			else
-			{
-				ViewModel.DisableAutostart();
-			}
 		}
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e)
 		{
 			//MainControl.SelectedItem = tabSettings;
 			settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
-			labelInstallState.Content = EnumUtils.GetEnumValueName<FirewallEventManager.InstallationStatus>(ViewModel.InstallationStatus);
+			if (settingsFlyout.IsOpen)
+			{
+				SettingsGrid.RefreshBindings();
+			}
 		}
 
 		private void TabEvents_GotFocus(object sender, RoutedEventArgs e)

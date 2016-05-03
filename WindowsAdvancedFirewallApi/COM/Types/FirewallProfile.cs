@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.COM.Types
 {
@@ -24,6 +25,33 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			set
 			{
 				FirewallCOMManager.Instance.Policy.SetProfileStatus(this, value);
+			}
+		}
+
+		public bool IsEnabled
+		{
+			get
+			{
+				return CurrentStatus.ToBoolean();
+			}
+			set
+			{
+				CurrentStatus = value.ToStatusEnum();
+			}
+		}
+
+		public FirewallProfileType ManagedType
+		{
+			get
+			{
+				var profileTypes = FirewallProfileTypeUtil.ToFirewallProfileTypes(COMObject);
+
+				if (profileTypes?.Count == 1)
+				{
+					return profileTypes[0];
+				}
+
+				return FirewallProfileType.Unknown;
 			}
 		}
 

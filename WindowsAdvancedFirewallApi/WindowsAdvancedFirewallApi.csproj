@@ -196,7 +196,7 @@
     <Compile Include="Data\FirewallPorts.cs" />
     <Compile Include="Data\FirewallProfileType.cs" />
     <Compile Include="Data\FirewallProtocol.cs" />
-    <Compile Include="Data\BaseObjects\FirewallValuableProperty.cs" />
+    <Compile Include="Data\Base\FirewallValuableProperty.cs" />
     <Compile Include="Data\Status.cs" />
     <Compile Include="Events\Arguments\FirewallBaseEventArgs.cs" />
     <Compile Include="Events\Arguments\FirewallExtendedApplicationEventArgs.cs" />

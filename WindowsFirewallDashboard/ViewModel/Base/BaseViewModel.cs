@@ -50,5 +50,15 @@ namespace WindowsFirewallDashboard.ViewModel.Base
 		#region INotifyPropertyChanged Members
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
+
+		public void RaiseOnPropertyChangedForAllProperties()
+		{
+			var properties = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+			foreach (var item in properties)
+			{
+				RaiseOnPropertyChanged(item.Name);
+			}
+		}
 	}
 }

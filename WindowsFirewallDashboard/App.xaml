@@ -9,23 +9,17 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml">
-				</ResourceDictionary>
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml">
-				</ResourceDictionary>
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml">
-				</ResourceDictionary>
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Emerald.xaml">
-				</ResourceDictionary>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml"/>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Emerald.xaml"/>
 				<!--<ResourceDictionary Source="pack://application:,,,/Ressources/Accents/SystemAccentColor.xaml" />-->
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml">
-				</ResourceDictionary>
-				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml">
-				</ResourceDictionary>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"/>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml"/>
 				<ResourceDictionary>
 					<vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:WindowsFirewallDashboard.Locator"/>
 					<Style x:Key="icomoon">
-						<Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Ressources/Fonts/#icomoon" />
+						<Setter Property="TextElement.FontFamily" Value="/Ressources/Fonts/#icomoon" />
 					</Style>
 				</ResourceDictionary>
 				<ResourceDictionary Source="Simple Styles.xaml"/>

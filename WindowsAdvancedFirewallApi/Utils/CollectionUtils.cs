@@ -12,6 +12,38 @@ namespace WindowsAdvancedFirewallApi.Utils
 	{
 		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
+		public enum ArithmeticalLogic
+		{
+			AND, OR
+		}
+
+		public static bool Contains<TValue>(this ICollection<TValue> collection, ArithmeticalLogic logic, params TValue[] values)
+		{
+			Func<bool, bool, bool> logicalFunction;
+			bool startValue;
+
+			switch (logic)
+			{
+				case ArithmeticalLogic.OR:
+					startValue = false;
+					logicalFunction = (@old, @new) => @old || @new;
+					break;
+				case ArithmeticalLogic.AND:
+				default:
+					startValue = true;
+					logicalFunction = (@old, @new) => @old && @new;
+					break;
+			}
+
+
+			foreach (var item in values)
+			{
+				startValue = logicalFunction(startValue, collection.Contains(item));
+			}
+
+			return startValue;
+		}
+
 		public static TValue GetValue<TKey, TValue> (this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
 		{
 			TValue value;

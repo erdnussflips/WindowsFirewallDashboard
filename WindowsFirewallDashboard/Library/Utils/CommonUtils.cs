@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace WindowsFirewallDashboard.Library.Utils
@@ -31,6 +32,13 @@ namespace WindowsFirewallDashboard.Library.Utils
 			var genericTypes = interfaces.Where(i => i.IsGenericType);
 			var result = genericTypes.Any(i => i.GetGenericTypeDefinition() == interfaceType);
 			return result;
+		}
+
+		public static void RefreshBindings(this FrameworkElement element)
+		{
+			var dataContext = element.DataContext;
+			element.DataContext = null;
+			element.DataContext = dataContext;
 		}
 	}
 }

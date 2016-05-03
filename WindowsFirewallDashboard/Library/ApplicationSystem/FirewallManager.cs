@@ -8,6 +8,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.COM;
+using WindowsAdvancedFirewallApi.COM.Types;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
@@ -33,6 +34,12 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		private NotificationManager _notifications;
 		private ServiceHost _shellService;
+
+		public FirewallProfile CurrentProfile => FirewallCOMManager.Instance.CurrentProfile;
+
+		public FirewallProfile PrivateProfile => FirewallProfile.Private;
+		public FirewallProfile PublicProfile => FirewallProfile.Public;
+		public FirewallProfile DomainProfile => FirewallProfile.Domain;
 
 		private ObservableCollection<IFirewallRule> _rules;
 		public ObservableCollection<IFirewallRule> Rules
