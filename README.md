@@ -4,7 +4,8 @@
 [![Coverage](https://img.shields.io/codecov/c/github/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](http://codecov.io/github/ErdnussFlipS/WindowsFirewallDashboard)
 [![Issues](https://img.shields.io/github/issues/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](https://github.com/ErdnussFlipS/WindowsFirewallDashboard/issues)
 [![Release](https://img.shields.io/github/release/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](https://github.com/ErdnussFlipS/WindowsFirewallDashboard/releases/latest)
-[![GPL License](https://img.shields.io/badge/license-GPL_v3-lightgrey.svg?style=flat-square)](https://github.com/ErdnussFlipS/WindowsFirewallDashboard/blob/nightly/LICENSE.md)
+[![GNU GPL v3 license](https://img.shields.io/github/license/ErdnussFlipS/WindowsFirewallDashboard.svg?style=flat-square)](https://github.com/ErdnussFlipS/WindowsFirewallDashboard/blob/nightly/LICENSE.md)
+[![POEditor](https://img.shields.io/badge/POEditor-Help_Translate-blue.svg?style=flat-square)](https://poeditor.com/join/project/z0rLf12hEZ)
 
 Branch  | Status
 --------|--------
