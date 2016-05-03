@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsAdvancedFirewallApi.Data.BaseObjects;
+using WindowsAdvancedFirewallApi.Data.Base;
 using WindowsAdvancedFirewallApi.Library;
 using WindowsAdvancedFirewallApi.Utils;
 

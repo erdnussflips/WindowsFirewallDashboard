@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Library;
 using WindowsAdvancedFirewallApi.Utils;
 
-namespace WindowsAdvancedFirewallApi.Data.BaseObjects
+namespace WindowsAdvancedFirewallApi.Data.Base
 {
 	public abstract class FirewallValuableProperty<TValueType> : IComparable where TValueType : IComparable
 	{

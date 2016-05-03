@@ -16,16 +16,31 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 		}
 
-		public static string GetEnumValueName<TEnum>(object value) where TEnum : struct, IConvertible, IComparable, IFormattable
+		public static string GetEnumValueName(object value, Type enumType)
 		{
+			if (!enumType.IsEnum)
+			{
+				throw new ArgumentException(string.Format("{0} must be an enumerated type", nameof(enumType)));
+			}
+
 			try
 			{
-				return Enum.GetName(typeof(TEnum), value);
+				return Enum.GetName(enumType, value);
 			}
 			catch (Exception ex)
 			{
 				return null;
 			}
+		}
+
+		public static string GetEnumValueName(object value)
+		{
+			return GetEnumValueName(value, value.GetType());
+		}
+
+		public static string GetEnumValueName<TEnum>(object value) where TEnum : struct, IConvertible, IComparable, IFormattable
+		{
+			return GetEnumValueName(value, typeof(TEnum));
 		}
 
 		public static TEnum ParseEnum<TEnum>(this short value, TEnum defaultValue = default(TEnum)) where TEnum : struct, IConvertible, IComparable, IFormattable => Parse(value, defaultValue);
