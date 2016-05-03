@@ -83,6 +83,22 @@ namespace WindowsAdvancedFirewallApi.Utils
 			return defaultKey;
 		}
 
+		public static void Add(this IList list, params object[] items)
+		{
+			foreach (var item in items)
+			{
+				list.Add(item);
+			}
+		}
+
+		public static void AddRange(this IList list, IList items)
+		{
+			foreach (var item in items)
+			{
+				list.Add(item);
+			}
+		}
+
 		public static string Stringify(this IList list)
 		{
 			var castedList = (list as IList).Cast<object>().ToList();

@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="WindowsFirewallDashboard.View.Components.TechniqueSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WindowsFirewallDashboard.View.Components"
+             mc:Ignorable="d"
+             d:DesignHeight="110.435" d:DesignWidth="131.304" Foreground="Black">
+    <local:OptionGroup FirstOptionSeparatorBrush="Black">
+        <local:OptionGroup.Options>
+            <!--x:Name="Automatic" x:Name="Allow" x:Name="Block" x:Name="BlockAndPrompt"-->
+            <RadioButton Content="Automatic" VerticalAlignment="Center" d:LayoutOverrides="TopPosition, BottomPosition" />
+            <RadioButton Content="Allow" VerticalAlignment="Center" d:LayoutOverrides="TopPosition, BottomPosition" />
+            <RadioButton Content="Block silently" VerticalAlignment="Center" d:LayoutOverrides="TopPosition, BottomPosition" />
+            <RadioButton Content="Block and prompt" VerticalAlignment="Center" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" />
+        </local:OptionGroup.Options>
+    </local:OptionGroup>
+
+</UserControl>

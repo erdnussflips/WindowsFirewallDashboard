@@ -1,0 +1,15 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WindowsFirewallDashboard.View.Components"
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Name="userControl"
+             x:Class="WindowsFirewallDashboard.View.Components.OptionGroup"
+             mc:Ignorable="d"
+             d:DesignHeight="104.584" d:DesignWidth="127.891" DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+    <UserControl.Resources>
+        <Rectangle x:Key="FirstOptionSeparatorTemplate" Height="2" Fill="{Binding FirstOptionSeparatorBrush, ElementName=userControl, Mode=OneWay}"/>
+    </UserControl.Resources>
+    <StackPanel x:Name="RadioButtons"/>
+</UserControl>

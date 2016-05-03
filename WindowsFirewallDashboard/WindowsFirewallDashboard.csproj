@@ -230,6 +230,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Components\OptionGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Components\TechniqueSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\FirewallEventNotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -279,6 +287,12 @@
     <Compile Include="View\Components\SettingsGrid.xaml.cs">
       <DependentUpon>SettingsGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Components\OptionGroup.xaml.cs">
+      <DependentUpon>OptionGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Components\TechniqueSelector.xaml.cs">
+      <DependentUpon>TechniqueSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\FirewallEventNotificationWindow.xaml.cs">
       <DependentUpon>FirewallEventNotificationWindow.xaml</DependentUpon>
     </Compile>
@@ -288,8 +302,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\FWProfile.cs" />
-    <Compile Include="Model\FWRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

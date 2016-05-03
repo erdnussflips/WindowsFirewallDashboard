@@ -54,18 +54,21 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Rectangle Stroke="Black" Grid.Column="1" Grid.RowSpan="99" Fill="#FFECFFEE"/>
-                        <Label Margin="0,0,-0.001,0" d:LayoutOverrides="Width, Height" Grid.Column="1" Content="Private" Foreground="Black"/>
-                        <Rectangle Stroke="Black" Grid.Column="2" Grid.RowSpan="4" Fill="#FFFFECEC"/>
-                        <Label Content="Public" Margin="0,0,-0.002,0" Grid.Column="2" d:LayoutOverrides="Width, Height" Foreground="Black"/>
-                        <Rectangle Stroke="Black" Grid.Column="3" Grid.RowSpan="4" Fill="#FFEDECFF"/>
-                        <Label Content="Domain" Margin="0,0,-0.002,0" Grid.Column="3" d:LayoutOverrides="Width, Height" Foreground="Black"/>
+                        <Rectangle Stroke="Black" Grid.Column="2" Grid.RowSpan="99" Fill="#FFFFECEC"/>
+                        <Rectangle Stroke="Black" Grid.Column="3" Grid.RowSpan="99" Fill="#FFEDECFF"/>
                         <Rectangle Stroke="Black" Fill="#FFFFE3BD" Grid.Row="1" Grid.ColumnSpan="99"/>
-                        <Label Content="Windows Firewall global status" d:LayoutOverrides="Width, Height" Grid.Row="1" Grid.ColumnSpan="4" Foreground="Black"/>
-                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding PrivateProfile.IsEnabled, Mode=TwoWay}"/>
-                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding PublicProfile.IsEnabled, Mode=TwoWay}"/>
-                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding DomainProfile.IsEnabled, Mode=TwoWay}"/>
                         <Rectangle Stroke="Black" Fill="#FFFFE3BD" Grid.Row="3" Grid.ColumnSpan="4"/>
+                        <Label Content="Windows Firewall global status" d:LayoutOverrides="Width, Height" Grid.Row="1" Grid.ColumnSpan="4" Foreground="Black"/>
                         <Label Content="Default actions (when no filtering rule matches)" Grid.Row="3" Grid.ColumnSpan="4" d:LayoutOverrides="Width, Height" Foreground="Black"/>
+                        <Label Margin="0,0,-0.001,0" d:LayoutOverrides="Width, Height" Grid.Column="1" Content="Private" Foreground="Black"/>
+                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding PrivateProfile.IsEnabled, Mode=TwoWay}"/>
+                        <local:TechniqueSelector Grid.Column="1" Grid.Row="4"/>
+                        <Label Content="Public" Margin="0,0,-0.002,0" Grid.Column="2" d:LayoutOverrides="Width, Height" Foreground="Black"/>
+                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding PublicProfile.IsEnabled, Mode=TwoWay}"/>
+                        <local:TechniqueSelector Grid.Column="2" Grid.Row="4"/>
+                        <Label Content="Domain" Margin="0,0,-0.002,0" Grid.Column="3" d:LayoutOverrides="Width, Height" Foreground="Black"/>
+                        <Custom:ToggleSwitchButton Content="" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding DomainProfile.IsEnabled, Mode=TwoWay}"/>
+                        <local:TechniqueSelector Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="4"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
