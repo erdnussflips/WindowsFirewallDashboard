@@ -121,5 +121,15 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		{
 			return COMObject.DefaultOutboundAction[profile.COMObject].ToManagedEnum();
 		}
+
+		public bool IsNotificationDisabled(FirewallProfile profile)
+		{
+			return COMObject.NotificationsDisabled[profile.COMObject];
+		}
+
+		public void SetNotificationDisabled(FirewallProfile profile, bool value)
+		{
+			COMObject.NotificationsDisabled[profile.COMObject] = value;
+		}
 	}
 }

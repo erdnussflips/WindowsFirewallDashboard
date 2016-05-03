@@ -18,13 +18,13 @@ namespace WindowsFirewallShellExtension
 	{
 		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
-		private ChannelFactory<IShellService> shellServiceChannelFactory { get; set; }
-		private IShellService shellService { get; set; }
-		private ICommunicationObject shellServiceChannel
+		private ChannelFactory<IShellService> ShellServiceChannelFactory { get; set; }
+		private IShellService ShellService { get; set; }
+		private ICommunicationObject ShellServiceChannel
 		{
 			get
 			{
-				return (ICommunicationObject)shellService;
+				return (ICommunicationObject)ShellService;
 			}
 		}
 
@@ -121,19 +121,19 @@ namespace WindowsFirewallShellExtension
 		{
 			LOG.Debug("Open channel");
 
-			if (shellServiceChannelFactory == null)
+			if (ShellServiceChannelFactory == null)
 			{
-				shellServiceChannelFactory = new ChannelFactory<IShellService>(new NetNamedPipeBinding(), new EndpointAddress(CoreConstants.PipeEndpoint));
+				ShellServiceChannelFactory = new ChannelFactory<IShellService>(new NetNamedPipeBinding(), new EndpointAddress(CoreConstants.PipeEndpoint));
 			}
 
-			if (shellService == null)
+			if (ShellService == null)
 			{
-				shellService = shellServiceChannelFactory.CreateChannel();
+				ShellService = ShellServiceChannelFactory.CreateChannel();
 			}
 
 			LOG.Debug("Channel opened");
 
-			return shellService;
+			return ShellService;
 		}
 
 		private void CloseChannel()
@@ -142,8 +142,8 @@ namespace WindowsFirewallShellExtension
 			{
 				LOG.Debug("Close channel");
 
-				shellServiceChannel.Close();
-				shellServiceChannelFactory.Close();
+				ShellServiceChannel.Close();
+				ShellServiceChannelFactory.Close();
 
 				LOG.Debug("Channel closed");
 			}
@@ -154,8 +154,8 @@ namespace WindowsFirewallShellExtension
 			}
 			finally
 			{
-				shellServiceChannel.Abort();
-				shellServiceChannelFactory.Abort();
+				ShellServiceChannel.Abort();
+				ShellServiceChannelFactory.Abort();
 			}
 		}
 	}

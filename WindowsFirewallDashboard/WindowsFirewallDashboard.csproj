@@ -256,12 +256,14 @@
     <Compile Include="Library\Converter\IListToStringConverter.cs" />
     <Compile Include="Library\Converter\UniversalValueConverter.cs" />
     <Compile Include="Library\Dependencies\SingleInstance.cs" />
+    <Compile Include="Library\Interfaces\INotificationManager.cs" />
     <Compile Include="Library\IPC\IpcCmdOptions.cs" />
     <Compile Include="Library\ShellIntegration\ShellServiceListener.cs" />
     <Compile Include="Library\Utils\CommonUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
     <Compile Include="Library\Utils\ReflectionHelper.cs" />
     <Compile Include="Locator\ViewModelLocator.cs" />
+    <Compile Include="Model\ProfileRuleAction.cs" />
     <Compile Include="Model\UserSettings.cs" />
     <Compile Include="Resources\Localization\Language.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -384,6 +386,9 @@
     <Content Include="Resources\Images\shield.svg">
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Library\Enums\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

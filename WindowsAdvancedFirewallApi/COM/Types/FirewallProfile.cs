@@ -40,11 +40,35 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
+		public FirewallAction DefaultInboundAction
+		{
+			get
+			{
+				return FirewallCOMManager.Instance.Policy.GetDefaultInboundAction(this);
+			}
+			set
+			{
+				FirewallCOMManager.Instance.Policy.SetDefaultInboundAction(this, value);
+			}
+		}
+
+		public FirewallAction DefaultOutboundAction
+		{
+			get
+			{
+				return FirewallCOMManager.Instance.Policy.GetDefaultOutboundAction(this);
+			}
+			set
+			{
+				FirewallCOMManager.Instance.Policy.SetDefaultOutboundAction(this, value);
+			}
+		}
+
 		public FirewallProfileType ManagedType
 		{
 			get
 			{
-				var profileTypes = FirewallProfileTypeUtil.ToFirewallProfileTypes(COMObject);
+				var profileTypes = COMObject.ToFirewallProfileTypes();
 
 				if (profileTypes?.Count == 1)
 				{
@@ -52,6 +76,18 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 				}
 
 				return FirewallProfileType.Unknown;
+			}
+		}
+
+		public bool RuleNotification
+		{
+			get
+			{
+				return !FirewallCOMManager.Instance.Policy.IsNotificationDisabled(this);
+			}
+			set
+			{
+				FirewallCOMManager.Instance.Policy.SetNotificationDisabled(this, !value);
 			}
 		}
 

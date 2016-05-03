@@ -24,6 +24,18 @@ namespace WindowsAdvancedFirewallApi.COM
 				throw new UnauthorizedAccessException("You need administrator rights for this function.");
 			}
 		}
+
+		private static void validateProfile(FirewallProfile profile)
+		{
+			if (profile == FirewallProfile.All)
+				throw new ArgumentException("The '"+nameof(FirewallProfile.All)+"' profile can't used for this action.");
+		}
+
+		private static void validateForNativeProfileAccess(FirewallProfile profile)
+		{
+			checkForAdminRights();
+			validateProfile(profile);
+		}
 		#endregion
 
 		#region Singleton
@@ -88,16 +100,26 @@ namespace WindowsAdvancedFirewallApi.COM
 
 		public bool Enable(FirewallProfile profile)
 		{
-			checkForAdminRights();
-			if (profile == FirewallProfile.All) throw new ArgumentException("The 'All' profile can't used for enabling");
+			validateForNativeProfileAccess(profile);
 			return Policy.Enable(profile);
 		}
 
 		public bool Disable(FirewallProfile profile)
 		{
-			checkForAdminRights();
-			if (profile == FirewallProfile.All) throw new ArgumentException("The 'All' profile can't used for disabling");
+			validateForNativeProfileAccess(profile);
 			return Policy.Disable(profile);
+		}
+
+		public void EnableNotifications(FirewallProfile profile)
+		{
+			validateForNativeProfileAccess(profile);
+			Policy.SetNotificationDisabled(profile, false);
+		}
+
+		public void DisableNotifications(FirewallProfile profile)
+		{
+			validateForNativeProfileAccess(profile);
+			Policy.SetNotificationDisabled(profile, true);
 		}
 
 		public IList<IFirewallRule> Rules

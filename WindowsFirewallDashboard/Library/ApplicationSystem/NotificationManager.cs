@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WindowsFirewallDashboard.Library.Interfaces;
 using WindowsFirewallDashboard.View;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
 {
-	class NotificationManager
+	class NotificationManager : INotificationManager
 	{
 		private FirewallEventNotificationWindow notificationWindow;
 
@@ -21,7 +22,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		{
 			Application.Current.Dispatcher.Invoke(() =>
 			{
-				if(notificationWindow == null)
+				if (notificationWindow == null)
 				{
 					notificationWindow = new FirewallEventNotificationWindow
 					{

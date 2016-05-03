@@ -157,7 +157,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Library\" />
+    <Folder Include="Library\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WindowsAdvancedFirewallApi\WindowsAdvancedFirewallApi.csproj">

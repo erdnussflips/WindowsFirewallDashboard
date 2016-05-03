@@ -15,6 +15,7 @@ using WindowsAdvancedFirewallApi.Events.Arguments;
 using WindowsFirewallCore;
 using WindowsFirewallCore.Extensions;
 using WindowsFirewallCore.IPCommunication.Interfaces;
+using WindowsFirewallDashboard.Library.Interfaces;
 using WindowsFirewallDashboard.Library.ShellIntegration;
 
 namespace WindowsFirewallDashboard.Library.ApplicationSystem
@@ -22,7 +23,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
 	class FirewallManager
 	{
-		private static Logger LOG = LogManager.GetCurrentClassLogger();
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
 		public FirewallEventManager EventManager
 		{
@@ -32,7 +33,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 			}
 		}
 
-		private NotificationManager _notifications;
+		private readonly INotificationManager _notifications;
 		private ServiceHost _shellService;
 
 		public FirewallProfile CurrentProfile => FirewallCOMManager.Instance.CurrentProfile;
@@ -41,20 +42,9 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		public FirewallProfile PublicProfile => FirewallProfile.Public;
 		public FirewallProfile DomainProfile => FirewallProfile.Domain;
 
-		private ObservableCollection<IFirewallRule> _rules;
-		public ObservableCollection<IFirewallRule> Rules
-		{
-			get
-			{
-				return _rules;
-			}
-			set
-			{
-				_rules = value;
-			}
-		}
+		public ObservableCollection<IFirewallRule> Rules { get; set; }
 
-		public FirewallManager(NotificationManager notifications)
+		public FirewallManager(INotificationManager notifications)
 		{
 			_notifications = notifications;
 			Rules = new ObservableCollection<IFirewallRule>(FirewallCOMManager.Instance.Rules);

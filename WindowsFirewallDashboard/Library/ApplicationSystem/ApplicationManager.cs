@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 using WindowsFirewallDashboard.Library.IPC;
+using WindowsFirewallDashboard.Library.ShellIntegration;
 using WindowsFirewallDashboard.Library.Utils;
 using WindowsFirewallDashboard.Model;
 using WindowsFirewallDashboard.Resources.Localization;
@@ -69,7 +71,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 			if (User.CheckForUpdatesAutomatically)
 			{
-				Updater.CheckForUpdates();
+				Updater.CheckForUpdatesAsync();
 			}
 		}
 
@@ -101,6 +103,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		private void Load()
 		{
 			User = new UserSettings();
+			User.UpdateRuleActions(Firewall.PrivateProfile, Firewall.PublicProfile, Firewall.DomainProfile);
 		}
 
 		public void PrepareFromCommandline(string[] args)
@@ -116,9 +119,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public void ExitApplication()
 		{
-			Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => {
-				Application.Current.Shutdown();
-			}));
+			Dispatcher.CurrentDispatcher.BeginInvoke(new Action(Application.Current.Shutdown));
 		}
 		#endregion
 	}
