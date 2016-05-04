@@ -10,15 +10,26 @@ using WindowsFirewallDashboard.Library.ApplicationSystem;
 namespace WindowsFirewallDashboard.Model
 {
 	[Serializable]
-	class UserSettings
+	public class UserSettings
 	{
-		public bool CheckForUpdatesAutomatically = true;
-		public bool InstallUpdatesAutomatically = true;
-		public bool NotifyForNewNetworkAccess = true;
+		public bool CheckForUpdatesAutomatically { get; set; }
+		public bool InstallUpdatesAutomatically { get; set; }
+		public bool NotifyForNewNetworkAccess { get; set; }
 
-		public ProfileRuleAction PrivateRuleAction = new ProfileRuleAction(FirewallProfileType.Private);
-		public ProfileRuleAction PublicRuleAction = new ProfileRuleAction(FirewallProfileType.Public);
-		public ProfileRuleAction DomainRuleAction = new ProfileRuleAction(FirewallProfileType.Domain);
+		public ProfileRuleAction PrivateRuleAction { get; set; }
+		public ProfileRuleAction PublicRuleAction { get; set; }
+		public ProfileRuleAction DomainRuleAction { get; set; }
+
+		public UserSettings()
+		{
+			CheckForUpdatesAutomatically = true;
+			InstallUpdatesAutomatically = true;
+			NotifyForNewNetworkAccess = true;
+
+			PrivateRuleAction = new ProfileRuleAction(FirewallProfileType.Private);
+			PublicRuleAction = new ProfileRuleAction(FirewallProfileType.Public);
+			DomainRuleAction = new ProfileRuleAction(FirewallProfileType.Domain);
+	}
 
 		public void UpdateRuleActions(FirewallProfile privateProfile, FirewallProfile publicProfile, FirewallProfile domainProfile)
 		{

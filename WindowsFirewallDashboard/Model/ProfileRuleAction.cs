@@ -7,7 +7,7 @@ using WindowsAdvancedFirewallApi.Data;
 
 namespace WindowsFirewallDashboard.Model
 {
-    class ProfileRuleAction
+   public class ProfileRuleAction
     {
         sealed class RelatedFirewallActionAttribute : Attribute
         {

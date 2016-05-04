@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace WindowsFirewallDashboard.View.Components
     /// </summary>
     public partial class OptionGroup : UserControl
     {
+        [Category(nameof(OptionGroup))]
         public ObservableCollection<RadioButton> Options
         {
             get { return (ObservableCollection<RadioButton>)GetValue(OptionProperty); }
@@ -36,6 +38,7 @@ namespace WindowsFirewallDashboard.View.Components
         }
         public static readonly DependencyProperty FirstOptionSeparatorBrushProperty = DependencyProperty.Register($"{nameof(FirstOptionSeparatorBrush)}", typeof(Brush), typeof(OptionGroup));
 
+        [Category(nameof(OptionGroup))]
         public string GroupName
         {
             get { return (string)GetValue(GroupNameProperty); }
@@ -43,6 +46,7 @@ namespace WindowsFirewallDashboard.View.Components
         }
         public static readonly DependencyProperty GroupNameProperty = DependencyProperty.Register(nameof(GroupName), typeof(string), typeof(OptionGroup));
 
+        [Category(nameof(OptionGroup))]
         public event EventHandler SelectionChanged;
 
         public OptionGroup()

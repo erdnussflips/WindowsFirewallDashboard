@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.COM.Types;
 using WindowsAdvancedFirewallApi.Events;
 using WindowsFirewallDashboard.Library.ApplicationSystem;
+using WindowsFirewallDashboard.Model;
 using WindowsFirewallDashboard.ViewModel.Base;
 
 namespace WindowsFirewallDashboard.ViewModel
@@ -25,6 +26,8 @@ namespace WindowsFirewallDashboard.ViewModel
         public FirewallProfile PrivateProfile => ApplicationManager.Instance.Firewall.PrivateProfile;
         public FirewallProfile PublicProfile => ApplicationManager.Instance.Firewall.PublicProfile;
         public FirewallProfile DomainProfile => ApplicationManager.Instance.Firewall.DomainProfile;
+
+        public UserSettings User => ApplicationManager.Instance.User;
 
         public bool IsAutostartEnabled
         {
