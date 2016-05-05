@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.COM.Types;
 using WindowsAdvancedFirewallApi.Data;
+using WindowsFirewallDashboard.Library;
 using WindowsFirewallDashboard.Library.ApplicationSystem;
 
 namespace WindowsFirewallDashboard.Model
 {
 	[Serializable]
-	public class UserSettings
+	class UserSettings
 	{
 		public bool CheckForUpdatesAutomatically { get; set; }
 		public bool InstallUpdatesAutomatically { get; set; }

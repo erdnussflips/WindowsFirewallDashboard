@@ -27,7 +27,7 @@ namespace WindowsFirewallDashboard.ViewModel
         public FirewallProfile PublicProfile => ApplicationManager.Instance.Firewall.PublicProfile;
         public FirewallProfile DomainProfile => ApplicationManager.Instance.Firewall.DomainProfile;
 
-        public UserSettings User => ApplicationManager.Instance.User;
+        public UserSettingsViewModel User { get; } = new UserSettingsViewModel(ApplicationManager.Instance.User);
 
         public bool IsAutostartEnabled
         {

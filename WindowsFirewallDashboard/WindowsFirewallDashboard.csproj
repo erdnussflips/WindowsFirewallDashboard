@@ -260,12 +260,14 @@
     <Compile Include="Library\ApplicationSystem\NotificationManager.cs" />
     <Compile Include="Library\ApplicationSystem\WindowManager.cs" />
     <Compile Include="Library\Converter\ColorToBrushConverter.cs" />
+    <Compile Include="Library\Converter\DebuggingConverter.cs" />
     <Compile Include="Library\Converter\EnumToStringConverter.cs" />
     <Compile Include="Library\Converter\IListToStringConverter.cs" />
     <Compile Include="Library\Converter\UniversalValueConverter.cs" />
     <Compile Include="Library\Dependencies\SingleInstance.cs" />
     <Compile Include="Library\Interfaces\INotificationManager.cs" />
     <Compile Include="Library\IPC\IpcCmdOptions.cs" />
+    <Compile Include="Library\ObservableObject.cs" />
     <Compile Include="Library\ShellIntegration\ShellServiceListener.cs" />
     <Compile Include="Library\Utils\CommonUtils.cs" />
     <Compile Include="Library\Utils\LocalizationTool.cs" />
@@ -283,7 +285,10 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Base\IViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="ViewModel\ProfileRuleActionViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\GenericViewModel.cs" />
+    <Compile Include="ViewModel\UserSettingsViewModel.cs" />
     <Compile Include="View\Components\SettingsGrid.xaml.cs">
       <DependentUpon>SettingsGrid.xaml</DependentUpon>
     </Compile>

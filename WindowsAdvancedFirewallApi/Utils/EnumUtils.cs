@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,20 +10,33 @@ namespace WindowsAdvancedFirewallApi.Utils
 {
 	public static class EnumUtils
 	{
+		private static void CheckForEnum(Type enumType)
+		{
+			if (!enumType.IsEnum)
+			{
+				throw new ArgumentException($"{enumType.Name} must be an enum type");
+			}
+		}
 		private static void CheckForEnum<TEnum>() where TEnum : struct, IConvertible, IComparable, IFormattable
 		{
-			if (!typeof(TEnum).IsEnum)
-			{
-				throw new ArgumentException($"{nameof(TEnum)} must be an enumerated type");
-			}
+			CheckForEnum(typeof(TEnum));
+		}
+
+		public static TAttribute GetAttribute<TEnum, TAttribute>(this TEnum enumValue, int index = 0)
+			where TEnum : struct, IConvertible, IComparable, IFormattable
+			where TAttribute : Attribute
+		{
+			CheckForEnum<TEnum>();
+
+			var fi = enumValue.GetType().GetField(enumValue.ToString());
+			var attributes = (TAttribute[])fi.GetCustomAttributes(typeof(TAttribute), false);
+
+			return index < attributes?.Count() ? attributes[index] : null;
 		}
 
 		public static string GetEnumValueName(object value, Type enumType)
 		{
-			if (!enumType.IsEnum)
-			{
-				throw new ArgumentException($"{nameof(enumType)} must be an enumerated type");
-			}
+			CheckForEnum(enumType);
 
 			try
 			{

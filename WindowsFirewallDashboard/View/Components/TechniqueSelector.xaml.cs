@@ -1,6 +1,8 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,8 @@ namespace WindowsFirewallDashboard.View.Components
     /// </summary>
     public partial class TechniqueSelector : UserControl
     {
+        private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
+
         public class TechniqueChangedEventArgs : EventArgs
         {
             public Technique SelectedTechnique { private set; get; }
@@ -46,9 +50,11 @@ namespace WindowsFirewallDashboard.View.Components
             get { return (Technique)GetValue(SelectedTechniqueProperty); }
             set
             {
-                SetValue(SelectedTechniqueProperty, value);
-                UpdateSelectedRadioButton(value);
-                RaiseTechniqueChanged(value);
+                if (value != SelectedTechnique)
+                {
+                    SetValue(SelectedTechniqueProperty, value);
+                    UpdateSelectedRadioButton(value);
+                }
             }
         }
 
@@ -87,13 +93,22 @@ namespace WindowsFirewallDashboard.View.Components
             }
         }
 
-        public event EventHandler<TechniqueChangedEventArgs> SeletectedTechniqueChanged;
+        public event EventHandler<TechniqueChangedEventArgs> SelectedTechniqueChanged;
 
         public TechniqueSelector()
         {
             InitializeComponent();
+
             AutomaticSeparator = new SolidColorBrush(Colors.Black);
+            SelectedTechnique = default(Technique);
             OptionGroup.SelectionChanged += OptionGroup_SelectionChanged;
+
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            UpdateSelectedRadioButton(SelectedTechnique);
         }
 
         private void OptionGroup_SelectionChanged(object sender, EventArgs e)
@@ -118,9 +133,11 @@ namespace WindowsFirewallDashboard.View.Components
 
         private void RaiseTechniqueChanged(Technique technique)
         {
-            if (SeletectedTechniqueChanged != null)
+            SelectedTechnique = technique;
+
+            if (SelectedTechniqueChanged != null)
             {
-                SeletectedTechniqueChanged.Invoke(this, new TechniqueChangedEventArgs(technique));
+                SelectedTechniqueChanged.Invoke(this, new TechniqueChangedEventArgs(technique));
             }
         }
 

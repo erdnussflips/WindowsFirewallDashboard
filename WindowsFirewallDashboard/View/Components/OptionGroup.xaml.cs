@@ -55,8 +55,6 @@ namespace WindowsFirewallDashboard.View.Components
 
             Options = new ObservableCollection<RadioButton>();
 
-            InitializeBindings();
-
             Options.CollectionChanged += Options_CollectionChanged;
 
             UpdateLayout();
@@ -95,20 +93,6 @@ namespace WindowsFirewallDashboard.View.Components
             {
                 RadioButtons.Children.Insert(1, (Rectangle)FindResource("FirstOptionSeparatorTemplate"));
             }
-        }
-
-        private void InitializeBindings()
-        {
-            /*BindingOperations.SetBinding(FirstOptionSeparator, Shape.FillProperty, new Binding
-            {
-                Source = this,
-                Path = new PropertyPath(FirstOptionSeperatorBrushProperty)
-            });
-
-            BindToGroupName(Automatic);
-            BindToGroupName(Allow);
-            BindToGroupName(Block);
-            BindToGroupName(BlockAndPrompt);*/
         }
 
         private void BindToGroupName(DependencyObject target)

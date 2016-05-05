@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data;
+using WindowsAdvancedFirewallApi.Utils;
+using WindowsFirewallDashboard.Library;
 
 namespace WindowsFirewallDashboard.Model
 {
    public class ProfileRuleAction
     {
-        sealed class RelatedFirewallActionAttribute : Attribute
+        public sealed class RelatedFirewallActionAttribute : Attribute
         {
             public FirewallAction Action { get; private set; }
 
@@ -28,14 +31,13 @@ namespace WindowsFirewallDashboard.Model
         }
 
         public FirewallProfileType Profile { get; }
-        public Technique InboundAction { get; set; }
-        public Technique OutboundAction { get; set; }
+
+        public Technique InboundAction { get; set; } = Technique.BlockAndPrompt;
+        public Technique OutboundAction { get; set; } = Technique.BlockAndPrompt;
 
         public ProfileRuleAction(FirewallProfileType profile)
         {
             Profile = profile;
-            InboundAction = Technique.BlockAndPrompt;
-            OutboundAction = Technique.BlockAndPrompt;
         }
 
         public static Technique GetMatchedTechnique(FirewallAction action)
