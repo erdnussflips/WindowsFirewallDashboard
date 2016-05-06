@@ -54,6 +54,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		{
 			EventManager.StartListingFirewall();
 			EventManager.SettingsChanged += EventManager_SettingsChanged;
+			EventManager.ProfileSettingsChanged += EventManager_ProfileSettingsChanged;
 			EventManager.RulesChanged += EventManager_RulesChanged;
 		}
 
@@ -64,13 +65,20 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		private void EventManager_RulesChanged(object sender, FirewallRuleBaseEventArgs e)
 		{
-			LOG.Debug("Rules changed");
+			LOG.Debug(nameof(EventManager_RulesChanged));
 			//Rules.Clear();
 			//Rules.AddRange(FirewallCOMManager.Instance.Rules);
 		}
 
 		private void EventManager_SettingsChanged(object sender, FirewallSettingEventArgs e)
 		{
+			LOG.Debug(nameof(EventManager_SettingsChanged));
+			_notifications.ShowEventNotification();
+		}
+
+		private void EventManager_ProfileSettingsChanged(object sender, FirewallProfileSettingEventArgs e)
+		{
+			LOG.Debug(nameof(EventManager_ProfileSettingsChanged));
 			_notifications.ShowEventNotification();
 		}
 

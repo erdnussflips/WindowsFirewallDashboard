@@ -265,6 +265,9 @@
     <Compile Include="Library\Converter\IListToStringConverter.cs" />
     <Compile Include="Library\Converter\UniversalValueConverter.cs" />
     <Compile Include="Library\Dependencies\SingleInstance.cs" />
+    <Compile Include="Library\Interfaces\DataObject\IDataObject.cs" />
+    <Compile Include="Library\Interfaces\DataObject\IProfileRuleAction.cs" />
+    <Compile Include="Library\Interfaces\DataObject\IUserSettings.cs" />
     <Compile Include="Library\Interfaces\INotificationManager.cs" />
     <Compile Include="Library\IPC\IpcCmdOptions.cs" />
     <Compile Include="Library\ObservableObject.cs" />
