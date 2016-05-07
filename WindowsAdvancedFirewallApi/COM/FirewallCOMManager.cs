@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetFwTypeLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.COM.Types;
 using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.COM
 {
@@ -122,12 +124,33 @@ namespace WindowsAdvancedFirewallApi.COM
 			Policy.SetNotificationDisabled(profile, true);
 		}
 
+
+		private IDictionary<INetFwRule, IFirewallRule> RuleDictionary;
 		public IList<IFirewallRule> Rules
 		{
 			get
 			{
 				checkForAdminRights();
-				return Policy.GetRules();
+				RuleDictionary = Policy.GetRuleDictionary();
+				return RuleDictionary.Values.ToList();
+			}
+		}
+
+		public IList<IFirewallRule> RulesAdded
+		{
+			get
+			{
+				checkForAdminRights();
+				var addedRules = new Dictionary<INetFwRule, IFirewallRule>();
+
+				if (RuleDictionary == null)
+				{
+					return addedRules.Values.ToList();
+				}
+
+				addedRules.AddRange(Policy.GetRuleAddedDictionary(RuleDictionary.Keys.ToList()));
+
+				return addedRules.Values.ToList();
 			}
 		}
 	}

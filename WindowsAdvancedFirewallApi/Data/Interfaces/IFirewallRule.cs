@@ -45,4 +45,10 @@ namespace WindowsAdvancedFirewallApi.Data.Interfaces
 		dynamic Interfaces { get; set; }
 		string InterfaceTypes { get; set; }
 	}
+
+	public interface IHashedContent
+	{
+		string InitContentHashCode { get; }
+		string ContentHashCode { get; }
+	}
 }

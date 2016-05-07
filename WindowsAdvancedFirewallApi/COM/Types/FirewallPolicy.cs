@@ -1,6 +1,7 @@
 ﻿using NetFwTypeLib;
 using NLog;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,9 +9,29 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.COM.Types
 {
+	internal static class INetFwRulesExtension
+	{
+		public static IEnumerable<INetFwRule> ToTypedEnumerable(this INetFwRules rules)
+		{
+			var typedRules = new List<INetFwRule>();
+
+			foreach (var rule in rules)
+			{
+				if (rule is INetFwRule)
+				{
+					typedRules.Add(rule as INetFwRule);
+				}
+			}
+
+			return typedRules;
+		}
+	}
+
+
 	internal class FirewallPolicy : COMWrapperType<INetFwPolicy2>
 	{
 		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
@@ -82,6 +103,53 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 				var nativeRule = item as INetFwRule3;
 				var managedRule = new FirewallRule(nativeRule);
 				rules.Add(managedRule);
+			}
+
+			return rules;
+		}
+
+		public IDictionary<INetFwRule, IFirewallRule> GetRuleDictionary()
+		{
+			return GetRuleDictionary(COMObject.Rules);
+		}
+
+		public IDictionary<INetFwRule, IFirewallRule> GetRuleAddedDictionary(IEnumerable<INetFwRule> oldNativeRules)
+		{
+			var nativeRules = COMObject.Rules.ToTypedEnumerable();
+
+			var added = new HashSet<INetFwRule>(nativeRules);
+			added.ExceptWith(oldNativeRules);
+
+			return GetRuleDictionary(added);
+		}
+
+		public IDictionary<INetFwRule, IFirewallRule> GetRuleDeletedDictionary(IEnumerable<INetFwRule> oldNativeRules)
+		{
+			var nativeRules = COMObject.Rules.ToTypedEnumerable();
+
+			var added = GetRuleAddedDictionary(oldNativeRules).Keys.ToList();
+
+			var oldAndAddedRules = new HashSet<INetFwRule>(oldNativeRules);
+			oldAndAddedRules.AddRange(added);
+
+			var deleted = new HashSet<INetFwRule>(oldAndAddedRules);
+			deleted.SymmetricExceptWith(nativeRules);
+
+			return GetRuleDictionary(deleted);
+		}
+
+		private IDictionary<INetFwRule, IFirewallRule> GetRuleDictionary(IEnumerable nativeRules)
+		{
+			LOG.Debug("List rules");
+			var rules = new Dictionary<INetFwRule, IFirewallRule>();
+
+			foreach (var item in nativeRules)
+			{
+				if (!(item is INetFwRule3)) continue;
+
+				var nativeRule = item as INetFwRule3;
+				var managedRule = new FirewallRule(nativeRule);
+				rules.Add(nativeRule, managedRule);
 			}
 
 			return rules;

@@ -91,7 +91,7 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 		}
 
-		public static void AddRange(this IList list, IList items)
+		public static void AddRange(this IList list, ICollection items)
 		{
 			foreach (var item in items)
 			{
@@ -99,9 +99,17 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 		}
 
-		public static string Stringify(this IList list)
+		public static void AddRange<TItem>(this ICollection<TItem> collection, ICollection<TItem> items)
 		{
-			var castedList = (list as IList).Cast<object>().ToList();
+			foreach (var item in items)
+			{
+				collection.Add(item);
+			}
+		}
+
+		public static string Stringify(this ICollection collection)
+		{
+			var castedList = (collection as ICollection).Cast<object>().ToList();
 			var stringBuilder = new StringBuilder();
 
 			for (int i = 0; i < castedList.Count; i++)

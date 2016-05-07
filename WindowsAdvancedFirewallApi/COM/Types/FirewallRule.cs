@@ -1,9 +1,11 @@
 ﻿using NetFwTypeLib;
 using NLog;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data;
@@ -13,9 +15,42 @@ using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.COM.Types
 {
-	public class FirewallRule : COMWrapperType<INetFwRule3>, IFirewallRule
+	public class FirewallRule : COMWrapperType<INetFwRule3>, IFirewallRule, IHashedContent
 	{
 		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
+
+		public string InitContentHashCode { get; private set; }
+
+		public string ContentHashCode
+		{
+			get
+			{
+				return CalculateContentHashCode();
+			}
+		}
+
+		private string CalculateContentHashCode()
+		{
+			var contentStrings = new StringBuilder();
+
+			foreach (var property in typeof(IFirewallRule).GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+			{
+				var value = property.GetValue(this);
+
+				if (value is ICollection)
+				{
+					var castedObject = value as ICollection;
+
+					contentStrings.Append($"{castedObject.Stringify()};");
+				}
+				else
+				{
+					contentStrings.Append($"{value?.ToString()};");
+				}
+			}
+
+			return HashTool.MD5(contentStrings.ToString());
+		}
 
 		public FirewallRule() : base(Native<INetFwRule3>.INetFwRule3)
 		{
@@ -24,7 +59,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 
 		internal FirewallRule(INetFwRule3 nativeObject) : base(nativeObject)
 		{
-
+			InitContentHashCode = CalculateContentHashCode();
 		}
 
 		public FirewallAction Action
