@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
 using WindowsAdvancedFirewallApi.Utils;
+using WindowsAdvancedFirewallApi.WindowsRegistry;
 
 namespace WindowsAdvancedFirewallApi.COM.Types
 {
@@ -91,6 +92,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			COMObject.FirewallEnabled[profile.COMObject] = status.ToBoolean();
 		}
 
+		public void AddRule(FirewallRule rule)
+		{
+			COMObject.Rules.Add(rule.COMObject);
+		}
+
+		public void RemoveRule(FirewallRule rule)
+		{
+			COMObject.Rules.Remove(rule.COMObject.Name);
+		}
+
 		public IList<IFirewallRule> GetRules()
 		{
 			LOG.Debug("List rules");
@@ -108,40 +119,17 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			return rules;
 		}
 
-		public IDictionary<INetFwRule, IFirewallRule> GetRuleDictionary()
+		public IDictionary<string, IHashedFirewallRule> GetRuleDictionary()
 		{
 			return GetRuleDictionary(COMObject.Rules);
 		}
 
-		public IDictionary<INetFwRule, IFirewallRule> GetRuleAddedDictionary(IEnumerable<INetFwRule> oldNativeRules)
-		{
-			var nativeRules = COMObject.Rules.ToTypedEnumerable();
-
-			var added = new HashSet<INetFwRule>(nativeRules);
-			added.ExceptWith(oldNativeRules);
-
-			return GetRuleDictionary(added);
-		}
-
-		public IDictionary<INetFwRule, IFirewallRule> GetRuleDeletedDictionary(IEnumerable<INetFwRule> oldNativeRules)
-		{
-			var nativeRules = COMObject.Rules.ToTypedEnumerable();
-
-			var added = GetRuleAddedDictionary(oldNativeRules).Keys.ToList();
-
-			var oldAndAddedRules = new HashSet<INetFwRule>(oldNativeRules);
-			oldAndAddedRules.AddRange(added);
-
-			var deleted = new HashSet<INetFwRule>(oldAndAddedRules);
-			deleted.SymmetricExceptWith(nativeRules);
-
-			return GetRuleDictionary(deleted);
-		}
-
-		private IDictionary<INetFwRule, IFirewallRule> GetRuleDictionary(IEnumerable nativeRules)
+		private IDictionary<string, IHashedFirewallRule> GetRuleDictionary(IEnumerable nativeRules)
 		{
 			LOG.Debug("List rules");
-			var rules = new Dictionary<INetFwRule, IFirewallRule>();
+			var rules = new Dictionary<string, IHashedFirewallRule>();
+
+			RegistryHelper.Local.RuleMatcher.GetRules();
 
 			foreach (var item in nativeRules)
 			{
@@ -149,7 +137,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 
 				var nativeRule = item as INetFwRule3;
 				var managedRule = new FirewallRule(nativeRule);
-				rules.Add(nativeRule, managedRule);
+				rules.Add(managedRule.InitContentHashCode, managedRule);
 			}
 
 			return rules;

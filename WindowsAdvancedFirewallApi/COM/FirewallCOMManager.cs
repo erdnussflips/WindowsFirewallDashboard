@@ -1,6 +1,8 @@
 ﻿using NetFwTypeLib;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,8 @@ namespace WindowsAdvancedFirewallApi.COM
 {
 	public sealed class FirewallCOMManager
 	{
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
+
 		public enum FirewallStatus
 		{
 			Enabled, PartiallyEnabled, Disabled
@@ -125,14 +129,14 @@ namespace WindowsAdvancedFirewallApi.COM
 		}
 
 
-		private IDictionary<INetFwRule, IFirewallRule> RuleDictionary;
+		private IDictionary<string, IHashedFirewallRule> RuleDictionary;
 		public IList<IFirewallRule> Rules
 		{
 			get
 			{
 				checkForAdminRights();
 				RuleDictionary = Policy.GetRuleDictionary();
-				return RuleDictionary.Values.ToList();
+				return RuleDictionary.Values.Cast<IFirewallRule>().ToList();
 			}
 		}
 
@@ -141,16 +145,128 @@ namespace WindowsAdvancedFirewallApi.COM
 			get
 			{
 				checkForAdminRights();
-				var addedRules = new Dictionary<INetFwRule, IFirewallRule>();
+				var addedRules = new List<IFirewallRule>();
+
+				var oldRules = RuleDictionary;
+				var currentRules = Policy.GetRuleDictionary();
+
+				var hashesOldRules = oldRules.Keys;
+				var hashesCurrentRules = currentRules.Keys;
+
+				var hashSetRules = new HashSet<string>(hashesCurrentRules);
+				hashSetRules.ExceptWith(hashesOldRules);
+
+				foreach (var item in hashSetRules)
+				{
+					var rule = currentRules.GetValue(item, null);
+
+					if (rule != null)
+					{
+						addedRules.Add(rule);
+						RuleDictionary.Add(rule.InitContentHashCode, rule);
+					}
+				}
+
+				return addedRules;
+			}
+		}
+
+		public IList<IFirewallRule> RulesRemoved
+		{
+			get
+			{
+				checkForAdminRights();
+				var removedRules = new List<IFirewallRule>();
+
+				var oldRules = RuleDictionary;
+				var currentRules = Policy.GetRuleDictionary();
+
+				var hashesOldRules = oldRules.Keys;
+				var hashesCurrentRules = currentRules.Keys;
+
+				var hashesExistingRules = new HashSet<string>(hashesCurrentRules);
+				hashesExistingRules.IntersectWith(hashesOldRules);
+
+				var hashesRemovedRules = new HashSet<string>(hashesOldRules);
+				hashesRemovedRules.ExceptWith(hashesExistingRules);
+
+
+				foreach (var item in hashesRemovedRules)
+				{
+					var rule = oldRules.GetValue(item, null);
+
+					if (rule != null)
+					{
+						removedRules.Add(rule);
+						RuleDictionary.Remove(rule.InitContentHashCode);
+					}
+				}
+
+				return removedRules;
+			}
+		}
+
+		public IList<IFirewallRule> RulesModified
+		{
+			get
+			{
+				checkForAdminRights();
+				var modifiedRules = new List<IFirewallRule>();
 
 				if (RuleDictionary == null)
 				{
-					return addedRules.Values.ToList();
+					return modifiedRules;
 				}
 
-				addedRules.AddRange(Policy.GetRuleAddedDictionary(RuleDictionary.Keys.ToList()));
+				var oldRules = RuleDictionary;
+				var currentRules = Policy.GetRuleDictionary();
 
-				return addedRules.Values.ToList();
+				var hashesOldRules = oldRules.Keys;
+				var hashesCurrentRules = currentRules.Keys;
+
+				var difference = new HashSet<string>(hashesOldRules);
+				difference.SymmetricExceptWith(hashesCurrentRules);
+
+				foreach (var item in oldRules.Values)
+				{
+					if ((bool)item.Name?.Equals("FirewallTestRule"))
+					{
+						LOG.Debug($"Old:{item.InitContentHashCode}:{item.ContentHashCode}:{item.Name}:{item.Description}");
+					}
+				}
+
+				foreach (var item in currentRules.Values)
+				{
+					if ((bool)item.Name?.Equals("FirewallTestRule"))
+					{
+						LOG.Debug($"Current:{item.InitContentHashCode}:{item.ContentHashCode}:{item.Name}:{item.Description}");
+					}
+				}
+
+				/*foreach (var item in oldRules)
+				{
+					var rule = item.Value;
+					var initHash = rule.InitContentHashCode;
+					var description = rule.Description;
+
+					if ((bool)rule.Name?.Equals("FirewallTestRule"))
+					{
+						Debugger.Break();
+					}
+
+					var isPresent = hashesCurrentRules.Contains(hash);
+					if (isPresent)
+					{
+
+					}
+
+					if (isPresent && !initHash.Equals(hash))
+					{
+						modifiedRules.Add(rule);
+					}
+				}*/
+
+				return modifiedRules;
 			}
 		}
 	}

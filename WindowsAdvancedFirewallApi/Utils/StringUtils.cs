@@ -9,6 +9,11 @@ namespace WindowsAdvancedFirewallApi.Utils
 {
 	public static class StringUtils
 	{
+		public enum TrimMode
+		{
+			All, FromLeft, FromRight
+		}
+
 		public static bool IsPath(this string value)
 		{
 			if (value == null)
@@ -30,6 +35,11 @@ namespace WindowsAdvancedFirewallApi.Utils
 				return Path.GetFileName(value);
 			}
 
+			return value;
+		}
+
+		public static string TrimLetters(this string value, TrimMode mode)
+		{
 			return value;
 		}
 	}

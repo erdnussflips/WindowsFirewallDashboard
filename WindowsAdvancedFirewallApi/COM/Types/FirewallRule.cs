@@ -15,7 +15,7 @@ using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.COM.Types
 {
-	public class FirewallRule : COMWrapperType<INetFwRule3>, IFirewallRule, IHashedContent
+	public class FirewallRule : COMWrapperType<INetFwRule3>, IHashedFirewallRule
 	{
 		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
 
@@ -60,6 +60,11 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		internal FirewallRule(INetFwRule3 nativeObject) : base(nativeObject)
 		{
 			InitContentHashCode = CalculateContentHashCode();
+
+			if ((bool)Name?.Equals("FirewallTestRule"))
+			{
+				LOG.Debug($"Create:{InitContentHashCode}:{Name}");
+			}
 		}
 
 		public FirewallAction Action

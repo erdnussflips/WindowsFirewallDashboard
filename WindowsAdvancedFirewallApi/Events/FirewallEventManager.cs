@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using WindowsAdvancedFirewallApi.Events.Arguments;
 using WindowsAdvancedFirewallApi.Events.Objects;
 using WindowsAdvancedFirewallApi.Library;
+using WindowsAdvancedFirewallApi.WindowsRegistry;
 
 namespace WindowsAdvancedFirewallApi.Events
 {
@@ -88,15 +89,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to check installation status.", true);
 
-			using (var key = Registry.LocalMachine.OpenSubKey(ApiConstants.REGISTRY_KEY_FIREWALL_LOG))
-			{
-				if (key == null)
-				{
-					return false;
-				}
-
-				return true;
-			}
+			return RegistryHelper.Local.IsEventLogEnabled();
 		}
 
 		public InstallationStatus GetInstallationStatus()
@@ -123,13 +116,8 @@ namespace WindowsAdvancedFirewallApi.Events
 
 			if(!IsInstalled())
 			{
-				Registry.LocalMachine.CreateSubKey(ApiConstants.REGISTRY_KEY_FIREWALL_LOG);
+				RegistryHelper.Local.EnableEventLog();
 			}
-
-			//if (!EventLog.SourceExists(FIREWALL_EVENT_SOURCE))
-			//{
-			//	EventLog.CreateEventSource(FIREWALL_EVENT_SOURCE, FIREWALL_EVENT_LOGNAME);
-			//}
 		}
 
 		public void Deinstall()
@@ -138,14 +126,8 @@ namespace WindowsAdvancedFirewallApi.Events
 
 			if(IsInstalled())
 			{
-				Registry.LocalMachine.DeleteSubKey(ApiConstants.REGISTRY_KEY_FIREWALL_LOG);
+				RegistryHelper.Local.DisabledEventLog();
 			}
-
-			//if(EventLog.SourceExists(FIREWALL_EVENT_SOURCE))
-			//{
-			//	EventLog.DeleteEventSource(FIREWALL_EVENT_SOURCE);
-			//	EventLog.Delete(FIREWALL_EVENT_LOGNAME);
-			//}
 		}
 
 		public bool CanListenFirewall()

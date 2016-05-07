@@ -51,4 +51,9 @@ namespace WindowsAdvancedFirewallApi.Data.Interfaces
 		string InitContentHashCode { get; }
 		string ContentHashCode { get; }
 	}
+
+	public interface IHashedFirewallRule : IFirewallRule, IHashedContent
+	{
+
+	}
 }
