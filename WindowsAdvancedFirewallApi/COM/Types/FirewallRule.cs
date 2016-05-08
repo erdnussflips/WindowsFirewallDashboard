@@ -60,11 +60,6 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 		internal FirewallRule(INetFwRule3 nativeObject) : base(nativeObject)
 		{
 			InitContentHashCode = CalculateContentHashCode();
-
-			if ((bool)Name?.Equals("FirewallTestRule"))
-			{
-				LOG.Debug($"Create:{InitContentHashCode}:{Name}");
-			}
 		}
 
 		public FirewallAction Action

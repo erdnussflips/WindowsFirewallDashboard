@@ -34,6 +34,16 @@ namespace WindowsAdvancedFirewallApi.Utils
 			return index < attributes?.Count() ? attributes[index] : null;
 		}
 
+		public static IEnumerable<TEnum> GetValues<TEnum>()
+			where TEnum : struct, IConvertible, IComparable, IFormattable
+		{
+			CheckForEnum<TEnum>();
+
+			var values = Enum.GetValues(typeof(TEnum));
+
+			return values.Cast<TEnum>();
+		}
+
 		public static string GetEnumValueName(object value, Type enumType)
 		{
 			CheckForEnum(enumType);

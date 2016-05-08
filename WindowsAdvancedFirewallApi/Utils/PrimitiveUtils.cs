@@ -41,18 +41,24 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 		}
 
+		public static int? ParseInteger(this string value, int? defaultValue)
+		{
+			int parsed;
+
+			if (int.TryParse(value, out parsed))
+			{
+				return parsed;
+			}
+
+			LOG.Info($"Return default value: {defaultValue}");
+			return defaultValue;
+		}
+
 		public static int ParseInteger(this string value, int defaultValue)
 		{
-			try
-			{
-				return int.Parse(value);
-			}
-			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
-			{
-				LOG.Info($"Return default value: {defaultValue}");
-				return defaultValue;
-			}
+			return (int)ParseInteger(value, (int?)defaultValue);
 		}
+
 		public static long ParseLong(this string value)
 		{
 			try
@@ -69,15 +75,41 @@ namespace WindowsAdvancedFirewallApi.Utils
 
 		public static long ParseLong(this string value, long defaultValue)
 		{
-			try
+			long parsed;
+
+			if (long.TryParse(value, out parsed))
 			{
-				return long.Parse(value);
+				return parsed;
 			}
-			catch (Exception ex) when (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
+
+			LOG.Info($"Return default value: {defaultValue}");
+			return defaultValue;
+		}
+
+		public static float? ParseFloat(this string value, float? defaultValue)
+		{
+			float parsed;
+
+			if (float.TryParse(value, out parsed))
 			{
-				LOG.Info($"Return default value: {defaultValue}");
-				return defaultValue;
+				return parsed;
 			}
+
+			LOG.Info($"Return default value: {defaultValue}");
+			return defaultValue;
+		}
+
+		public static double? ParseDouble(this string value, double? defaultValue)
+		{
+			double parsed;
+
+			if (double.TryParse(value, out parsed))
+			{
+				return parsed;
+			}
+
+			LOG.Info($"Return default value: {defaultValue}");
+			return defaultValue;
 		}
 	}
 }

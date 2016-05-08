@@ -28,6 +28,12 @@ namespace WindowsAdvancedFirewallApi.Data
 			{ FirewallAction.Block, 3 },
 		};
 
+		private static readonly Dictionary<FirewallAction, string> _mappingRegistry = new Dictionary<FirewallAction, string>
+		{
+			{ FirewallAction.Allow, "Allow" },
+			{ FirewallAction.Block, "Block" },
+		};
+
 		public static FirewallAction ToManagedEnum(this NET_FW_ACTION_ _value)
 		{
 			return _mappingNatives.GetKey(_value, FirewallAction.Unknown);
@@ -41,6 +47,11 @@ namespace WindowsAdvancedFirewallApi.Data
 		public static FirewallAction ToFirewallAction(this int _eventAction)
 		{
 			return _mappingEvents.GetKey(_eventAction, FirewallAction.Unknown);
+		}
+
+		public static FirewallAction ToFirewallAction(this string _registryValue)
+		{
+			return _mappingRegistry.GetKey(_registryValue, FirewallAction.Unknown);
 		}
 	}
 }

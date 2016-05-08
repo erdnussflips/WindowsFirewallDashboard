@@ -28,6 +28,12 @@ namespace WindowsAdvancedFirewallApi.Data
 			{ FirewallDirection.Out, 2 },
 		};
 
+		private static readonly Dictionary<FirewallDirection, string> _mappingRegistry = new Dictionary<FirewallDirection, string>
+		{
+			{ FirewallDirection.In, "In" },
+			{ FirewallDirection.Out, "Out" },
+		};
+
 		public static FirewallDirection ToManagedEnum(this NET_FW_RULE_DIRECTION_ _value)
 		{
 			return _mappingNatives.GetKey(_value, FirewallDirection.Unknown);
@@ -41,6 +47,11 @@ namespace WindowsAdvancedFirewallApi.Data
 		public static FirewallDirection ToFirewallDirection(this int _eventAction)
 		{
 			return _mappingEvents.GetKey(_eventAction, FirewallDirection.Unknown);
+		}
+
+		public static FirewallDirection ToFirewallDirection(this string _registryAction)
+		{
+			return _mappingRegistry.GetKey(_registryAction, FirewallDirection.Unknown);
 		}
 	}
 }

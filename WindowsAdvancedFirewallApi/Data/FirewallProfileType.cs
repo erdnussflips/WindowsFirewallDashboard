@@ -4,15 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
+	public sealed class FirewallProfileTypeRegistryAttribute : Attribute
+	{
+		public string Value { get; private set; }
+
+		public FirewallProfileTypeRegistryAttribute(string value)
+		{
+			Value = value;
+		}
+	}
+
 	public enum FirewallProfileType
 	{
 		Unknown,
-		Domain,
-		Private,
-		Public
+		[FirewallProfileTypeRegistry("Domain")] Domain,
+		[FirewallProfileTypeRegistry("Private")] Private,
+		[FirewallProfileTypeRegistry("Public")] Public
 	}
 
 	public static class FirewallProfileTypeUtil
@@ -72,6 +83,21 @@ namespace WindowsAdvancedFirewallApi.Data
 			}
 
 			return bitmask;
+		}
+
+		public static FirewallProfileType ToFirewallProfileType(this string profileValue)
+		{
+			foreach (var item in EnumUtils.GetValues<FirewallProfileType>())
+			{
+				var attribute = EnumUtils.GetAttribute<FirewallProfileType, FirewallProfileTypeRegistryAttribute>(item);
+
+				if (attribute?.Value.Equals(profileValue) ?? false)
+				{
+					return item;
+				}
+			}
+
+			return FirewallProfileType.Unknown;
 		}
 	}
 }

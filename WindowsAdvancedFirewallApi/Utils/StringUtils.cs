@@ -38,9 +38,9 @@ namespace WindowsAdvancedFirewallApi.Utils
 			return value;
 		}
 
-		public static string TrimLetters(this string value, TrimMode mode)
+		public static bool ToBoolean(this string value)
 		{
-			return value;
+			return Convert.ToBoolean(value);
 		}
 	}
 }

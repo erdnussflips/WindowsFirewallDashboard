@@ -6,41 +6,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsAdvancedFirewallApi.Data.Interfaces;
+using WindowsAdvancedFirewallApi.Utils;
 using WindowsAdvancedFirewallApi.WindowsRegistry.Factories;
 
 namespace WindowsAdvancedFirewallApi.WindowsRegistry
 {
-    class RuleMatcher
-    {
-        private RegistryKey RulesKey { get; set; }
-        private FirewallRuleFactory Factory { get; set; } = new FirewallRuleFactory();
+	class RuleMatcher
+	{
+		private RegistryKey RulesKey { get; set; }
+		private FirewallRuleFactory Factory { get; set; } = new FirewallRuleFactory();
 
-        public RuleMatcher(RegistryKey rootKey)
-        {
-            RulesKey = rootKey.OpenSubKey(ApiConstants.REGISTRY_KEY_RULES);
-        }
+		public RuleMatcher(RegistryKey rootKey)
+		{
+			RulesKey = rootKey.OpenSubKey(ApiConstants.REGISTRY_KEY_RULES);
+		}
 
-        public IList<IFirewallRule> GetRules()
-        {
-            var rules = new List<IFirewallRule>();
-            var ruleValues = new List<KeyValuePair<string, string>>();
+		public IDictionary<string, IList<IFirewallRule>> GetRules()
+		{
+			var rules = new Dictionary<string, IList<IFirewallRule>>();
 
-            foreach (var valueName in RulesKey.GetValueNames())
-            {
-                var value = RulesKey.GetValue(valueName);
+			var syncLock = new object();
 
-                if (value is string)
-                {
-                    var castedValue = value as string;
+			Parallel.ForEach(RulesKey.GetValueNames(), valueName =>
+			{
+				var value = RulesKey.GetValue(valueName);
 
-                    ruleValues.Add(new KeyValuePair<string, string>(valueName, castedValue));
+				if (value is string)
+				{
+					var castedValue = value as string;
 
-                    var rule = Factory.CreateFromString(valueName, castedValue);
-                    rules.Add(rule);
-                }
-            }
+					var rule = Factory.CreateFromString(valueName, castedValue);
 
-            return rules;
-        }
-    }
+					lock (syncLock)
+					{
+						var namedRules = rules.GetValue(rule.Name, new List<IFirewallRule>());
+						namedRules.Add(rule);
+
+						rules.Put(rule.Name, namedRules);
+					}
+				}
+			});
+
+			//foreach (var valueName in RulesKey.GetValueNames())
+			//{
+
+			//}
+
+			return rules;
+		}
+	}
 }

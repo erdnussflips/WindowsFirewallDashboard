@@ -83,7 +83,28 @@ namespace WindowsAdvancedFirewallApi.Utils
 			return defaultKey;
 		}
 
-		public static void Add(this IList list, params object[] items)
+		public static void Put(this IDictionary dictionary, object key, object value, bool replace = false)
+		{
+			if (dictionary.Contains(key))
+			{
+				if (replace)
+				{
+					dictionary.Remove(key);
+					dictionary.Add(key, value);
+				}
+			}
+			else
+			{
+				dictionary.Add(key, value);
+			}
+		}
+
+		public static void Replace(this IDictionary dictionary, object key, object value)
+		{
+			dictionary.Put(key, value, true);
+		}
+
+		public static void Add(this ICollection list, params object[] items)
 		{
 			foreach (var item in items)
 			{
@@ -91,7 +112,15 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 		}
 
-		public static void AddRange(this IList list, ICollection items)
+		public static void Add<TType>(this ICollection<TType> collection, params TType[] items)
+		{
+			foreach (var item in items)
+			{
+				collection.Add(item);
+			}
+		}
+
+		public static void AddRange(this ICollection list, ICollection items)
 		{
 			foreach (var item in items)
 			{

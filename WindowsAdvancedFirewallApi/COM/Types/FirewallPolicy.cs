@@ -129,7 +129,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			LOG.Debug("List rules");
 			var rules = new Dictionary<string, IHashedFirewallRule>();
 
-			RegistryHelper.Local.RuleMatcher.GetRules();
+			var registryRules = RegistryHelper.Local.RuleMatcher.GetRules();
 
 			foreach (var item in nativeRules)
 			{
