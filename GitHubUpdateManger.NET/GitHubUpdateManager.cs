@@ -4,7 +4,9 @@ using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,19 +51,49 @@ namespace GitHubUpdateManger
 				Updates.Add(update);
 			}
 
-			SendUpdates(currentVersion);
+			NotifyUpdatesAvailable(currentVersion);
 		}
 
-		private void SendUpdates(Version currentVersion)
+		public async Task DownloadReleaseAssetsAsync(RepositoryRelease update, string downloadLocation)
 		{
-			if (this.ApplicationUpdater == null)
+			await Task.Run(new Action(() => {
+				var releaseFolderName = $@"{update.ID}_{update.Name}";
+
+				foreach (var asset in update.Assets)
+				{
+					var id = asset.Id;
+					var filename = asset.Name;
+					var url = asset.BrowserDownloadUrl;
+					var downloadFilePath = $@"{downloadLocation}/{id}_{filename}";
+
+					var request = (HttpWebRequest)WebRequest.Create(url);
+
+					using (var response = (HttpWebResponse)request.GetResponse())
+					using (var responseStream = response.GetResponseStream())
+					using (var fileStream = new FileStream(downloadFilePath, System.IO.FileMode.Create, FileAccess.Write))
+					{
+						responseStream.Seek(0, SeekOrigin.Begin);
+						responseStream.CopyTo(fileStream);
+					}
+
+					var downloadedAsset = new DownloadedReleaseAsset(asset, downloadFilePath);
+					update.AssetsDownloaded.Add(downloadedAsset);
+				}
+			}));
+
+			NotifyUpdateDownloaded(update);
+		}
+
+		private void NotifyUpdatesAvailable(Version currentVersion)
+		{
+			if (ApplicationUpdater == null)
 			{
 				return;
 			}
 
 			var relevantUpdates = new List<RepositoryRelease>();
 
-			foreach (var update in this.Updates)
+			foreach (var update in Updates)
 			{
 				if (update.Version > currentVersion)
 				{
@@ -69,11 +101,15 @@ namespace GitHubUpdateManger
 				}
 			}
 
-			ApplicationUpdater.UpdatesAvailable(relevantUpdates);
+			if (relevantUpdates.Count > 0)
+			{
+				ApplicationUpdater.UpdatesAvailable(relevantUpdates);
+			}
 		}
 
-		public async Task DownloadReleaseAssetsAsync(RepositoryRelease update)
+		private void NotifyUpdateDownloaded(RepositoryRelease update)
 		{
+			ApplicationUpdater?.UpdateDownloaded(update);
 		}
 	}
 }

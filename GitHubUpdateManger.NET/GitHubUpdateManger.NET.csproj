@@ -52,10 +52,12 @@
   <ItemGroup>
     <Compile Include="GitHubUpdateManager.cs" />
     <Compile Include="Library\CustomOctokit\GitHubClient.cs" />
+    <Compile Include="Library\CustomOctokit\ReleaseAssetExtension.cs" />
     <Compile Include="Library\CustomOctokit\ReleasesClient.cs" />
     <Compile Include="Library\CustomOctokit\Ensure.cs" />
     <Compile Include="Library\IApplicationUpdater.cs" />
     <Compile Include="Model\RepositoryRelease.cs" />
+    <Compile Include="Model\DownloadedReleaseAsset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

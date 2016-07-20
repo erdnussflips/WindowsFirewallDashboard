@@ -16,11 +16,18 @@ namespace GitHubUpdateManger.Model
 
 		private List<ReleaseAsset> githubReleaseAssets { get; set; }
 
+		public int ID => githubRelease.Id;
+
+		public string Name => githubRelease.Name;
+
 		public Version Version { get; private set; }
 
 		public DateTime PublishedAt => githubRelease.CreatedAt.LocalDateTime;
 
 		public string Description => githubRelease.Body;
+
+		public List<ReleaseAsset> Assets => githubReleaseAssets;
+		public List<DownloadedReleaseAsset> AssetsDownloaded { get; internal set; }
 
 		internal RepositoryRelease(Release release, List<ReleaseAsset> assets)
 		{
@@ -32,6 +39,8 @@ namespace GitHubUpdateManger.Model
 			githubRelease = release;
 			githubReleaseAssets = assets;
 			parseReleaseName();
+
+			AssetsDownloaded = new List<DownloadedReleaseAsset>();
 		}
 
 		private void parseReleaseName()

@@ -10,5 +10,6 @@ namespace GitHubUpdateManger.Library
 	public interface IApplicationUpdater
 	{
 		void UpdatesAvailable(List<RepositoryRelease> updates);
+		void UpdateDownloaded(RepositoryRelease update);
 	}
 }

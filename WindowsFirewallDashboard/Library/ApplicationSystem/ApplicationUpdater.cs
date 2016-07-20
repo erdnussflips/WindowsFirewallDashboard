@@ -58,6 +58,11 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 
 		public void UpdatesAvailable(List<RepositoryRelease> updates)
 		{
+			Debugger.Break();
+		}
+
+		public void UpdateDownloaded(RepositoryRelease update)
+		{
 		}
 
 		public void InstallUpdate()
