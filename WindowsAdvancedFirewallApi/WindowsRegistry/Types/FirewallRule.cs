@@ -76,7 +76,7 @@ namespace WindowsAdvancedFirewallApi.WindowsRegistry.Types
 
 		public FirewallProtocol Protocol { get; set; }
 
-		public string RemoteAddresses { get; set; }
+		public FirewallAddresses RemoteAddresses { get; set; }
 
 		public string RemoteMachineAuthorizationList { get; set; }
 

@@ -28,13 +28,15 @@ namespace WindowsAdvancedFirewallApi.Library
 
 		public int CompareTo(object obj)
 		{
+			const int defaultReturn = -1;
+
 			if (obj is GenericValue<TValueType>)
 			{
 				var castedObj = obj as GenericValue<TValueType>;
-				return Value?.CompareTo(castedObj.Value) ?? -1;
+				return Value?.CompareTo(castedObj.Value) ?? defaultReturn;
 			}
 
-			return -1;
+			return defaultReturn;
 		}
 
 		public override string ToString()

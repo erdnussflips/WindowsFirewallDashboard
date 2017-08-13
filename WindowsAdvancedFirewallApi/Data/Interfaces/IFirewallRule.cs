@@ -25,7 +25,7 @@ namespace WindowsAdvancedFirewallApi.Data.Interfaces
 		string LocalAppPackageId { get; set; }
 		string LocalUserAuthorizedList { get; set; }
 		string LocalUserOwner { get; set; }
-		string RemoteAddresses { get; set; }
+		FirewallAddresses RemoteAddresses { get; set; }
 		string RemoteMachineAuthorizationList { get; set; }
 		string RemoteUserAuthorizationList { get; set; }
 		string EmbeddedContext { get; set; }

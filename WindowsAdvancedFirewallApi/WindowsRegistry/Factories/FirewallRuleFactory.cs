@@ -9,11 +9,15 @@ using System.Diagnostics;
 using WindowsAdvancedFirewallApi.Utils;
 using WindowsAdvancedFirewallApi.Data;
 using WindowsAdvancedFirewallApi.Resources;
+using NLog;
+using WindowsAdvancedFirewallApi.Extensions;
 
 namespace WindowsAdvancedFirewallApi.WindowsRegistry.Factories
 {
 	class FirewallRuleFactory
 	{
+		private static readonly Logger LOG = LogManager.GetCurrentClassLogger();
+
 		public IFirewallRule CreateFromString(string ruleId, string ruleString)
 		{
 			var rule = new FirewallRule
@@ -40,13 +44,14 @@ namespace WindowsAdvancedFirewallApi.WindowsRegistry.Factories
 			foreach (var property in properties)
 			{
 				var propertyParts = property.Split('=');
+				var propertyName = propertyParts[0];
 
 				if (propertyParts.Count() < 2)
 				{
+					LOG.Debug("Fewer properties than required.");
 					continue;
 				}
 
-				var propertyName = propertyParts[0];
 				var propertyValue = propertyParts[1];
 
 				#region Passing
@@ -62,6 +67,24 @@ namespace WindowsAdvancedFirewallApi.WindowsRegistry.Factories
 				{
 					rule.LocalAppPackageId = propertyValue;
 				}
+				else if (propertyName.Equals("Defer")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("Edge")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("ICMP4")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("ICMP6")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("IF")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("IFType")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("LA6")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("LPort2_10")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("LPort2_20")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("LPort2_24")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("LUAuth")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("Platform")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("Platform2")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("RPort")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("RPort2_10")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("Svc")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("TTK")) { DebuggerExtensions.Break(); }
+				else if (propertyName.Equals("TTK2_22")) { DebuggerExtensions.Break(); }
 				#endregion
 				#region Converting
 				else if (propertyName.Equals("Action"))
@@ -89,6 +112,13 @@ namespace WindowsAdvancedFirewallApi.WindowsRegistry.Factories
 						rule.Protocol = FirewallProtocolUtil.ToFirewallProtocol((short)protocolNumber);
 					}
 				}
+				else if (propertyName.Equals("LPort")) {
+					rule.LocalPorts = propertyValue.ToFirewallPorts();
+				}
+				else if (propertyName.Equals("RA4", "RA42", "RA6", "RA62"))
+				{
+					rule.RemoteAddresses = propertyValue.ToFirewallAddresses(rule.RemoteAddresses);
+				}
 				#endregion
 				#region Localization
 				else if (propertyName.Equals("Name"))
@@ -102,6 +132,10 @@ namespace WindowsAdvancedFirewallApi.WindowsRegistry.Factories
 				else if(propertyName.Equals("EmbedCtxt"))
 				{
 					rule.EmbeddedContext = GetFirewallResourceString(propertyValue);
+				}
+				else
+				{
+					LOG.Debug($"Property '{propertyName}' is not handled.");
 				}
 				#endregion
 			}

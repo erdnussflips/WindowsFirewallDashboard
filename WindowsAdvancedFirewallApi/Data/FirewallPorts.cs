@@ -17,7 +17,7 @@ namespace WindowsAdvancedFirewallApi.Data
 
 		public Types Type { private set; get; }
 		public string Native { private set; get; }
-		private List<IValuable<int>> Ports => Values;
+		private IList<IValuable<int>> Ports => Values;
 
 		private FirewallPorts(Types type, string native)
 		{

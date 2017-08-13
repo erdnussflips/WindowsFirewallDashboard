@@ -43,5 +43,10 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		{
 			return Process.GetCurrentProcess().MainModule.FileName;
 		}
+
+		public static Version GetAssemblyVersion()
+		{
+			return GetExecutingAssembly().GetName().Version;
+		}
 	}
 }

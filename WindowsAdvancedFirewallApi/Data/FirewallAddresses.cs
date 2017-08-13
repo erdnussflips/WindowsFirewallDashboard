@@ -9,53 +9,99 @@ using WindowsAdvancedFirewallApi.Utils;
 
 namespace WindowsAdvancedFirewallApi.Data
 {
-	public class FirewallAddresses : FirewallValuableProperty<IPAddress>
+	public class FirewallAddresses
 	{
-		public enum Types
+		public enum Modes
 		{
-			Unknown, All, Specific
+			Any, Specific
 		}
 
-		public Types Type { private set; get; }
+		public class Value
+		{
+			public enum ValueTypes
+			{
+				Unknown, Custom, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, IntrAnet, IntErnet, Ply2Renders, RmtIntrAnet
+			}
+
+			public ValueTypes Type { private set; get; }
+			public string Native { private set; get; }
+			public IValuable<IPAddress> Address { private set; get; }
+
+			private Value(ValueTypes type, string native)
+			{
+				Type = type;
+				Native = native;
+			}
+
+			public Value(IValuable<IPAddress> address)
+			{
+				Type = ValueTypes.Custom;
+				Address = address;
+			}
+
+			public override string ToString()
+			{
+				if (Type == ValueTypes.Custom)
+				{
+					return Address.ToString();
+				}
+
+				return Type.ToString();
+			}
+
+			public static readonly Value LocalSubnet = new Value(ValueTypes.LocalSubnet, "LocalSubnet");
+			public static readonly Value DNS = new Value(ValueTypes.DNS, "DNS");
+			public static readonly Value DHCP = new Value(ValueTypes.DHCP, "DHCP");
+			public static readonly Value WINS = new Value(ValueTypes.WINS, "WINS");
+			public static readonly Value DefaultGateway = new Value(ValueTypes.DefaultGateway, "DefaultGateway");
+			public static readonly Value IntrAnet = new Value(ValueTypes.IntrAnet, "IntrAnet");
+			public static readonly Value IntErnet = new Value(ValueTypes.IntErnet, "IntErnet");
+			public static readonly Value Ply2Renders = new Value(ValueTypes.Ply2Renders, "Ply2Renders");
+			public static readonly Value RmtIntrAnet = new Value(ValueTypes.RmtIntrAnet, "RmtIntrAnet");
+
+			public static readonly IList<Value> Predefined = new List<Value> { LocalSubnet, DNS, DHCP, WINS, DefaultGateway, IntrAnet, IntErnet, Ply2Renders, RmtIntrAnet };
+		}
+
+		public Modes Mode { private set; get; }
 		public string Native { private set; get; }
 
-		public List<IValuable<IPAddress>> Addresses => Values;
+		public IList<Value> Addresses { private set; get; } = new List<Value>();
 
-		private FirewallAddresses(Types type, string native)
+		private FirewallAddresses(Modes mode, string native)
 		{
-			Type = type;
+			Mode = mode;
 			Native = native;
 		}
 
-		public FirewallAddresses(params IValuable<IPAddress>[] addresses)
+		public FirewallAddresses(params Value[] addresses)
 		{
-			Type = Types.Specific;
-			Addresses.AddRange(addresses);
+			Mode = Modes.Specific;
+
+			if (addresses != null)
+			{
+				Addresses.AddRange(addresses);
+			}
 		}
 
 		public override string ToString()
 		{
-			if (Type == Types.Specific)
+			if (Mode == Modes.Any)
 			{
-				return base.ToString();
+				return Native;
 			}
 
-			return Type.ToString();
+			return Addresses.Stringify();
 		}
 
-		// all addresses
-		public static readonly FirewallAddresses All = new FirewallAddresses(Types.All, "*");
-
-		public static readonly IList<FirewallAddresses> Predefined = new List<FirewallAddresses> { All };
+		public static readonly FirewallAddresses Any = new FirewallAddresses(Modes.Any, "*");
 	}
 
-	internal static class FirewallAddressesUtils
+	static class FirewallAddressesUtils
 	{
 		class Factory : IValuableFactory<IPAddress>
 		{
 			public IValuableRange<IPAddress> CreateValueRange(IPAddress lowest, IPAddress highest)
 			{
-				lowest.GetAddressValue();
 				return new IPAddressValueRange(lowest, highest);
 			}
 
@@ -75,26 +121,11 @@ namespace WindowsAdvancedFirewallApi.Data
 			}
 		}
 
-		public static FirewallAddresses ToFirewallAddresses(this string value)
+		static FirewallAddresses.Value GetPredefinedValue(string value)
 		{
-			var result = value.ToFirewallValuableProperty<FirewallAddresses, IPAddress>(new Factory());
-
-			if (result != null)
+			foreach (var item in FirewallAddresses.Value.Predefined)
 			{
-				return new FirewallAddresses(result.ToArray());
-			}
-
-			var trimmedValue = value?.TrimEnd(',');
-			var splittedPortValues = trimmedValue?.Split(',');
-
-			if (splittedPortValues == null || splittedPortValues.Length < 1)
-			{
-				return null;
-			}
-
-			foreach (var item in FirewallAddresses.Predefined)
-			{
-				if (trimmedValue?.Equals(item.Native) ?? false)
+				if (value?.Equals(item.Native) ?? false)
 				{
 					return item;
 				}
@@ -103,9 +134,48 @@ namespace WindowsAdvancedFirewallApi.Data
 			return null;
 		}
 
+		public static FirewallAddresses ToFirewallAddresses(this string value)
+		{
+			return value?.ToFirewallAddresses(null);
+		}
+
+		public static FirewallAddresses ToFirewallAddresses(this string value, FirewallAddresses existing)
+		{
+			if (existing?.Mode == FirewallAddresses.Modes.Any)
+			{
+				return existing;
+			}
+
+			var trimmedValue = value?.Trim().TrimEnd(',');
+
+			// any mode
+			if (trimmedValue.Equals(FirewallAddresses.Any.Native))
+			{
+				return FirewallAddresses.Any;
+			}
+
+			// custom mode
+			var splittedValue = value?.Split(',');
+			var firewallAddress = existing ?? new FirewallAddresses();
+
+			foreach (var item in splittedValue)
+			{
+				var addressValue = GetPredefinedValue(item);
+
+				if (addressValue == null)
+				{
+					addressValue = new FirewallAddresses.Value(item.ParseValue(new Factory()));
+				}
+
+				firewallAddress.Addresses.Add(addressValue);
+			}
+
+			return firewallAddress;
+		}
+
 		public static string ToNativeValue(this FirewallAddresses addresses)
 		{
-			return addresses.ToNativeValueGeneric<FirewallAddresses, IPAddress>();
+			return addresses.ToString();
 		}
 	}
 }

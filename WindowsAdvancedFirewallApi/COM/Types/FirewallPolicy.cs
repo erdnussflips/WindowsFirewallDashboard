@@ -129,7 +129,7 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			LOG.Debug("List rules");
 			var rules = new Dictionary<string, IHashedFirewallRule>();
 
-			var registryRules = RegistryHelper.Local.RuleMatcher.GetRules();
+			var registryRules = RegistryManager.Local.RuleManagement.GetRules();
 
 			foreach (var item in nativeRules)
 			{
@@ -137,8 +137,18 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 
 				var nativeRule = item as INetFwRule3;
 				var managedRule = new FirewallRule(nativeRule);
+
+				if (rules.ContainsKey(managedRule.InitContentHashCode))
+				{
+					LOG.Debug("Duplicate rules hash!");
+					continue;
+				}
+
 				rules.Add(managedRule.InitContentHashCode, managedRule);
 			}
+
+			var test = rules.Values.Select(r => (bool)r.Name?.Equals("# Test") ? r : null).First();
+			var test2 = rules.Values.Select(r => (bool)r.Name?.Equals("# Test2") ? r : null).First();
 
 			return rules;
 		}

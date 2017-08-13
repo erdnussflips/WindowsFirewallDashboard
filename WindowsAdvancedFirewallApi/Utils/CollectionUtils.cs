@@ -83,7 +83,16 @@ namespace WindowsAdvancedFirewallApi.Utils
 			return defaultKey;
 		}
 
-		public static void Put(this IDictionary dictionary, object key, object value, bool replace = false)
+		public static TValue Put<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value, bool replace = false)
+		{
+			var oldValue = dictionary.GetValue(key, default(TValue));
+
+			(dictionary as IDictionary).Put(key, value, replace);
+
+			return oldValue;
+		}
+
+		public static bool Put(this IDictionary dictionary, object key, object value, bool replace = false)
 		{
 			if (dictionary.Contains(key))
 			{
@@ -92,11 +101,20 @@ namespace WindowsAdvancedFirewallApi.Utils
 					dictionary.Remove(key);
 					dictionary.Add(key, value);
 				}
+				else
+					return false;
 			}
 			else
 			{
 				dictionary.Add(key, value);
 			}
+
+			return true;
+		}
+
+		public static TValue Replace<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+		{
+			return dictionary.Put(key, value, true);
 		}
 
 		public static void Replace(this IDictionary dictionary, object key, object value)
@@ -136,15 +154,14 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 		}
 
-		public static string Stringify(this ICollection collection)
+		public static string Stringify<TItem>(this ICollection<TItem> collection)
 		{
-			var castedList = (collection as ICollection).Cast<object>().ToList();
 			var stringBuilder = new StringBuilder();
 
-			for (int i = 0; i < castedList.Count; i++)
+			for (int i = 0; i < collection.Count; i++)
 			{
-				var item = castedList.ElementAt(i);
-				var isLastItem = i == castedList.Count - 1;
+				var item = collection.ElementAt(i);
+				var isLastItem = i == collection.Count - 1;
 
 				stringBuilder.Append(item.ToString());
 
@@ -155,6 +172,13 @@ namespace WindowsAdvancedFirewallApi.Utils
 			}
 
 			return stringBuilder.ToString();
+		}
+
+		public static string Stringify(this ICollection collection)
+		{
+			var castedList = (collection as ICollection).Cast<object>().ToList();
+
+			return Stringify<object>(castedList);
 		}
 
 		public static int CompareTo<TType>(this IList<TType> left, IList<TType> right) where TType : IComparable

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace WindowsAdvancedFirewallApi.WindowsRegistry
 {
-    class RegistryHelper
+    class RegistryManager
     {
-        public static readonly RegistryHelper Local = new RegistryHelper();
+        public static readonly RegistryManager Local = new RegistryManager();
 
         private RegistryKey RootKey { get; set; }
 
-        public RuleMatcher RuleMatcher { get; private set; }
+        public RuleManager RuleManagement { get; private set; }
 
-        private RegistryHelper(RegistryHive hive, string machineName = null)
+        private RegistryManager(RegistryHive hive, string machineName = null)
         {
             if (machineName != null)
             {
@@ -26,10 +26,10 @@ namespace WindowsAdvancedFirewallApi.WindowsRegistry
                 RootKey = RegistryKey.OpenBaseKey(hive, RegistryView.Default);
             }
 
-            RuleMatcher = new RuleMatcher(RootKey);
+            RuleManagement = new RuleManager(RootKey);
         }
 
-        public RegistryHelper(string machineName = null) : this(RegistryHive.LocalMachine, machineName)
+        public RegistryManager(string machineName = null) : this(RegistryHive.LocalMachine, machineName)
         {
 
         }

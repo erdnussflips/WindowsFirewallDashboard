@@ -48,7 +48,7 @@ namespace WindowsFirewallDashboard.Library.ApplicationSystem
 		{
 			try
 			{
-				await updateManager.CheckForReleasesAsync(Assembly.GetExecutingAssembly().GetName().Version, true);
+				await updateManager.CheckForReleasesAsync(ApplicationInformation.GetAssemblyVersion(), true);
 			}
 			catch (Exception ex)
 			{

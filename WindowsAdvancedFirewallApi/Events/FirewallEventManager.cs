@@ -89,7 +89,7 @@ namespace WindowsAdvancedFirewallApi.Events
 		{
 			ApiHelper.RaiseExceptionOnUnauthorizedAccess("to check installation status.", true);
 
-			return RegistryHelper.Local.IsEventLogEnabled();
+			return RegistryManager.Local.IsEventLogEnabled();
 		}
 
 		public InstallationStatus GetInstallationStatus()
@@ -116,7 +116,7 @@ namespace WindowsAdvancedFirewallApi.Events
 
 			if(!IsInstalled())
 			{
-				RegistryHelper.Local.EnableEventLog();
+				RegistryManager.Local.EnableEventLog();
 			}
 		}
 
@@ -126,7 +126,7 @@ namespace WindowsAdvancedFirewallApi.Events
 
 			if(IsInstalled())
 			{
-				RegistryHelper.Local.DisabledEventLog();
+				RegistryManager.Local.DisabledEventLog();
 			}
 		}
 

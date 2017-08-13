@@ -22,7 +22,7 @@ namespace WindowsAdvancedFirewallApi.Events.Objects
 		public FirewallAction Action { get; set; }
 		public IComparableList<FirewallProfileType> Profiles { get; set; }
 		public FirewallAddresses LocalAddresses { get; set; }
-		public string RemoteAddresses { get; set; }
+		public FirewallAddresses RemoteAddresses { get; set; }
 		public string RemoteMachineAuthorizationList { get; set; }
 		public string RemoteUserAuthorizationList { get; set; }
 		public string EmbeddedContext { get; set; }

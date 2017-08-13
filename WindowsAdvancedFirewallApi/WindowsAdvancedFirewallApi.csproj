@@ -236,6 +236,8 @@
     <Compile Include="Events\Objects\FirewallUserNotificationEvent.cs" />
     <Compile Include="Events\WFEvents.cs" />
     <Compile Include="Data\Interfaces\IFirewallRule.cs" />
+    <Compile Include="Extensions\DebuggerExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Library\ComparableList.cs" />
     <Compile Include="Library\Ensure.cs" />
     <Compile Include="Library\FastObservableCollection.cs" />
@@ -248,14 +250,14 @@
     <Compile Include="Resources\SystemLocalizations.cs" />
     <Compile Include="Utils\RegExTool.cs" />
     <Compile Include="WindowsRegistry\Factories\FirewallRuleFactory.cs" />
-    <Compile Include="WindowsRegistry\RegistryHelper.cs" />
+    <Compile Include="WindowsRegistry\RegistryManager.cs" />
     <Compile Include="Utils\CollectionUtils.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
     <Compile Include="Utils\HashTool.cs" />
     <Compile Include="Utils\PrimitiveUtils.cs" />
     <Compile Include="Utils\ReflectionUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
-    <Compile Include="WindowsRegistry\RuleMatcher.cs" />
+    <Compile Include="WindowsRegistry\RuleManager.cs" />
     <Compile Include="WindowsRegistry\Types\FirewallRule.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\FileSystemExtensions.cs" />
     <Compile Include="GitHubUpdateManager.cs" />
     <Compile Include="Library\CustomOctokit\GitHubClient.cs" />
     <Compile Include="Library\CustomOctokit\ReleaseAssetExtension.cs" />

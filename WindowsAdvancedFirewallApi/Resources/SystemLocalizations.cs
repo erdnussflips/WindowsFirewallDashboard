@@ -35,39 +35,36 @@ namespace WindowsAdvancedFirewallApi.Resources
 		}
 		public static SystemLocalizations Instance => Singleton;
 
-		private ResourceInfo FirewallAPI { get; set; }
-		private ResourceInfo ICSvc { get; set; }
-
 		public IReadOnlyDictionary<uint, string> StringsFirewallAPI { get; private set; }
 		public IReadOnlyDictionary<uint, string> StringsICSvc { get; private set; }
 
 		private SystemLocalizations()
 		{
-			FirewallAPI = new ResourceInfo();
+			var FirewallAPI = new ResourceInfo();
 			FirewallAPI.Load(Path.Combine(Environment.SystemDirectory, "FirewallAPI.dll"));
 			StringsFirewallAPI = LoadStrings(FirewallAPI);
 			FirewallAPI.Dispose();
 
-			ICSvc = new ResourceInfo();
+			var ICSvc = new ResourceInfo();
 			ICSvc.Load(Path.Combine(Environment.SystemDirectory, "icsvc.dll"));
 			StringsICSvc = LoadStrings(ICSvc);
 			ICSvc.Dispose();
 		}
 
-		private IReadOnlyDictionary<uint, string> LoadStrings(ResourceInfo ri)
+		private IReadOnlyDictionary<uint, string> LoadStrings(ResourceInfo resourceInfo)
 		{
 			var strings = new Dictionary<uint, string>();
 
-			foreach (var r in ri[Kernel32.ResourceTypes.RT_STRING])
+			foreach (var resource in resourceInfo[Kernel32.ResourceTypes.RT_STRING])
 			{
-				if (!(r is StringResource))
+				if (!(resource is StringResource))
 				{
 					continue;
 				}
 
-				var sr = r as StringResource;
+				var stringResource = resource as StringResource;
 
-				foreach (var @string in sr.Strings)
+				foreach (var @string in stringResource.Strings)
 				{
 					strings.Add(@string.Key, @string.Value);
 				}

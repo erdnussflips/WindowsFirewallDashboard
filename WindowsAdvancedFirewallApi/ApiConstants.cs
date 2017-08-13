@@ -16,6 +16,8 @@ namespace WindowsAdvancedFirewallApi
 		public const string REGISTRY_KEY_EVENTLOG = @"SYSTEM\CurrentControlSet\Services\EventLog\";
 		public const string REGISTRY_KEY_FIREWALL_LOG = REGISTRY_KEY_EVENTLOG + FIREWALL_EVENT_PROTOCOL;
 
-		public const string REGISTRY_KEY_RULES = @"SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\";
+		public const string REGISTRY_KEY_RULES =				@"SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules\";
+		public const string REGISTRY_KEY_RULES_STATIC =			@"SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System\";
+		public const string REGISTRY_KEY_RULES_CONFIGURABLE =	@"SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Configurable\System\";
 	}
 }

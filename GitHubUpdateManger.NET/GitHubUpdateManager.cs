@@ -1,4 +1,5 @@
-﻿using GitHubUpdateManger.Library;
+﻿using GitHubUpdateManger.Extensions;
+using GitHubUpdateManger.Library;
 using GitHubUpdateManger.Model;
 using Octokit;
 using System;
@@ -67,6 +68,8 @@ namespace GitHubUpdateManger
 					var downloadFilePath = $@"{downloadLocation}/{id}_{filename}";
 
 					var request = (HttpWebRequest)WebRequest.Create(url);
+
+					FileSystemExtensions.EnsureDirectory(downloadFilePath);
 
 					using (var response = (HttpWebResponse)request.GetResponse())
 					using (var responseStream = response.GetResponseStream())

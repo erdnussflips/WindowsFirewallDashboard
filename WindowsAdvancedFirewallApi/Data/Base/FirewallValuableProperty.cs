@@ -10,7 +10,7 @@ namespace WindowsAdvancedFirewallApi.Data.Base
 {
 	public abstract class FirewallValuableProperty<TValueType> : IComparable where TValueType : IComparable
 	{
-		protected readonly List<IValuable<TValueType>> Values = new List<IValuable<TValueType>>();
+		protected readonly IList<IValuable<TValueType>> Values = new List<IValuable<TValueType>>();
 
 		public override string ToString()
 		{
@@ -25,6 +25,32 @@ namespace WindowsAdvancedFirewallApi.Data.Base
 
 	internal static class FirewallValuablePropertyUtils
 	{
+		public static IValuable<TValueType> ParseValue<TValueType>(this string value, IValuableFactory<TValueType> factory)
+			where TValueType : IComparable
+		{
+			var splittedValueItems = value.Split('-');
+			if (splittedValueItems?.Count() < 1 || splittedValueItems?.Count() > 2)
+			{
+				return null;
+			}
+
+			// One value
+			string item0;
+			if (splittedValueItems?.Count() == 1 && factory.ValidateValue(item0 = splittedValueItems[0]))
+			{
+				return factory.CreateValueSingle(factory.ParseValue(item0));
+			}
+
+			// Range value
+			string item1;
+			if (splittedValueItems?.Count() == 2 && factory.ValidateValue(item0 = splittedValueItems[0]) && factory.ValidateValue(item1 = splittedValueItems[1]))
+			{
+				return factory.CreateValueRange(factory.ParseValue(item0), factory.ParseValue(item1));
+			}
+
+			return null;
+		}
+
 		public static IEnumerable<IValuable<TValueType>> ToFirewallValuableProperty<TFirewallValuableProperty, TValueType>(this string value, IValuableFactory<TValueType> factory)
 			where TValueType : IComparable
 			where TFirewallValuableProperty : FirewallValuableProperty<TValueType>
@@ -37,27 +63,9 @@ namespace WindowsAdvancedFirewallApi.Data.Base
 				return null;
 			}
 
-			var items = splittedValues.Select<string, IValuable<TValueType>>(item =>
+			var items = splittedValues.Select(item =>
 			{
-				var splittedValueItems = item?.Split('-');
-				if (splittedValueItems?.Count() < 1 || splittedValueItems?.Count() > 2)
-				{
-					return null;
-				}
-
-				string item0;
-				if (splittedValueItems?.Count() == 1 && factory.ValidateValue(item0 = splittedValueItems[0]))
-				{
-					return factory.CreateValueSingle(factory.ParseValue(item0));
-				}
-
-				string item1;
-				if (splittedValueItems?.Count() == 2 && factory.ValidateValue(item0 = splittedValueItems[0]) && factory.ValidateValue(item1 = splittedValueItems[1]))
-				{
-					return factory.CreateValueRange(factory.ParseValue(item0), factory.ParseValue(item1));
-				}
-
-				return null;
+				return item.ParseValue(factory);
 			});
 
 			if (items?.Count() > 0 && items?.ElementAt(0) != null)

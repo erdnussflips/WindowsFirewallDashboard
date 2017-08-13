@@ -327,16 +327,16 @@ namespace WindowsAdvancedFirewallApi.COM.Types
 			}
 		}
 
-		public string RemoteAddresses
+		public FirewallAddresses RemoteAddresses
 		{
 			get
 			{
-				return COMObject.RemoteAddresses;
+				return COMObject.RemoteAddresses.ToFirewallAddresses();
 			}
 
 			set
 			{
-				COMObject.RemoteAddresses = value;
+				COMObject.RemoteAddresses = value.ToNativeValue();
 			}
 		}
 
